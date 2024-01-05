@@ -42,11 +42,11 @@ const BecomeSeller = () => {
     ]
   return (
     <Stack bg={'#D7F1FF'} spacing={'5'} p={'10%'}>
-        <Heading textAlign={'center'}>Become a Seller - Showcase Your Templates</Heading>
-        <Text textAlign={'center'}>Are you a talented designer or developer with unique web templates or code components? Join our platform and transform your creative skills into revenue! Becoming a seller on our marketplace is simple and rewarding.</Text>
+        <Heading textAlign={'center'}>Become a Author - Showcase Your Templates</Heading>
+        <Text textAlign={'center'}>Are you a talented designer or developer with unique web templates or code components? Join our platform and transform your creative skills into revenue! Becoming a author on our marketplace is simple and rewarding.</Text>
         {
             cards.map((card, index)=>(
-                <Flex p={'2%'} key={index} bg={'#FFFFFF'} boxShadow='rgba(0, 0, 0, 0.24) 0px 3px 8px'>
+                <Flex borderRadius={'10'} p={'2%'} key={index} bg={'#FFFFFF'} boxShadow='rgba(0, 0, 0, 0.24) 0px 3px 8px'>
                     <Stack spacing={'4'} width={'60%'}>
                         <Heading fontSize={['20px','25px','30px','35px']}>{card.title}</Heading>
                         <Text fontStyle={'oblique'}>{card.description}</Text>
