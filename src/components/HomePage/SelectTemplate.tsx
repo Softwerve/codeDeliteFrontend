@@ -12,10 +12,11 @@ import {
   TabPanel,
   useColorModeValue,
   GridItem,
+  Flex,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { useState } from "react";
-
+import wall from "../../assets/wall1.png";
 const SelectTemplate = () => {
   const tabs = [
     {
@@ -24,8 +25,8 @@ const SelectTemplate = () => {
       panelContent: [
         {
           pId: 1,
-          image: "",
-          author: "Anshul Kumar Yadav",
+          image: wall,
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Free",
@@ -33,7 +34,7 @@ const SelectTemplate = () => {
         {
           pId: 2,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Paid",
@@ -41,7 +42,7 @@ const SelectTemplate = () => {
         {
           pId: 3,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Free",
@@ -49,7 +50,7 @@ const SelectTemplate = () => {
         {
           pId: 4,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Paid",
@@ -57,7 +58,7 @@ const SelectTemplate = () => {
         {
           pId: 5,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Paid",
@@ -65,7 +66,7 @@ const SelectTemplate = () => {
         {
           pId: 6,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Free",
@@ -79,7 +80,7 @@ const SelectTemplate = () => {
         {
           pId: 1,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Free",
@@ -87,7 +88,7 @@ const SelectTemplate = () => {
         {
           pId: 2,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Paid",
@@ -95,7 +96,7 @@ const SelectTemplate = () => {
         {
           pId: 3,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Free",
@@ -103,7 +104,7 @@ const SelectTemplate = () => {
         {
           pId: 4,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Paid",
@@ -111,7 +112,7 @@ const SelectTemplate = () => {
         {
           pId: 5,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Paid",
@@ -119,7 +120,7 @@ const SelectTemplate = () => {
         {
           pId: 6,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Free",
@@ -133,7 +134,7 @@ const SelectTemplate = () => {
         {
           pId: 1,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Free",
@@ -141,7 +142,7 @@ const SelectTemplate = () => {
         {
           pId: 2,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Paid",
@@ -149,7 +150,7 @@ const SelectTemplate = () => {
         {
           pId: 3,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Free",
@@ -157,7 +158,7 @@ const SelectTemplate = () => {
         {
           pId: 4,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Paid",
@@ -165,7 +166,7 @@ const SelectTemplate = () => {
         {
           pId: 5,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Paid",
@@ -173,7 +174,7 @@ const SelectTemplate = () => {
         {
           pId: 6,
           image: "",
-          author: "Anshul Kumar Yadav",
+          author: "Anshul",
           authorPic: "",
           authorProfileLink: "",
           pricing: "Free",
@@ -197,7 +198,12 @@ const SelectTemplate = () => {
           ideal foundation for your website project, Your vision starts here
         </Text>
         <Box></Box>
-        <Tabs onChange={(index) => setTabIndex(index)} bg={bgColor} p={'2%'} borderRadius={'10'}>
+        <Tabs
+          onChange={(index) => setTabIndex(index)}
+          bg={bgColor}
+          p={"2%"}
+          borderRadius={"10"}
+        >
           <TabList>
             {tabs.map((tab, index) => (
               <Tab key={index}>{tab.tabName}</Tab>
@@ -206,20 +212,32 @@ const SelectTemplate = () => {
           <TabPanels>
             {tabs.map((tab, index) => (
               <TabPanel key={index}>
-                <Grid gridTemplateColumns={'repeat(4,1fr)'} gridTemplateRows={'repeat(2,200px)'} gap={'10'}>
+                <Grid
+                  gridTemplateColumns={"repeat(4,1fr)"}
+                  gridTemplateRows={"repeat(2,200px)"}
+                  gap={"10"}
+                >
                   {tab.panelContent.map((panelContent, ind) => (
-                    <GridItem bgColor={'#ffffff'} boxShadow='rgba(0, 0, 0, 0.1) 0px 4px 12px' borderRadius={'10'}  >
+                    <GridItem
+                      bgColor={"#ffffff"}
+                      boxShadow="rgba(0, 0, 0, 0.1) 0px 4px 12px"
+                      borderRadius={"10"}
+                    >
                       <Image
-                        src={panelContent.image}
+                        src={panelContent.image.src}
                         alt={panelContent.author}
+                        width={"210"}
+                        height={"100"}
                       />
-                      <Text>By {panelContent.author}</Text>
-                      <a href={panelContent.authorProfileLink}>
-                        <Image
-                          src={panelContent.authorPic}
-                          alt={panelContent.author}
-                        />
-                      </a>
+                      <Flex justifyContent={'space-between'} alignItems={'center'} p={'5%'}>
+                        <Text fontSize={'sm'}>By {panelContent.author}</Text>
+                        <a href={panelContent.authorProfileLink}>
+                          <Image
+                            src={panelContent.authorPic}
+                            alt={panelContent.author}
+                          />
+                        </a>
+                      </Flex>
                     </GridItem>
                   ))}
                 </Grid>
