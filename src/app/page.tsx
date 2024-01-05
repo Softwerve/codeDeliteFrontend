@@ -1,4 +1,5 @@
 import Navbar from '@/components/Common/Navbar'
+import BecomeSeller from '@/components/HomePage/BecomeSeller'
 import TopSection from '@/components/HomePage/TopSection'
 import SelectTemplate from '@/components/HomePage/selectTemplate'
 import { ChakraProvider } from '@chakra-ui/react'
@@ -10,6 +11,7 @@ export default function Home() {
        <Navbar/>
        <TopSection/>
        <SelectTemplate/>
+       <BecomeSeller/>
    </ChakraProvider>
   )
 }

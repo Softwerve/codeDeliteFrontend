@@ -13,10 +13,12 @@ import {
   useColorModeValue,
   GridItem,
   Flex,
+  Button,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { useState } from "react";
 import wall from "../../assets/wall1.png";
+import { FaLongArrowAltRight } from "react-icons/fa";
 const SelectTemplate = () => {
   const tabs = [
     {
@@ -222,6 +224,7 @@ const SelectTemplate = () => {
                       bgColor={"#ffffff"}
                       boxShadow="rgba(0, 0, 0, 0.1) 0px 4px 12px"
                       borderRadius={"10"}
+                      key={ind}
                     >
                       <Image
                         src={panelContent.image.src}
@@ -243,6 +246,7 @@ const SelectTemplate = () => {
                 </Grid>
               </TabPanel>
             ))}
+            <Button className="underline-on-hover"  bg={'none'} _hover={{bg:'none'}}>See All <FaLongArrowAltRight/> </Button>
           </TabPanels>
         </Tabs>
       </Stack>
