@@ -10,14 +10,14 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { FaSearch } from "react-icons/fa";
+import tempBg from '../../assets/tempBg.jpg'
 
 const SearchSection = () => {
   return (
-    <Box p={"5%"} textAlign={"center"}>
-      <Box p={"10%"} bg={"#FFDE59"} borderRadius={"10px"}>
-      <Stack width={'60%'} margin={'auto'} spacing={5} >
+    <Box p={"15%  15% 5% 15%"} color={'#ffffff'} textAlign={"center"} backgroundImage={tempBg.src} backgroundRepeat={'no-repeat'} backgroundSize={'cover'}>
+      <Stack width={"60%"} margin={"auto"} spacing={5}>
         <Heading>Explore Our Templates</Heading>
-        <InputGroup borderRadius={'10px'} bg={'#ffffff'} color={'#000000'}>
+        <InputGroup borderRadius={"10px"} bg={"#ffffff"} color={"#000000"}>
           <InputLeftElement pointerEvents="none">
             <FaSearch color="gray.300" />
           </InputLeftElement>
@@ -31,8 +31,6 @@ const SearchSection = () => {
           tailored to your needs.
         </Text>
       </Stack>
-
-      </Box>
     </Box>
   );
 };
