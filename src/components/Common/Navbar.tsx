@@ -22,6 +22,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../../assets/codedelite.png";
 import { FaBars, FaChevronDown, FaLocationArrow } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
@@ -46,6 +47,12 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+
+
+  const router = useRouter();
+
+
   return (
     <Flex
       as="nav"
@@ -101,6 +108,7 @@ const Navbar = () => {
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
+            onClick={()=>router.push('/templates')}
           >
             Templates
           </Button>
