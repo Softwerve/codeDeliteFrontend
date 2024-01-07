@@ -68,7 +68,7 @@ const Navbar = () => {
       zIndex={999}
       transition="background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out"
     >
-      <Box>
+      <Box onClick={()=>router.push('/')} cursor={'pointer'}>
         <Image src={logo} alt="coginite" height="30" width={"120"} />
       </Box>
       {navItemsDisplay == "flex" ? (

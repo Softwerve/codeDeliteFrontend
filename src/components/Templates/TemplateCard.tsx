@@ -21,13 +21,12 @@ import {
         authorProfileImage: string;
         authorProfileLink: string;
         category: string;
-        templateType: string;
     };
   }
   
   const TemplateCard: React.FC<CardProps> = ({ card }) => {
     return (
-      <Box border={"1px solid #ffffff"} borderRadius={"10px"}>
+      <Box boxShadow='rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px'  borderRadius={"10px"} bg={'#000000'}>
         <Flex justifyContent={"space-between"} alignItems={"center"} p={"5%"}>
           <Flex justifyContent={"space-between"} gap={3}>
             <Image
@@ -46,7 +45,7 @@ import {
           <Text>{card.title}</Text>
           <Text>$ {card.price}</Text>
         </Flex>
-        <Divider />
+        <Divider/>
         <Box p={'2%'}>
             <Text fontSize={'10'}>Liked By abhishek and 32 mores</Text>
         </Box>
@@ -54,7 +53,7 @@ import {
         <Flex
           justifyContent={"space-between"}
           alignContent={"center"}
-          p={"2%"}
+          p={"5%"}
           fontSize={"20"}
         >
           <BiLike />
