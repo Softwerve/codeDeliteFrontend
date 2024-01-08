@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 button.underline-on-hover::after {
   content: '';
   position: absolute;

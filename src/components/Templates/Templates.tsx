@@ -186,12 +186,12 @@ const Templates: React.FC<Props> = ({ selectedCategory }) => {
     setSelectedTab(title);
   };
 
-  const gridColumns = useBreakpointValue({
-    base: "repeat(1, 1fr)",
-    sm: "repeat(2, 1fr)",
-    md: "repeat(3, 1fr)",
-    lg: "repeat(4, 1fr)",
-  });
+  // const gridColumns = useBreakpointValue({
+  //   base: "repeat(1, 1fr)",
+  //   sm: "repeat(2, 1fr)",
+  //   md: "repeat(3, 1fr)",
+  //   lg: "repeat(4, 1fr)",
+  // });
 
   return (
     <Stack spacing={10} p={"5%"} color={"#ffffff"}>
@@ -213,15 +213,14 @@ const Templates: React.FC<Props> = ({ selectedCategory }) => {
           {tabs.map((tab, index) => (
             <TabPanel key={index}>
               <Grid
-                templateColumns={gridColumns}
+                templateColumns={['repeat(1,1fr)',"repeat(2,1fr)","repeat(3,1fr)","repeat(4,1fr)"]}
                 templateRows={"repeat(auto,auto)"}
                 gap={5}
               >
                 {cards
                   .filter(
                     (card) =>
-                      selectedTab === "All" ||
-                      card.category === selectedTab
+                      selectedTab === "All" || card.category === selectedTab
                   )
                   .map((card, index) => (
                     <GridItem key={index}>
