@@ -26,6 +26,7 @@ const Footer = () => {
         content: ['LinkedIn','Instagram',"Twitter","Facebook"]
     }
   ];
+  let currentYear = new Date().getFullYear();
   return (
     <Stack borderTop={"1px solid white"} spacing={"5"} p={"5% 5% 2% 5%"} bg={'#000000'} color={'#FFFFFF'}>
       <Image src={coginite} alt="codedelite" width={"100"} />
@@ -42,7 +43,7 @@ const Footer = () => {
         ))}
       </Flex>
       <Box textAlign={'center'}>
-        Copright © 2024 Coginite Company. All Rights Reserved
+        Copright © {currentYear} Coginite Company. All Rights Reserved
       </Box>
     </Stack>
   );
