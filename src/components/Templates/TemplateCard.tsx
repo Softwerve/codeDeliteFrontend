@@ -8,8 +8,8 @@ import { IoMdPersonAdd } from "react-icons/io";
 
 interface CardProps {
   card: {
-    author: string;
-    image: string;
+    authorName: string;
+    thumbnailImage: string;
     title: string;
     price: number;
     authorProfileImage: string;
@@ -23,22 +23,22 @@ const TemplateCard: React.FC<CardProps> = ({ card }) => {
     <Box
       boxShadow="rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"
       borderRadius={"10px"}
-      bg={"#000000"}
+      bg={"#ffffff"}
     >
       <Flex justifyContent={"space-between"} alignItems={"center"} p={"5%"}>
         <Flex justifyContent={"space-between"} gap={5} alignItems={"center"}>
           <Image
             src={card.authorProfileImage}
-            alt={card.author}
+            alt={card.authorName}
             borderRadius={"50%"}
             height={"20px"}
             width={"20px"}
           />
-          <Text>{card.author}</Text>
+          <Text>{card.authorName}</Text>
         </Flex>
         <IoMdPersonAdd />
       </Flex>
-      <Image src={card.image} alt={card.author} />
+      <Image src={card.thumbnailImage} alt={card.authorName} />
       <Flex justifyContent={"space-between"} alignContent={"center"} p={"2%"}>
         <Text>{card.title}</Text>
         <Text>{card.price <= 0 ? "Free" : "₹ " + card.price}</Text>
