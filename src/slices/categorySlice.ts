@@ -2,35 +2,35 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../lib/store";
 
 // Define a type for the slice state
-interface TemplatesState {
-  templates: [];
+interface CategoriesState {
+  categories: [];
   isLoading: boolean;
   isError: boolean;
   message: string;
 }
 
 // Define the initial state using that type
-const initialState: TemplatesState = {
-  templates: [],
+const initialState: CategoriesState = {
+  categories: [],
   isLoading: false,
   isError: false,
   message: "",
 };
 
-export const templateSlice = createSlice({
-  name: "templates",
+export const categorySlice = createSlice({
+  name: "categories",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    getAllPublishedTemplatesOfACategoryStart: (state) => {
+    getAllCategoriesStart: (state) => {
       state.isLoading = true;
       state.isError = false;
     },
-    getAllPublishedTemplatesOfACategorySuccess: (state, action) => {
+    getAllCategoriesSuccess: (state, action) => {
       state.isLoading = false;
-      state.templates = action.payload;
+      state.categories = action.payload;
     },
-    getAllPublishedTemplatesOfACategoryFailure: (state, action) => {
+    getAllCategoriesFailure: (state,action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload.message;
@@ -38,10 +38,10 @@ export const templateSlice = createSlice({
   },
 });
 
-export const { getAllPublishedTemplatesOfACategoryStart, getAllPublishedTemplatesOfACategorySuccess, getAllPublishedTemplatesOfACategoryFailure } =
-  templateSlice.actions;
+export const { getAllCategoriesStart, getAllCategoriesSuccess, getAllCategoriesFailure } =
+  categorySlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.sendOtp.value;
 
-export default templateSlice.reducer;
+export default categorySlice.reducer;

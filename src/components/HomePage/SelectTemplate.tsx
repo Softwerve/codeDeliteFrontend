@@ -22,7 +22,7 @@ import wall from "../../assets/wall1.png";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import TemplateCard from "../Templates/TemplateCard";
 import { useAppDispatch, useAppSelector, useAppStore } from "@/lib/hooks";
-import { handleGetAllPublishedTemplates } from "@/apiActions/templatesAction";
+import { handleGetAllPublishedTemplatesOfACategory } from "@/apiActions/templatesAction";
 
 
 interface TabData {
@@ -68,7 +68,7 @@ const SelectTemplate = () => {
   const data = useAppSelector((state)=> state.templates);
   const templates = data.templates;
   useEffect(()=>{
-    store.dispatch(handleGetAllPublishedTemplates());
+    store.dispatch(handleGetAllPublishedTemplatesOfACategory("All"));
   },[])
 
   const gridColumns = useBreakpointValue({
@@ -101,19 +101,19 @@ const SelectTemplate = () => {
           borderRadius={"10"}
         >
           <TabList flexWrap={'wrap'}>
-            {tabs.map((tab, index) => (
+            {tabs?.map((tab, index) => (
               <Tab key={index}>{tab.title}</Tab>
             ))}
           </TabList>
           <TabPanels>
-            {tabs.map((tab, index) => (
+            {tabs?.map((tab, index) => (
               <TabPanel key={index}>
                 <Grid
                   gridTemplateColumns={gridColumns}
                   gridTemplateRows={"repeat(2,auto)"}
                   gap={"10"}
                 >
-                  {templates.map((card, ind) => (
+                  {templates?.map((card, ind) => (
                     <GridItem
                       borderRadius={"10"}
                       key={ind}

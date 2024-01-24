@@ -1,17 +1,28 @@
 import { AppDispatch } from "@/lib/store";
-import { getAllPublishedTemplatesFailure, getAllPublishedTemplatesStart, getAllPublishedTemplatesSuccess } from "@/slices/templateSlice";
+import { getAllCategoriesFailure, getAllCategoriesStart, getAllCategoriesSuccess } from "@/slices/categorySlice";
+import {  getAllPublishedTemplatesOfACategoryFailure, getAllPublishedTemplatesOfACategoryStart, getAllPublishedTemplatesOfACategorySuccess } from "@/slices/templateSlice";
 
 const baseUrl = "http://localhost:8080";
 
-export const handleGetAllPublishedTemplates = () => async(dispatch: AppDispatch) => {
-    dispatch(getAllPublishedTemplatesStart());
-    try{
-        const response = await fetch(`${baseUrl}/template/published`);
+export const handleGetAllPublishedTemplatesOfACategory = (category: string) => async(dispatch: AppDispatch)=>{
+    dispatch(getAllPublishedTemplatesOfACategoryStart());
+    try {
+        const response = await fetch(`${baseUrl}/category/get?category=${category}`);
         const payload = await response.json();
-        console.log(payload);
-        dispatch(getAllPublishedTemplatesSuccess(payload));
-    }catch(err: any){
-        dispatch(getAllPublishedTemplatesFailure(err.message))
+        // console.log(category,payload);
+        dispatch(getAllPublishedTemplatesOfACategorySuccess(payload));
+    } catch (error: any) {
+        dispatch(getAllPublishedTemplatesOfACategoryFailure(error.message));
     }
+}
 
+export const handleGetAllCategories = () => async(dispatch: AppDispatch) => {
+    dispatch(getAllCategoriesStart());
+    try {
+        const response = await fetch(`${baseUrl}/category/`)
+        const payload = await response.json();
+        dispatch(getAllCategoriesSuccess(payload));
+    } catch (error: any) {
+        dispatch(getAllCategoriesFailure(error.message));
+    }
 }

@@ -5,9 +5,13 @@ import { FaEye } from "react-icons/fa";
 import { FaHeartCirclePlus } from "react-icons/fa6";
 import { BiLike } from "react-icons/bi";
 import { IoMdPersonAdd } from "react-icons/io";
-
+import './TemplateCard.css';
+import { useRouter } from "next/navigation";
+import { useAppSelector, useAppStore } from "@/lib/hooks";
+import { handleAddItemToBag } from "@/apiActions/bagAction";
 interface CardProps {
   card: {
+    tempId: number;
     authorName: string;
     thumbnailImage: string;
     title: string;
@@ -15,10 +19,18 @@ interface CardProps {
     authorProfileImage: string;
     authorProfileLink: string;
     category: string;
+    tempLink: string;
   };
 }
 
 const TemplateCard: React.FC<CardProps> = ({ card }) => {
+  // console.log("Cards: ",card);
+  const router = useRouter();
+  const store = useAppStore();
+  const {isLoading, isSuccess, message} = useAppSelector((state)=>state.bag);
+  const handleBag = (tempId: number) =>{
+    store.dispatch(handleAddItemToBag(tempId));
+  }
   return (
     <Box
       boxShadow="rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"
@@ -54,10 +66,10 @@ const TemplateCard: React.FC<CardProps> = ({ card }) => {
         p={"5%"}
         fontSize={"20"}
       >
-        <BiLike />
-        <FaEye />
-        <FaHeartCirclePlus />
-        <IoBagHandleSharp />
+        <BiLike className="temp-icons" />
+        <FaEye className="temp-icons" onClick={()=> router.push(`${card.tempLink}`) } />
+        <FaHeartCirclePlus className="temp-icons" />
+        <IoBagHandleSharp className="temp-icons" onClick={handleBag(`${card.tempId}`)} />
       </Flex>
     </Box>
   );

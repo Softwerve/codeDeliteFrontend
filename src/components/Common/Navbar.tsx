@@ -59,7 +59,7 @@ const Navbar = () => {
       align="center"
       justify="space-between"
       padding="0.5rem 2rem"
-      bg={isTop ? "transparent" : "black"}
+      bg={isTop ? "transparent" : "#ffffff"}
       boxShadow={isTop ? "none" : "rgba(0, 0, 0, 0.1) 0px 4px 12px"}
       position={isTop ? "absolute" : "sticky"}
       top={0}
@@ -82,7 +82,7 @@ const Navbar = () => {
           <Menu>
             <MenuButton
               className="underline-on-hover"
-              color="white"
+              color={isTop ? "white":"black"}
               bg="none"
               as={Button}
               _hover={{ bg: "none" }}
@@ -104,7 +104,7 @@ const Navbar = () => {
           </Menu>
           <Button
             className="underline-on-hover"
-            color={"white"}
+            color={isTop ? "white":"black"}
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
@@ -114,7 +114,7 @@ const Navbar = () => {
           </Button>
           <Button
             className="underline-on-hover"
-            color={"white"}
+            color={isTop ? "white":"black"}
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
@@ -123,7 +123,7 @@ const Navbar = () => {
           </Button>
           <Button
             className="underline-on-hover"
-            color={"white"}
+            color={isTop ? "white":"black"}
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
@@ -132,7 +132,7 @@ const Navbar = () => {
           </Button>
           <Button
             className="underline-on-hover"
-            color={"white"}
+            color={isTop ? "white":"black"}
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
@@ -144,7 +144,7 @@ const Navbar = () => {
         ""
       )}
       {showLoginButton == true ? (
-        <Button variant={"outline"} color={"white"} _hover={{ bg: "none" }}>
+        <Button variant={"outline"} color={isTop ? "white":"black"} _hover={{ bg: "none" }}>
           Login <FiArrowUpRight fontWeight="bold" />
         </Button>
       ) : (

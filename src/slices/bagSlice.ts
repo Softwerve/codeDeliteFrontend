@@ -2,46 +2,49 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../lib/store";
 
 // Define a type for the slice state
-interface TemplatesState {
-  templates: [];
+interface bagState {
+  isSuccess: false;
   isLoading: boolean;
   isError: boolean;
   message: string;
 }
 
 // Define the initial state using that type
-const initialState: TemplatesState = {
-  templates: [],
+const initialState: bagState = {
   isLoading: false,
   isError: false,
   message: "",
+  isSuccess: false,
 };
 
-export const templateSlice = createSlice({
-  name: "templates",
+export const bagSlice = createSlice({
+  name: "bag",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    getAllPublishedTemplatesOfACategoryStart: (state) => {
+    addItemToBagStart: (state) => {
       state.isLoading = true;
       state.isError = false;
+      state.isSuccess = false;
     },
-    getAllPublishedTemplatesOfACategorySuccess: (state, action) => {
+    addItemToBagSuccess: (state, action) => {
       state.isLoading = false;
-      state.templates = action.payload;
+      state.isSuccess = action.payload.isSuccess;
+      state.message = action.payload.message;
     },
-    getAllPublishedTemplatesOfACategoryFailure: (state, action) => {
+    addItemToBagFailure: (state, action) => {
       state.isLoading = false;
       state.isError = true;
+      state.isSuccess = false;
       state.message = action.payload.message;
-    }
+    },
   },
 });
 
-export const { getAllPublishedTemplatesOfACategoryStart, getAllPublishedTemplatesOfACategorySuccess, getAllPublishedTemplatesOfACategoryFailure } =
-  templateSlice.actions;
+export const { addItemToBagStart, addItemToBagSuccess, addItemToBagFailure } =
+  bagSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.sendOtp.value;
 
-export default templateSlice.reducer;
+export default bagSlice.reducer;

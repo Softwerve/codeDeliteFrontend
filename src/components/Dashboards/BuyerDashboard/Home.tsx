@@ -11,7 +11,7 @@ const Home = () => {
       <ChakraProvider>
         <Box p={"2%"} bg={"#FDE1FB"}>
           <SearchSection />
-          <Templates selectedCategory={"all"} />
+          <Templates/>
         </Box>
       </ChakraProvider>
     </StoreProvider>

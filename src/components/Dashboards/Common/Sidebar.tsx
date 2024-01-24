@@ -12,15 +12,15 @@ export default function Sidebar({ show, setter }) {
   const router = useRouter();
 
   const className =
-    "bg-black w-[300px] transition-[margin-left] ease-in-out duration-500 sticky md:static top-0 bottom-0 left-0 z-40";
+    "bg-white w-[300px] transition-[margin-left] ease-in-out duration-500 sticky md:static top-0 bottom-0 left-0 z-40";
 
   const appendClass = show ? " ml-0" : " ml-[-300px] md:ml-0";
 
   const MenuItem = ({ icon, name, route }) => {
     const colorClass =
       router.pathname === route
-        ? "text-white"
-        : "text-white/50 hover:text-white";
+        ? "text-black"
+        : "text-black/50 hover:text-black";
 
     return (
       <Link
@@ -28,7 +28,7 @@ export default function Sidebar({ show, setter }) {
         onClick={() => {
           setter((oldVal) => !oldVal);
         }}
-        className={`flex gap-1 [&>*]:my-auto text-md pl-6 py-3 border-b-[1px] border-b-white/10 ${colorClass}`}
+        className={`flex gap-1 [&>*]:my-auto text-md pl-6 py-3 border-b-[1px] border-b-black/30 ${colorClass}`}
       >
         <div className="text-xl flex [&>*]:mx-auto w-[30px]">{icon}</div>
         <div>{name}</div>
@@ -47,7 +47,7 @@ export default function Sidebar({ show, setter }) {
 
   return (
     <>
-      <div className={`${className}${appendClass}`} style={{ padding: "2%" }}>
+      <div className={`${className}${appendClass}`} style={{ padding: "2%", position:'sticky',top:0,bottom:0,left:0}}>
         <div className="p-2 flex">
           <Link href="/">
             <img src={logo.src} alt="Company Logo" width={300} height={300} />
@@ -67,7 +67,7 @@ export default function Sidebar({ show, setter }) {
             src="https://avatars.githubusercontent.com/u/102046087?v=4"
             alt="Anshul"
           />
-          <Text textAlign={"center"} color={"#ffffff"}>
+          <Text textAlign={"center"} color={"black.50"}>
             Anshul
           </Text>
         </Stack>

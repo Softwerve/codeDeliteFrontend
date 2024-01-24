@@ -1,4 +1,6 @@
 
+import { bagSlice } from '@/slices/bagSlice'
+import { categorySlice } from '@/slices/categorySlice'
 import { templateSlice } from '@/slices/templateSlice'
 import { configureStore } from '@reduxjs/toolkit'
 
@@ -6,6 +8,8 @@ export const makeStore = () => {
   return configureStore({
     reducer: {
       templates : templateSlice.reducer,
+      categories: categorySlice.reducer,
+      bag : bagSlice.reducer,
     }
   })
 }
