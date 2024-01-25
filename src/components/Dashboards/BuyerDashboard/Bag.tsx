@@ -1,4 +1,4 @@
-import {handleGetBag } from "@/apiActions/bagAction";
+import {handleGetBag, handleRemoveItemFromBag } from "@/apiActions/bagAction";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   Box,
@@ -20,7 +20,11 @@ const Bag = () => {
   const {bagItems,bagTotalAmount} = useAppSelector((state)=> state.bag);
   useEffect(()=>{
     store.dispatch(handleGetBag());
-  },[])
+  },[bagItems])
+
+  const handleRemoveItem = (tempId: any) => {
+    store.dispatch(handleRemoveItemFromBag(tempId));
+  }
   let flexStyle = {
     justifyContent: "space-between",
     alignContent: "center",
@@ -52,10 +56,10 @@ const Bag = () => {
               >
                 <Image src={item?.thumbnailImage}height={'100%'} />
                 <Stack spacing={2}>
-                  <Text fontWeight={"bold"}>{item.authorName}</Text>
+                  <Text fontWeight={"bold"}>{item?.authorName}</Text>
                   <Text>{item?.authorUserName}</Text>
                 </Stack>
-                <Text>{item.price <= 0 ? "Free" : "₹ " + item.price}</Text>
+                <Text>{item?.price <= 0 ? "Free" : "₹ " + item?.price}</Text>
                 <Button
                   bg={"#2D7F80"}
                   color={"#ffffff"}
@@ -63,7 +67,7 @@ const Bag = () => {
                 >
                   Buy
                 </Button>
-                <IoBagRemove fontSize="25" />
+                <IoBagRemove className="temp-icons" fontSize="25" onClick={()=>handleRemoveItem(item?.tempId)} />
               </Flex>
             ))}
           </Box>

@@ -54,11 +54,27 @@ export const bagSlice = createSlice({
     getUserBagFailure: (state,action)=>{
       state.isLoading = false;
       state.isError = true;
-    }
+    },
+    removeItemFromBagStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+    },
+    removeItemFromBagSuccess: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = action.payload.isSuccess;
+      state.message = action.payload.message;
+    },
+    removeItemFromBagFailure: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.payload.message;
+    },
   },
 });
 
-export const { addItemToBagStart, addItemToBagSuccess, addItemToBagFailure, getUserBagStart, getUserBagSuccess, getUserBagFailure } =
+export const { addItemToBagStart, addItemToBagSuccess, addItemToBagFailure, getUserBagStart, getUserBagSuccess, getUserBagFailure, removeItemFromBagStart,removeItemFromBagSuccess,removeItemFromBagFailure } =
   bagSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

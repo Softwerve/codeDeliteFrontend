@@ -27,7 +27,7 @@ const Favourites = () => {
   const {lovedItems} = useAppSelector((store)=> store.templates);
   useEffect(()=>{
     store.dispatch(handleGetAllLovedLists());
-  },[])
+  },[lovedItems])
   return (
     <ChakraProvider>
       <Stack spacing={10} p={"5%"}>

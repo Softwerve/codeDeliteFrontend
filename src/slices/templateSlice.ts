@@ -18,7 +18,7 @@ const initialState: TemplatesState = {
   isLoading: false,
   isError: false,
   message: "",
-  isSuccess: false
+  isSuccess: false,
 };
 
 export const templateSlice = createSlice({
@@ -65,6 +65,19 @@ export const templateSlice = createSlice({
       state.isError = true;
       state.message = action.payload.message;
     },
+    removeItemFromLovedListStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    removeItemFromLovedListSuccess: (state, action) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+      state.isSuccess = action.payload.isSuccess;
+    },
+    removeItemFromLovedListFailure: (state, action) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+    },
   },
 });
 
@@ -78,6 +91,9 @@ export const {
   getAllLovedTemplatesStart,
   getAllLovedTemplatesSuccess,
   getAllLovedTemplatesFailure,
+  removeItemFromLovedListStart,
+  removeItemFromLovedListSuccess,
+  removeItemFromLovedListFailure,
 } = templateSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

@@ -9,7 +9,7 @@ import './TemplateCard.css';
 import { useRouter } from "next/navigation";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import { handleAddItemToBag } from "@/apiActions/bagAction";
-import { handleAddItemToLovedList } from "@/apiActions/templatesAction";
+import { handleAddItemToLovedList, handleRemoveItemFromLovedList } from "@/apiActions/templatesAction";
 interface CardProps {
   card: {
     tempId: number;
@@ -54,6 +54,10 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
     {
       handleToast(message,"error")
     }
+  }
+
+  const handleRemoveLovedItem = (tempId: any) => {
+    store.dispatch(handleRemoveItemFromLovedList(tempId));
   }
 
   const handleToast = (message: any,status: any) =>{
@@ -102,11 +106,11 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
         fontSize={"20"}
       >
         <BiLike className="temp-icons" />
-        <FaEye className="temp-icons" onClick={()=> router.push(`${card.tempLink}`) } />
+        <FaEye className="temp-icons" onClick={()=> router.push(`${card?.tempLink}`) } />
         {
           !isLoved?
           <FaHeartCirclePlus className="temp-icons" onClick={handleAddLovedItem} /> :
-          <FaHeartCircleMinus className ="temp-icons" />
+          <FaHeartCircleMinus className ="temp-icons" onClick={()=>handleRemoveLovedItem(card?.tempId)} />
         }
         <IoBagHandleSharp className="temp-icons" onClick={handleBag} />
       </Flex>

@@ -1,5 +1,5 @@
 import { AppDispatch } from "@/lib/store";
-import { addItemToBagFailure, addItemToBagStart, addItemToBagSuccess, getUserBagFailure, getUserBagStart, getUserBagSuccess } from "@/slices/bagSlice";
+import { addItemToBagFailure, addItemToBagStart, addItemToBagSuccess, getUserBagFailure, getUserBagStart, getUserBagSuccess, removeItemFromBagFailure, removeItemFromBagStart, removeItemFromBagSuccess } from "@/slices/bagSlice";
 import Cookies from "universal-cookie";
 
 const baseUrl = "http://localhost:8080";
@@ -45,5 +45,21 @@ export const handleGetBag = () => async(dispatch: AppDispatch) => {
     dispatch(getUserBagSuccess(payload));
   } catch (error: any) {
     dispatch(getUserBagFailure(error));
+  }
+}
+
+export const handleRemoveItemFromBag = (tempId: any) => async(dispatch: AppDispatch) => {
+  dispatch(removeItemFromBagStart());
+  try {
+    const response = await fetch(`${baseUrl}/user/bag/item/remove?templateId=${tempId}`,{
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    const payload = await response.json();
+    dispatch(removeItemFromBagSuccess(payload));
+  } catch (error: any) {
+    dispatch(removeItemFromBagFailure(error));
   }
 }

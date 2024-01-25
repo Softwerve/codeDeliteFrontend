@@ -1,7 +1,7 @@
 import { AppDispatch } from "@/lib/store";
 import { addItemToBagSuccess } from "@/slices/bagSlice";
 import { getAllCategoriesFailure, getAllCategoriesStart, getAllCategoriesSuccess } from "@/slices/categorySlice";
-import {  addItemToLovedListFailure, addItemToLovedListStart, addItemToLovedListSuccess, getAllLovedTemplatesFailure, getAllLovedTemplatesStart, getAllLovedTemplatesSuccess, getAllPublishedTemplatesOfACategoryFailure, getAllPublishedTemplatesOfACategoryStart, getAllPublishedTemplatesOfACategorySuccess } from "@/slices/templateSlice";
+import {  addItemToLovedListFailure, addItemToLovedListStart, addItemToLovedListSuccess, getAllLovedTemplatesFailure, getAllLovedTemplatesStart, getAllLovedTemplatesSuccess, getAllPublishedTemplatesOfACategoryFailure, getAllPublishedTemplatesOfACategoryStart, getAllPublishedTemplatesOfACategorySuccess, removeItemFromLovedListFailure, removeItemFromLovedListStart, removeItemFromLovedListSuccess } from "@/slices/templateSlice";
 import Cookies from "universal-cookie";
 
 const baseUrl = "http://localhost:8080";
@@ -57,9 +57,26 @@ export const handleGetAllLovedLists = () => async(dispatch: AppDispatch) => {
             }
         })
         const payload = await response.json();
-        console.log(payload);
+        // console.log(payload);
         dispatch(getAllLovedTemplatesSuccess(payload));
     } catch (error) {
         dispatch(getAllLovedTemplatesFailure(error));
+    }
+}
+
+export const handleRemoveItemFromLovedList = (tempId: any) => async(dispatch: AppDispatch) => {
+    dispatch(removeItemFromLovedListStart());
+    try {
+        const response = await fetch(`${baseUrl}/user/loved/item/remove?templateId=${tempId}`,{
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        const payload = await response.json();
+        // console.log(payload);
+        dispatch(removeItemFromLovedListSuccess(payload));
+    } catch (error) {
+        dispatch(removeItemFromLovedListFailure(error));
     }
 }
