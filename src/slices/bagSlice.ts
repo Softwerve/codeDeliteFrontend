@@ -7,6 +7,8 @@ interface bagState {
   isLoading: boolean;
   isError: boolean;
   message: string;
+  bagItems: []
+  bagTotalAmount: any;
 }
 
 // Define the initial state using that type
@@ -15,6 +17,8 @@ const initialState: bagState = {
   isError: false,
   message: "",
   isSuccess: false,
+  bagItems: [],
+  bagTotalAmount: 0.0
 };
 
 export const bagSlice = createSlice({
@@ -38,10 +42,23 @@ export const bagSlice = createSlice({
       state.isSuccess = false;
       state.message = action.payload.message;
     },
+    getUserBagStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    getUserBagSuccess: (state,action) => {
+      state.isLoading = false;
+      state.bagItems = action.payload.bagItems;
+      state.bagTotalAmount = action.payload.totalPrice;
+    },
+    getUserBagFailure: (state,action)=>{
+      state.isLoading = false;
+      state.isError = true;
+    }
   },
 });
 
-export const { addItemToBagStart, addItemToBagSuccess, addItemToBagFailure } =
+export const { addItemToBagStart, addItemToBagSuccess, addItemToBagFailure, getUserBagStart, getUserBagSuccess, getUserBagFailure } =
   bagSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

@@ -71,7 +71,7 @@ const Templates = () => {
               >
                 {templates?.map((card, index) => (
                   <GridItem key={index}>
-                    <TemplateCard card={card} />
+                    <TemplateCard card={card} isLoved={false} />
                   </GridItem>
                 ))}
               </Grid>

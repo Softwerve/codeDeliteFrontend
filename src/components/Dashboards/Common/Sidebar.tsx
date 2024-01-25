@@ -1,12 +1,14 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SlHome } from "react-icons/sl";
 import { FaRegHeart } from "react-icons/fa";
 import logo from "../../../assets/codedelite.png";
 import { IoBagHandle, IoCodeDownloadSharp } from "react-icons/io5";
-import { Stack, Text } from "@chakra-ui/react";
+import { Avatar, Stack, Text } from "@chakra-ui/react";
+import { useAppSelector, useAppStore } from "@/lib/hooks";
+import { handleUserDetails } from "@/apiActions/userAction";
 
 export default function Sidebar({ show, setter }) {
   const router = useRouter();
@@ -45,9 +47,25 @@ export default function Sidebar({ show, setter }) {
     />
   );
 
+  const store = useAppStore();
+  const data = useAppSelector((state) => state.user);
+  const user = data.user;
+  useEffect(() => {
+    store.dispatch(handleUserDetails());
+  }, []);
+
   return (
     <>
-      <div className={`${className}${appendClass}`} style={{ padding: "2%", position:'sticky',top:0,bottom:0,left:0}}>
+      <div
+        className={`${className}${appendClass}`}
+        style={{
+          padding: "2%",
+          position: "sticky",
+          top: 0,
+          bottom: 0,
+          left: 0,
+        }}
+      >
         <div className="p-2 flex">
           <Link href="/">
             <img src={logo.src} alt="Company Logo" width={300} height={300} />
@@ -62,13 +80,17 @@ export default function Sidebar({ show, setter }) {
             marginBottom: "30px",
           }}
         >
-          <img
-            style={{ borderRadius: "50%" }}
-            src="https://avatars.githubusercontent.com/u/102046087?v=4"
-            alt="Anshul"
+          <Avatar
+            name={user.name}
+            color={"white"}
+            src={user.profileImage}
+            borderRadius={'50%'}
           />
           <Text textAlign={"center"} color={"black.50"}>
-            Anshul
+            {user.name}
+          </Text>
+          <Text textAlign={"center"} color={"black.50"}>
+            {user.email}
           </Text>
         </Stack>
         <div className="flex flex-col">

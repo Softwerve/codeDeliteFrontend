@@ -2,6 +2,7 @@
 import { bagSlice } from '@/slices/bagSlice'
 import { categorySlice } from '@/slices/categorySlice'
 import { templateSlice } from '@/slices/templateSlice'
+import { userSlice } from '@/slices/userSlice'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const makeStore = () => {
@@ -10,6 +11,7 @@ export const makeStore = () => {
       templates : templateSlice.reducer,
       categories: categorySlice.reducer,
       bag : bagSlice.reducer,
+      user : userSlice.reducer,
     }
   })
 }

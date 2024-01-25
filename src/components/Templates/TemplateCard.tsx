@@ -1,14 +1,15 @@
-import { Box, Image, Flex, Text, Divider } from "@chakra-ui/react";
+import { Box, Image, Flex, Text, Divider, useToast, Avatar } from "@chakra-ui/react";
 import { IoBagHandleSharp } from "react-icons/io5";
 import React from "react";
 import { FaEye } from "react-icons/fa";
-import { FaHeartCirclePlus } from "react-icons/fa6";
+import { FaHeartCircleMinus, FaHeartCirclePlus } from "react-icons/fa6";
 import { BiLike } from "react-icons/bi";
 import { IoMdPersonAdd } from "react-icons/io";
 import './TemplateCard.css';
 import { useRouter } from "next/navigation";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import { handleAddItemToBag } from "@/apiActions/bagAction";
+import { handleAddItemToLovedList } from "@/apiActions/templatesAction";
 interface CardProps {
   card: {
     tempId: number;
@@ -21,16 +22,49 @@ interface CardProps {
     category: string;
     tempLink: string;
   };
+  isLoved : boolean;
 }
 
-const TemplateCard: React.FC<CardProps> = ({ card }) => {
+const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
   // console.log("Cards: ",card);
   const router = useRouter();
   const store = useAppStore();
+  const toast = useToast();
   const {isLoading, isSuccess, message} = useAppSelector((state)=>state.bag);
-  const handleBag = (tempId: number) =>{
-    store.dispatch(handleAddItemToBag(tempId));
+  const data = useAppSelector((state)=>state.templates);
+  const handleBag = () =>{
+    store.dispatch(handleAddItemToBag(card.tempId));
+    if(!isLoading && isSuccess)
+    {
+      handleToast(message,"success");
+    }
+    else if( !isLoading && !isSuccess)
+    {
+      handleToast(message,"error")
+    }
   }
+
+  const handleAddLovedItem = () => {
+    store.dispatch(handleAddItemToLovedList(card.tempId));
+    if(!data.isLoading && data.isSuccess)
+    {
+      handleToast(message,"success");
+    }
+    else if( !isLoading && !isSuccess)
+    {
+      handleToast(message,"error")
+    }
+  }
+
+  const handleToast = (message: any,status: any) =>{
+    toast({
+      title: message,
+      status: status,
+      duration: 3000,
+      isClosable: true,
+    })
+  }
+
   return (
     <Box
       boxShadow="rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"
@@ -39,14 +73,15 @@ const TemplateCard: React.FC<CardProps> = ({ card }) => {
     >
       <Flex justifyContent={"space-between"} alignItems={"center"} p={"5%"}>
         <Flex justifyContent={"space-between"} gap={5} alignItems={"center"}>
-          <Image
+          <Avatar
             src={card.authorProfileImage}
-            alt={card.authorName}
+            name={card.authorName.split(' ')[0]}
             borderRadius={"50%"}
             height={"20px"}
             width={"20px"}
+            padding={'4'}
           />
-          <Text>{card.authorName}</Text>
+          <Text>{card.authorName.split(' ')[0]}</Text>
         </Flex>
         <IoMdPersonAdd />
       </Flex>
@@ -68,8 +103,12 @@ const TemplateCard: React.FC<CardProps> = ({ card }) => {
       >
         <BiLike className="temp-icons" />
         <FaEye className="temp-icons" onClick={()=> router.push(`${card.tempLink}`) } />
-        <FaHeartCirclePlus className="temp-icons" />
-        <IoBagHandleSharp className="temp-icons" onClick={handleBag(`${card.tempId}`)} />
+        {
+          !isLoved?
+          <FaHeartCirclePlus className="temp-icons" onClick={handleAddLovedItem} /> :
+          <FaHeartCircleMinus className ="temp-icons" />
+        }
+        <IoBagHandleSharp className="temp-icons" onClick={handleBag} />
       </Flex>
     </Box>
   );

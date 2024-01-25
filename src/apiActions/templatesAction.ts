@@ -1,8 +1,12 @@
 import { AppDispatch } from "@/lib/store";
+import { addItemToBagSuccess } from "@/slices/bagSlice";
 import { getAllCategoriesFailure, getAllCategoriesStart, getAllCategoriesSuccess } from "@/slices/categorySlice";
-import {  getAllPublishedTemplatesOfACategoryFailure, getAllPublishedTemplatesOfACategoryStart, getAllPublishedTemplatesOfACategorySuccess } from "@/slices/templateSlice";
+import {  addItemToLovedListFailure, addItemToLovedListStart, addItemToLovedListSuccess, getAllLovedTemplatesFailure, getAllLovedTemplatesStart, getAllLovedTemplatesSuccess, getAllPublishedTemplatesOfACategoryFailure, getAllPublishedTemplatesOfACategoryStart, getAllPublishedTemplatesOfACategorySuccess } from "@/slices/templateSlice";
+import Cookies from "universal-cookie";
 
 const baseUrl = "http://localhost:8080";
+const cookies = new Cookies();
+const token = cookies.get("token");
 
 export const handleGetAllPublishedTemplatesOfACategory = (category: string) => async(dispatch: AppDispatch)=>{
     dispatch(getAllPublishedTemplatesOfACategoryStart());
@@ -24,5 +28,38 @@ export const handleGetAllCategories = () => async(dispatch: AppDispatch) => {
         dispatch(getAllCategoriesSuccess(payload));
     } catch (error: any) {
         dispatch(getAllCategoriesFailure(error.message));
+    }
+}
+
+export const handleAddItemToLovedList = (tempId: any) => async(dispatch: AppDispatch)=>{
+    dispatch(addItemToLovedListStart());
+    try {
+        const response = await fetch(`${baseUrl}/user/loved/add?templateId=${tempId}`,{
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const payload = await response.json();
+        dispatch(addItemToLovedListSuccess(payload));
+    } catch (error) {
+        dispatch(addItemToLovedListFailure(error))
+    }
+}
+
+export const handleGetAllLovedLists = () => async(dispatch: AppDispatch) => {
+    dispatch(getAllLovedTemplatesStart());
+    try {
+        const response = await fetch(`${baseUrl}/user/loved/items`,{
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        const payload = await response.json();
+        console.log(payload);
+        dispatch(getAllLovedTemplatesSuccess(payload));
+    } catch (error) {
+        dispatch(getAllLovedTemplatesFailure(error));
     }
 }

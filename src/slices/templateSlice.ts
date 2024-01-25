@@ -7,14 +7,18 @@ interface TemplatesState {
   isLoading: boolean;
   isError: boolean;
   message: string;
+  lovedItems: [];
+  isSuccess: boolean;
 }
 
 // Define the initial state using that type
 const initialState: TemplatesState = {
   templates: [],
+  lovedItems: [],
   isLoading: false,
   isError: false,
   message: "",
+  isSuccess: false
 };
 
 export const templateSlice = createSlice({
@@ -34,12 +38,47 @@ export const templateSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload.message;
-    }
+    },
+    addItemToLovedListStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    addItemToLovedListSuccess: (state, action) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+      state.isSuccess = action.payload.isSuccess;
+    },
+    addItemToLovedListFailure: (state, action) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+    },
+    getAllLovedTemplatesStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    getAllLovedTemplatesSuccess: (state, action) => {
+      state.isLoading = false;
+      state.lovedItems = action.payload;
+    },
+    getAllLovedTemplatesFailure: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload.message;
+    },
   },
 });
 
-export const { getAllPublishedTemplatesOfACategoryStart, getAllPublishedTemplatesOfACategorySuccess, getAllPublishedTemplatesOfACategoryFailure } =
-  templateSlice.actions;
+export const {
+  getAllPublishedTemplatesOfACategoryStart,
+  getAllPublishedTemplatesOfACategorySuccess,
+  getAllPublishedTemplatesOfACategoryFailure,
+  addItemToLovedListStart,
+  addItemToLovedListSuccess,
+  addItemToLovedListFailure,
+  getAllLovedTemplatesStart,
+  getAllLovedTemplatesSuccess,
+  getAllLovedTemplatesFailure,
+} = templateSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.sendOtp.value;

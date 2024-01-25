@@ -1,3 +1,5 @@
+import {handleGetBag } from "@/apiActions/bagAction";
+import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   Box,
   Button,
@@ -9,36 +11,21 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoBagHandle, IoBagRemove } from "react-icons/io5";
 
 const Bag = () => {
-  const cards = [
-    {
-      image:
-        "https://media.licdn.com/dms/image/sync/D5610AQF98P9-VcgvBw/image-shrink_800/0/1704450784122/POwerPlatformDeveloper1920x1080jpg?e=1705338000&v=beta&t=O9xz0cJQI2vGh8sLA29HCBf7NvdLeVQVGqSo71UHs-I",
-      authorName: "Rail Marcow",
-      authorUserName: "rail-marcow-dev",
-      price: 0,
-    },
-    {
-      image:
-        "https://media.licdn.com/dms/image/sync/D5610AQF98P9-VcgvBw/image-shrink_800/0/1704450784122/POwerPlatformDeveloper1920x1080jpg?e=1705338000&v=beta&t=O9xz0cJQI2vGh8sLA29HCBf7NvdLeVQVGqSo71UHs-I",
-      authorName: "Rail Marcow",
-      authorUserName: "rail-marcow-dev",
-      price: 60,
-    },
-  ];
+  const store = useAppStore();
+  const {bagItems,bagTotalAmount} = useAppSelector((state)=> state.bag);
+  useEffect(()=>{
+    store.dispatch(handleGetBag());
+  },[])
   let flexStyle = {
     justifyContent: "space-between",
     alignContent: "center",
     fontSize: "20",
   };
-  let subTotal = 0;
-  cards.forEach((c) => (subTotal += c.price));
-  let tax = (subTotal * 18) / 100;
-  let total = subTotal + tax;
   return (
     <ChakraProvider>
       <Stack p={"5%"}>
@@ -52,7 +39,7 @@ const Bag = () => {
         </Text>
         <Flex justifyContent={"space-between"} mt={"2%"}>
           <Box width={"60%"}>
-            {cards.map((card, index) => (
+            {bagItems?.map((item, index) => (
               <Flex
                 height={"120px"}
                 key={index}
@@ -63,12 +50,12 @@ const Bag = () => {
                 boxShadow="rgba(0, 0, 0, 0.08) 0px 4px 12px"
                 mb={"5"}
               >
-                <Image src={card.image}height={'100%'} />
+                <Image src={item?.thumbnailImage}height={'100%'} />
                 <Stack spacing={2}>
-                  <Text fontWeight={"bold"}>{card.authorName}</Text>
-                  <Text>{card.authorUserName}</Text>
+                  <Text fontWeight={"bold"}>{item.authorName}</Text>
+                  <Text>{item?.authorUserName}</Text>
                 </Stack>
-                <Text>{card.price <= 0 ? "Free" : "₹ " + card.price}</Text>
+                <Text>{item.price <= 0 ? "Free" : "₹ " + item.price}</Text>
                 <Button
                   bg={"#2D7F80"}
                   color={"#ffffff"}
@@ -92,15 +79,15 @@ const Bag = () => {
               </Text>
               <Flex style={flexStyle}>
                 <Text>Subtotal</Text>
-                <Text>{"₹ " + subTotal}</Text>
+                <Text>{"₹ " + bagTotalAmount}</Text>
               </Flex>
               <Flex style={flexStyle}>
                 <Text>GST & Taxes</Text>
-                <Text>{"₹ " + tax}</Text>
+                <Text>{"₹ " + 0}</Text>
               </Flex>
               <Flex style={flexStyle}>
                 <Text fontWeight={"bold"}>Total</Text>
-                <Text fontWeight={"bold"}>{"₹ " + total}</Text>
+                <Text fontWeight={"bold"}>{"₹ " + bagTotalAmount}</Text>
               </Flex>
               <Button
                 bg={"#2D7F80"}
