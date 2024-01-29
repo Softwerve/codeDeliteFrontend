@@ -1,17 +1,40 @@
+"use client";
 import React from "react";
-import BuyerDashboard from "./Common";
 import Home from "./BuyerDashboard/Home";
 import Favourites from "./BuyerDashboard/Favourites";
 import Bag from "./BuyerDashboard/Bag";
 import StoreProvider from "@/app/StoreProvider";
+import Navbar from "./Common/Navbar";
+import { Box, ChakraProvider, Flex, Stack } from "@chakra-ui/react";
+import Sidebar from "./Common/Sidebar";
+import Following from "./BuyerDashboard/Following";
+import PurchaseBag from "./BuyerDashboard/PurchaseBag";
 export default function LayoutPage({ title }) {
   return (
     <StoreProvider>
-      <BuyerDashboard pageTitle={title}>
-        <div className="min-h-screen flex flex-col">
-          {title === "Home" ? <Home /> : title === "Loved Templates" ? <Favourites/>: title === "Your Bag" ? <Bag/> : "Error"}
-        </div>
-      </BuyerDashboard>
+      <ChakraProvider>
+        <Flex>
+          <Box position={"sticky"} width={["0%", "20%"]}>
+            <Sidebar />
+          </Box>
+          <Stack width={["100%", "80%"]}>
+            <Navbar />
+            {title == "Home" ? (
+              <Home />
+            ) : title == "Following" ? (
+              <Following />
+            ) : title == "Bag" ? (
+              <Bag />
+            ) : title == "Loved Templates" ? (
+              <Favourites />
+            ) : title == "Purchase Bag" ? (
+              <PurchaseBag />
+            ) : (
+              "Error"
+            )}
+          </Stack>
+        </Flex>
+      </ChakraProvider>
     </StoreProvider>
   );
 }

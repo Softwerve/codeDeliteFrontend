@@ -3,6 +3,7 @@ import type { RootState } from "../lib/store";
 
 // Define a type for the slice state
 interface userState {
+  isLogin: boolean;
   isLoading: boolean;
   isError: boolean;
   message: string;
@@ -11,6 +12,7 @@ interface userState {
 
 // Define the initial state using that type
 const initialState: userState = {
+  isLogin: false,
   isLoading: false,
   isError: false,
   message: "",
@@ -29,6 +31,7 @@ export const userSlice = createSlice({
     userDetailsSuccess: (state, action) => {
       state.isLoading = false;
       state.user = action.payload;
+      state.isLogin = true;
     },
     userDetailsFailure: (state, action) => {
       state.isLoading = false;

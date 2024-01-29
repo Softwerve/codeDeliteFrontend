@@ -16,23 +16,30 @@ import {
   DrawerHeader,
   DrawerBody,
   DrawerCloseButton,
+  Avatar,
+  Text,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/codedelite.png";
+import logoTop from "../../assets/logo.png"
 import { FaBars, FaChevronDown, FaLocationArrow } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
+import { useAppSelector, useAppStore } from "@/lib/hooks";
+import { handleUserDetails } from "@/apiActions/userAction";
 
 const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-
+  const store = useAppStore();
+  const data = useAppSelector((state) => state.user);
   const navItemsDisplay = useBreakpointValue({ base: "none", md: "flex" });
   const showLoginButton = useBreakpointValue({ base: false, md: true });
 
   useEffect(() => {
+    store.dispatch(handleUserDetails());
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       if (scrollPosition > 50) {
@@ -46,12 +53,10 @@ const Navbar = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+
   }, []);
 
-
-
   const router = useRouter();
-
 
   return (
     <Flex
@@ -68,8 +73,8 @@ const Navbar = () => {
       zIndex={999}
       transition="background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out"
     >
-      <Box onClick={()=>router.push('/')} cursor={'pointer'}>
-        <Image src={logo} alt="coginite" height="30" width={"120"} />
+      <Box onClick={() => router.push("/")} cursor={"pointer"}>
+        <Image src={isTop?logoTop: logo} alt="coginite" height="30" width={"120"} />
       </Box>
       {navItemsDisplay == "flex" ? (
         <Flex
@@ -82,7 +87,7 @@ const Navbar = () => {
           <Menu>
             <MenuButton
               className="underline-on-hover"
-              color={isTop ? "white":"black"}
+              color={isTop ? "white" : "black"}
               bg="none"
               as={Button}
               _hover={{ bg: "none" }}
@@ -104,17 +109,17 @@ const Navbar = () => {
           </Menu>
           <Button
             className="underline-on-hover"
-            color={isTop ? "white":"black"}
+            color={isTop ? "white" : "black"}
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
-            onClick={()=>router.push('/templates')}
+            onClick={() => router.push("/templates")}
           >
             Templates
           </Button>
           <Button
             className="underline-on-hover"
-            color={isTop ? "white":"black"}
+            color={isTop ? "white" : "black"}
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
@@ -123,7 +128,7 @@ const Navbar = () => {
           </Button>
           <Button
             className="underline-on-hover"
-            color={isTop ? "white":"black"}
+            color={isTop ? "white" : "black"}
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
@@ -132,7 +137,7 @@ const Navbar = () => {
           </Button>
           <Button
             className="underline-on-hover"
-            color={isTop ? "white":"black"}
+            color={isTop ? "white" : "black"}
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
@@ -144,9 +149,20 @@ const Navbar = () => {
         ""
       )}
       {showLoginButton == true ? (
-        <Button variant={"outline"} color={isTop ? "white":"black"} _hover={{ bg: "none" }}>
-          Login <FiArrowUpRight fontWeight="bold" />
-        </Button>
+        data.isLogin ? (
+          <Flex justifyContent={'space-between'} gap={3} alignItems={'center'}>
+            <Avatar name={data.user.username} src={data.user.profileImage} size={'sm'} />
+            <Text  color={isTop?'#ffffff':"#000000"}>{data.user.username}</Text>
+          </Flex>
+        ) : (
+          <Button
+            variant={"outline"}
+            color={isTop ? "white" : "black"}
+            _hover={{ bg: "none" }}
+          >
+            Login <FiArrowUpRight fontWeight="bold" />
+          </Button>
+        )
       ) : (
         ""
       )}
@@ -186,9 +202,6 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem bg="#000000" color="#ffffff">
                   WebTailory
-                </MenuItem>
-                <MenuItem bg="#000000" color="#ffffff">
-                  Softwerve
                 </MenuItem>
               </MenuList>
             </Menu>

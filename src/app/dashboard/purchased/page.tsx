@@ -4,7 +4,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <LayoutPage title={"Your Purchase"} />
+    <LayoutPage title={"Purchase Bag"} />
   )
 }
 

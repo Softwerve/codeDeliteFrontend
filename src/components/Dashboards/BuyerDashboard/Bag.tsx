@@ -31,7 +31,6 @@ const Bag = () => {
     fontSize: "20",
   };
   return (
-    <ChakraProvider>
       <Stack p={"5%"}>
         <Flex justifyContent={"space-between"} alignItems={"center"}>
           <Heading>Your Bag</Heading>
@@ -104,7 +103,6 @@ const Bag = () => {
           </Box>
         </Flex>
       </Stack>
-    </ChakraProvider>
   );
 };
 

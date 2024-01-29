@@ -1,123 +1,100 @@
 "use client";
-import React, { useEffect } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { SlHome } from "react-icons/sl";
-import { FaRegHeart } from "react-icons/fa";
+import { Box, Button, Stack, useBreakpointValue } from "@chakra-ui/react";
+import Image from "next/image";
+import React from "react";
 import logo from "../../../assets/codedelite.png";
-import { IoBagHandle, IoCodeDownloadSharp } from "react-icons/io5";
-import { Avatar, Stack, Text } from "@chakra-ui/react";
-import { useAppSelector, useAppStore } from "@/lib/hooks";
-import { handleUserDetails } from "@/apiActions/userAction";
+import { useRouter } from "next/navigation";
+import { IoBagHandle } from "react-icons/io5";
+import { CgComponents } from "react-icons/cg";
+import { HiTemplate, HiUsers } from "react-icons/hi";
+import { BiSolidDashboard } from "react-icons/bi";
+import { TbMoneybag } from "react-icons/tb";
+import { MdOutlineFileDownload } from "react-icons/md";
+import { FaHeartCirclePlus } from "react-icons/fa6";
 
-export default function Sidebar({ show, setter }) {
+const Sidebar = () => {
   const router = useRouter();
-
-  const className =
-    "bg-white w-[300px] transition-[margin-left] ease-in-out duration-500 sticky md:static top-0 bottom-0 left-0 z-40";
-
-  const appendClass = show ? " ml-0" : " ml-[-300px] md:ml-0";
-
-  const MenuItem = ({ icon, name, route }) => {
-    const colorClass =
-      router.pathname === route
-        ? "text-black"
-        : "text-black/50 hover:text-black";
-
-    return (
-      <Link
-        href={route}
-        onClick={() => {
-          setter((oldVal) => !oldVal);
-        }}
-        className={`flex gap-1 [&>*]:my-auto text-md pl-6 py-3 border-b-[1px] border-b-black/30 ${colorClass}`}
-      >
-        <div className="text-xl flex [&>*]:mx-auto w-[30px]">{icon}</div>
-        <div>{name}</div>
-      </Link>
-    );
-  };
-
-  const ModalOverlay = () => (
-    <div
-      className={`flex md:hidden fixed top-0 right-0 bottom-0 left-0 bg-black/50 z-30`}
-      onClick={() => {
-        setter((oldVal) => !oldVal);
-      }}
-    />
-  );
-
-  const store = useAppStore();
-  const data = useAppSelector((state) => state.user);
-  const user = data.user;
-  useEffect(() => {
-    store.dispatch(handleUserDetails());
-  }, []);
+  const displayValue = useBreakpointValue({base: "none", md: "block"});
+  const navItems = [
+    {
+      icon: <BiSolidDashboard />,
+      title: "Home",
+      link: "/dashboard/",
+    },
+    {
+      icon: <FaHeartCirclePlus/>,
+      title: "Loved Items",
+      link: "/dasboard/favourites"
+    },
+    {
+      icon: <HiUsers />,
+      title: "Following",
+      link: "/dashboard/following",
+    },
+    {
+      icon: <HiTemplate />,
+      title: "Templates",
+      link: "/dashboard/templates",
+    },
+    {
+      icon: <CgComponents />,
+      title: "Components",
+      link: "/dashboard/components",
+    },
+    {
+      icon: <IoBagHandle />,
+      title: "Bag",
+      link: "/dashboard/bag",
+    },
+    {
+      icon: <MdOutlineFileDownload />,
+      title: "Purchase Bag",
+      link: "/dashboard/purchase",
+    },
+  ];
 
   return (
-    <>
-      <div
-        className={`${className}${appendClass}`}
-        style={{
-          padding: "2%",
-          position: "sticky",
-          top: 0,
-          bottom: 0,
-          left: 0,
-        }}
+    <Stack
+      padding="10"
+      display={displayValue}
+      boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 12px"}
+      position={"sticky"}
+      top={0}
+      left={0}
+      bottom={0}
+      zIndex={999}
+      minH={"100vh"}
+      alignItems={"center"}
+      alignContent={"center"}
+      bg={"#ffffff"}
+    >
+      <Box
+        marginBottom={"50"}
+        onClick={() => router.push("/")}
+        cursor={"pointer"}
       >
-        <div className="p-2 flex">
-          <Link href="/">
-            <img src={logo.src} alt="Company Logo" width={300} height={300} />
-          </Link>
-        </div>
-        <Stack
-          spacing={"5"}
-          style={{
-            width: "70%",
-            margin: "auto",
-            marginTop: "50px",
-            marginBottom: "30px",
-          }}
-        >
-          <Avatar
-            name={user.name}
-            color={"white"}
-            src={user.profileImage}
-            borderRadius={'50%'}
-          />
-          <Text textAlign={"center"} color={"black.50"}>
-            {user.name}
-          </Text>
-          <Text textAlign={"center"} color={"black.50"}>
-            {user.email}
-          </Text>
-        </Stack>
-        <div className="flex flex-col">
-          <MenuItem name="Home" route="/dashboard" icon={<SlHome />} />
-          {/* <MenuItem
-            name="Explore Templates"
-            route="/dashboard/templates"
-            icon={<HiTemplate />}
-          /> */}
-          <MenuItem
-            name="Loved Templates"
-            route="/dashboard/fovouritetemplates"
-            icon={<FaRegHeart />}
-          />
-          <MenuItem
-            name="Your Bag"
-            route="/dashboard/bag"
-            icon={<IoBagHandle />}
-          />
-          <MenuItem
-            name="Your Puchase"
-            route="/dashboard/purchased"
-            icon={<IoCodeDownloadSharp />}
-          />
-        </div>
-      </div>
-      {show ? <ModalOverlay /> : <></>}
-    </>
+        <Image src={logo} alt="codedelite" />
+      </Box>{" "}
+      <Stack
+        minH={"70vh"}
+        justifyContent={"space-between"}
+        alignItems={"flex-start"}
+      >
+        {navItems?.map((item, index) => (
+          <Button
+            key={index}
+            bg={"none"}
+            _hover={{ bg: "none" }}
+            onClick={() => router.push(item.link)}
+            leftIcon={item.icon}
+            fontSize={"20"}
+          >
+            {item.title}
+          </Button>
+        ))}
+      </Stack>
+    </Stack>
   );
-}
+};
+
+export default Sidebar;

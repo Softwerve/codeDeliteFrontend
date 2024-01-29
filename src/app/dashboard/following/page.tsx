@@ -1,11 +1,10 @@
-"use client"
 import LayoutPage from '@/components/Dashboards/LayoutPage'
 import React from 'react'
 
-const page = () => {
+const Following = () => {
   return (
-    <LayoutPage title={'Bag'} />
+    <LayoutPage title={'Following'}/>
   )
 }
 
-export default page
+export default Following
