@@ -24,7 +24,7 @@ const Sidebar = () => {
     {
       icon: <FaHeartCirclePlus/>,
       title: "Loved Items",
-      link: "/dasboard/favourites"
+      link: "/dasboard/favouritetemplates"
     },
     {
       icon: <HiUsers />,
@@ -49,7 +49,7 @@ const Sidebar = () => {
     {
       icon: <MdOutlineFileDownload />,
       title: "Purchase Bag",
-      link: "/dashboard/purchase",
+      link: "/dashboard/purchased",
     },
   ];
 

@@ -21,7 +21,6 @@ export const handleUserDetails = () => (dispatch: AppDispatch) => {
   })
     .then((response) => response.json())
     .then((response) => {
-      console.log(response);
       return dispatch(userDetailsSuccess(response));
     })
     .catch((error: any) => {

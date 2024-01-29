@@ -138,7 +138,7 @@ const Navbar = () => {
         </Drawer>
         <Image src={CodeDelite.src} alt="codedelite" width={100} height={50} />
       </Flex>
-      <Flex justifyContent={"space-between"} alignItems={"center"} width={'20%'}>
+      <Flex justifyContent={"space-between"} alignItems={"center"} gap={5}>
         <Menu>
           {({ isOpen }) => (
             <>

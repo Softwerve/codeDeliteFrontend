@@ -1,10 +1,13 @@
-import LayoutPage from '@/components/Dashboards/LayoutPage'
-import React from 'react'
+import StoreProvider from "@/app/StoreProvider";
+import LayoutPage from "@/components/Dashboards/LayoutPage";
+import React from "react";
 
 const Following = () => {
   return (
-    <LayoutPage title={'Following'}/>
-  )
-}
+    <StoreProvider>
+      <LayoutPage title={"Following"} />
+    </StoreProvider>
+  );
+};
 
-export default Following
+export default Following;

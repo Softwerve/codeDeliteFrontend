@@ -1,13 +1,14 @@
+"use client";
 import StoreProvider from "@/app/StoreProvider";
 import LayoutPage from "@/components/Dashboards/LayoutPage";
 import React from "react";
 
-const componenentTemplate = () => {
+const page = () => {
   return (
     <StoreProvider>
-      <LayoutPage title={"Component"} />
+      <LayoutPage title={"Loved Templates"} />
     </StoreProvider>
   );
 };
 
-export default componenentTemplate;
+export default page;
