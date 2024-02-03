@@ -9,10 +9,8 @@ import { Box, ChakraProvider, Flex, Stack } from "@chakra-ui/react";
 import Sidebar from "./Common/Sidebar";
 import Following from "./BuyerDashboard/Following";
 import PurchaseBag from "./BuyerDashboard/PurchaseBag";
-import { useAppDispatch, useAppSelector, useAppStore } from "@/lib/hooks";
-import { handleUserDetails } from "@/apiActions/userAction";
-export default function LayoutPage({ title }) {
-  const store = useAppStore();
+import Templates from "../Templates/Templates";
+export default function LayoutPage({title}) {
   return (
     <ChakraProvider>
       <Flex>
@@ -23,11 +21,13 @@ export default function LayoutPage({ title }) {
           <Navbar />
           {title == "Home" ? (
             <Home />
+          ) : title == "Templates" ? (
+            <Templates />
           ) : title == "Following" ? (
             <Following />
           ) : title == "Bag" ? (
             <Bag />
-          ) : title == "Loved Templates" ? (
+          ) : title == "Loved Items" ? (
             <Favourites />
           ) : title == "Purchase Bag" ? (
             <PurchaseBag />

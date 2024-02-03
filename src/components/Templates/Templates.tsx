@@ -1,16 +1,9 @@
 "use client";
-import {
-  Heading,
-  Stack,
-  Grid,
-  GridItem,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Heading, Stack, Grid, GridItem } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import TemplateCard from "./TemplateCard";
-import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector, useAppStore } from "@/lib/hooks";
+import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   handleGetAllCategories,
   handleGetAllPublishedTemplatesOfACategory,
@@ -28,7 +21,6 @@ const Templates = () => {
   const data = useAppSelector((state) => state.templates);
   const templates = data.templates;
   const tabs = useAppSelector((state) => state.categories).categories;
-  const router = useRouter();
   useEffect(() => {
     store.dispatch(handleGetAllCategories());
     store.dispatch(handleGetAllPublishedTemplatesOfACategory("All"));
@@ -44,7 +36,9 @@ const Templates = () => {
       <Heading>Templates</Heading>
       <Tabs variant="soft-rounded" align="center">
         <TabList gap={"3"} flexWrap={"wrap"}>
-          <Tab border={"1px solid gray"} onClick={() => handleTabChange("All")}>All</Tab>
+          <Tab border={"1px solid gray"} onClick={() => handleTabChange("All")}>
+            All
+          </Tab>
           {tabs.map((tab, id) => (
             <Tab
               mr={2}

@@ -1,4 +1,5 @@
 
+import authSlice from '@/slices/authSlice'
 import bagSlice  from '@/slices/bagSlice'
 import categorySlice from '@/slices/categorySlice'
 import templateSlice from '@/slices/templateSlice'
@@ -12,6 +13,7 @@ export const makeStore = () => {
       categories: categorySlice,
       bag : bagSlice,
       user : userSlice,
+      auth: authSlice,
     }
   })
 }

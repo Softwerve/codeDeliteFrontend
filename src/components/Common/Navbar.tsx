@@ -22,7 +22,7 @@ import {
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/codedelite.png";
-import logoTop from "../../assets/logo.png"
+import logoTop from "../../assets/logo.png";
 import { FaBars, FaChevronDown, FaLocationArrow } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
 import { useRouter } from "next/navigation";
@@ -32,7 +32,6 @@ import { handleUserDetails } from "@/apiActions/userAction";
 const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
   const store = useAppStore();
   const data = useAppSelector((state) => state.user);
   const navItemsDisplay = useBreakpointValue({ base: "none", md: "flex" });
@@ -53,7 +52,6 @@ const Navbar = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-
   }, []);
 
   const router = useRouter();
@@ -74,13 +72,18 @@ const Navbar = () => {
       transition="background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out"
     >
       <Box onClick={() => router.push("/")} cursor={"pointer"}>
-        <Image src={isTop?logoTop: logo} alt="coginite" height="30" width={"120"} />
+        <Image
+          src={isTop ? logoTop : logo}
+          alt="coginite"
+          height="30"
+          width={"120"}
+        />
       </Box>
       {navItemsDisplay == "flex" ? (
         <Flex
           justifyContent="space-between"
           alignItems="center"
-          width={["50%", "40%"]}
+          width={["60%", "50%"]}
         >
           {" "}
           {/* Responsive width */}
@@ -144,15 +147,31 @@ const Navbar = () => {
           >
             Blog
           </Button>
+          <Button
+            className="underline-on-hover"
+            color={isTop ? "white" : "black"}
+            bg={"none"}
+            as={Button}
+            _hover={{ bg: "none" }}
+            onClick={() => router.push("/author")}
+          >
+            Become An Author
+          </Button>
         </Flex>
       ) : (
         ""
       )}
       {showLoginButton == true ? (
         data.isLogin ? (
-          <Flex justifyContent={'space-between'} gap={3} alignItems={'center'}>
-            <Avatar name={data.user.username} src={data.user.profileImage} size={'sm'} />
-            <Text  color={isTop?'#ffffff':"#000000"}>{data.user.username}</Text>
+          <Flex justifyContent={"space-between"} gap={3} alignItems={"center"}>
+            <Avatar
+              name={data.user?.username}
+              src={data?.user.profileImage}
+              size={"sm"}
+            />
+            <Text color={isTop ? "#ffffff" : "#000000"}>
+              {data?.user.username}
+            </Text>
           </Flex>
         ) : (
           <Button
@@ -169,16 +188,11 @@ const Navbar = () => {
 
       <IconButton
         display={{ base: "flex", md: "none" }}
-        ref={btnRef}
         onClick={onOpen}
         icon={<FaBars />}
+        aria-label={"Menu"}
       />
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />

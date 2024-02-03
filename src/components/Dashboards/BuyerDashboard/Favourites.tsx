@@ -8,6 +8,11 @@ import {
   GridItem,
   Heading,
   Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 
@@ -24,26 +29,50 @@ interface Card {
 
 const Favourites = () => {
   const store = useAppStore();
-  const {lovedItems} = useAppSelector((store)=> store.templates);
-  useEffect(()=>{
+  const { lovedItems } = useAppSelector((store) => store.templates);
+  useEffect(() => {
     store.dispatch(handleGetAllLovedLists());
-  },[lovedItems])
+  }, [lovedItems]);
   return (
     <ChakraProvider>
       <Stack spacing={10} p={"5%"}>
-        <Heading fontSize={"40"}>Your Loved Templates</Heading>
+        <Heading fontSize={"40"}>Your Loved Items</Heading>
         <Divider />
-        <Grid
-          templateColumns={"repeat(3,1fr)"}
-          templateRows={"repeat(auto,auto)"}
-          gap={"10"}
-        >
-          {lovedItems?.map((card, index) => (
-            <GridItem key={index} color={"#17171A"}>
-              <TemplateCard card={card} isLoved={true} />
-            </GridItem>
-          ))}
-        </Grid>
+        <Tabs isFitted>
+          <TabList>
+            <Tab>Websites</Tab>
+            <Tab>Components</Tab>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel>
+              <Grid
+                templateColumns={"repeat(3,1fr)"}
+                templateRows={"repeat(auto,auto)"}
+                gap={"10"}
+              >
+                {lovedItems?.map((card, index) => (
+                  <GridItem key={index} color={"#17171A"}>
+                    <TemplateCard card={card} isLoved={true} />
+                  </GridItem>
+                ))}
+              </Grid>
+            </TabPanel>
+            <TabPanel>
+              <Grid
+                templateColumns={"repeat(3,1fr)"}
+                templateRows={"repeat(auto,auto)"}
+                gap={"10"}
+              >
+                {lovedItems?.map((card, index) => (
+                  <GridItem key={index} color={"#17171A"}>
+                    <TemplateCard card={card} isLoved={true} />
+                  </GridItem>
+                ))}
+              </Grid>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Stack>
     </ChakraProvider>
   );

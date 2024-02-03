@@ -6,7 +6,7 @@ import React from "react";
 const page = () => {
   return (
     <StoreProvider>
-      <LayoutPage title={"Loved Templates"} />
+      <LayoutPage title={"Loved Items"} />
     </StoreProvider>
   );
 };

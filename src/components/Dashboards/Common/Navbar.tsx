@@ -41,7 +41,7 @@ const Navbar = () => {
   const btnRef = React.useRef();
   const router = useRouter();
   const store = useAppStore();
-  const {user,isloading} = useAppSelector((state)=> state.user); 
+  const {user} = useAppSelector((state)=> state.user); 
   const navItems = [
     {
       icon: <BiSolidDashboard />,
@@ -113,7 +113,6 @@ const Navbar = () => {
           isOpen={isOpen}
           placement="right"
           onClose={onClose}
-          finalFocusRef={btnRef}
         >
           <DrawerOverlay />
           <DrawerContent>
@@ -142,7 +141,7 @@ const Navbar = () => {
         <Menu>
           {({ isOpen }) => (
             <>
-              <MenuButton _active={isOpen}>
+              <MenuButton>
                 <Avatar name={user.username} src={user.profileImage} size={'md'} />
               </MenuButton>
               <MenuList>

@@ -24,7 +24,7 @@ const Sidebar = () => {
     {
       icon: <FaHeartCirclePlus/>,
       title: "Loved Items",
-      link: "/dasboard/favouritetemplates"
+      link: "/dashboard/loveditems"
     },
     {
       icon: <HiUsers />,

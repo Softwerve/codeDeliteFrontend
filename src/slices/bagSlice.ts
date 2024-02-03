@@ -7,7 +7,13 @@ interface bagState {
   isLoading: boolean;
   isError: boolean;
   message: string;
-  bagItems: []
+  bagItems: [{
+    thumbnailImage: string;
+    authorName: string;
+    authorUserName: string;
+    price: number;
+    tempId: number;
+  }]
   bagTotalAmount: any;
 }
 
@@ -17,7 +23,13 @@ const initialState: bagState = {
   isError: false,
   message: "",
   isSuccess: false,
-  bagItems: [],
+  bagItems: [{
+    thumbnailImage: "",
+    authorName: "",
+    authorUserName: "",
+    price: 0.0,
+    tempId: 0,
+  }],
   bagTotalAmount: 0.0
 };
 

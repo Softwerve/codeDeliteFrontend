@@ -27,7 +27,7 @@ const SearchSection = () => {
         <Text>
           Looking for a specific template? Use our search function to find the
           perfect match for your project. Enter keywords, categories, or
-          features you're seeking, and explore a wide range of templates
+          features you are seeking, and explore a wide range of templates
           tailored to your needs.
         </Text>
       </Stack>

@@ -118,7 +118,7 @@ const SelectTemplate = () => {
                       borderRadius={"10"}
                       key={ind}
                     >
-                      <TemplateCard card={card}/>
+                      <TemplateCard card={card} isLoved={false}/>
                     </GridItem>
                   ))}
                 </Grid>
