@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
-import coginite from "../../assets/logo.png";
+import softwerve from "../../assets/softwerveLogo.png";
 
 const Footer = () => {
   const boxes = [
@@ -29,7 +29,7 @@ const Footer = () => {
   let currentYear = new Date().getFullYear();
   return (
     <Stack borderTop={"1px solid white"} spacing={"5"} p={"5% 5% 2% 5%"} bg={'#000000'} color={'#FFFFFF'}>
-      <Image src={coginite} alt="codedelite" width={"100"} />
+      <Image src={softwerve} alt="codedelite" width={"100"} />
       <Flex justifyContent={"space-between"} p={"5%"} borderBottom={'1px solid white'}>
         {boxes.map((box, index) => (
           <Stack key={index}>
@@ -43,7 +43,7 @@ const Footer = () => {
         ))}
       </Flex>
       <Box textAlign={'center'}>
-        Copright © {currentYear} Coginite Company. All Rights Reserved
+        Copright © {currentYear} Softwerve Company. All Rights Reserved
       </Box>
     </Stack>
   );

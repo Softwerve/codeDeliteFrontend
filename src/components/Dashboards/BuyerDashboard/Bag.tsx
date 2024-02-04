@@ -58,7 +58,7 @@ const Bag = () => {
                   <Text fontWeight={"bold"}>{item?.authorName}</Text>
                   <Text>{item?.authorUserName}</Text>
                 </Stack>
-                <Text>{item?.price <= 0 ? "Free" : "₹ " + item?.price}</Text>
+                <Text>{item?.price <= 0 ? "Free" : "$ " + item?.price}</Text>
                 <Button
                   bg={"#2D7F80"}
                   color={"#ffffff"}
@@ -82,15 +82,15 @@ const Bag = () => {
               </Text>
               <Flex style={flexStyle}>
                 <Text>Subtotal</Text>
-                <Text>{"₹ " + bagTotalAmount}</Text>
+                <Text>{"$ " + bagTotalAmount}</Text>
               </Flex>
               <Flex style={flexStyle}>
                 <Text>GST & Taxes</Text>
-                <Text>{"₹ " + 0}</Text>
+                <Text>{"$ " + 0}</Text>
               </Flex>
               <Flex style={flexStyle}>
                 <Text fontWeight={"bold"}>Total</Text>
-                <Text fontWeight={"bold"}>{"₹ " + bagTotalAmount}</Text>
+                <Text fontWeight={"bold"}>{"$ " + bagTotalAmount}</Text>
               </Flex>
               <Button
                 bg={"#2D7F80"}

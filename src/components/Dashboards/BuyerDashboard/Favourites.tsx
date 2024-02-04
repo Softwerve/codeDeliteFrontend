@@ -51,11 +51,13 @@ const Favourites = () => {
                 templateRows={"repeat(auto,auto)"}
                 gap={"10"}
               >
-                {lovedItems?.map((card, index) => (
-                  <GridItem key={index} color={"#17171A"}>
-                    <TemplateCard card={card} isLoved={true} />
-                  </GridItem>
-                ))}
+                {lovedItems?.map((card, index) =>
+                  card.tempType === "Website" ? (
+                    <GridItem key={index} color={"#17171A"}>
+                      <TemplateCard card={card} isLoved={true} />
+                    </GridItem>
+                  ) : null
+                )}
               </Grid>
             </TabPanel>
             <TabPanel>
@@ -64,11 +66,13 @@ const Favourites = () => {
                 templateRows={"repeat(auto,auto)"}
                 gap={"10"}
               >
-                {lovedItems?.map((card, index) => (
-                  <GridItem key={index} color={"#17171A"}>
-                    <TemplateCard card={card} isLoved={true} />
-                  </GridItem>
-                ))}
+                {lovedItems?.map((card, index) =>
+                  card.tempType === "Components" ? (
+                    <GridItem key={index} color={"#17171A"}>
+                      <TemplateCard card={card} isLoved={true} />
+                    </GridItem>
+                  ) : null
+                )}
               </Grid>
             </TabPanel>
           </TabPanels>
