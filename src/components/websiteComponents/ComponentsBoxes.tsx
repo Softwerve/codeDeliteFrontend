@@ -17,7 +17,7 @@ const ComponentsBoxes = () => {
   const router = useRouter();
   const components = [
     {
-      icon: <TbLayoutNavbarFilled fontSize='50px' />,
+      icon: <TbLayoutNavbarFilled fontSize='50px' color='' />,
       category: "Navbar",
     },
     {
@@ -104,7 +104,7 @@ const ComponentsBoxes = () => {
             <GridItem key={index}>
               <Stack   height={'200px'} borderRadius={'10px'} justifyContent={'center'} alignItems={'center'} p={5} backgroundColor={'#ffffff'} boxShadow='rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px'>
                 {component.icon}
-                <Text _hover={{cursor: 'pointer', color:'blue'}} onClick={()=>router.push(`/components/${component.category}`)} fontSize={'20px'}>{component.category}</Text>
+                <Text _hover={{cursor: 'pointer', color:'#4D22CA'}} onClick={()=>router.push(`/components/${component.category}`)} fontSize={'20px'}>{component.category}</Text>
               </Stack>
             </GridItem>
           ))

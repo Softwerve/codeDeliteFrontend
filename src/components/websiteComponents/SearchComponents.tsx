@@ -1,6 +1,6 @@
 import { Button, Flex, Heading, Input,Stack } from "@chakra-ui/react";
 import React from "react";
-import componentsImage from "../../assets/components.png";
+import componentsImage from "../../assets/components2.png";
 import { BiSearchAlt2 } from "react-icons/bi";
 
 const SearchComponents = () => {
