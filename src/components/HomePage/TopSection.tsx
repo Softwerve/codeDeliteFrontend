@@ -1,7 +1,6 @@
-import { Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react'
+import { Button, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
 import bga from '../../assets/wall1.png'; 
-import { color } from 'framer-motion';
 
 const TopSection = () => {
   return (

@@ -10,7 +10,7 @@ import Sidebar from "./Common/Sidebar";
 import Following from "./BuyerDashboard/Following";
 import PurchaseBag from "./BuyerDashboard/PurchaseBag";
 import Templates from "../Templates/Templates";
-export default function LayoutPage({title}) {
+export default function LayoutPage({title}:{title: any}) {
   return (
     <ChakraProvider>
       <Flex>

@@ -85,31 +85,7 @@ const Navbar = () => {
           alignItems="center"
           width={["60%", "50%"]}
         >
-          {" "}
-          {/* Responsive width */}
-          <Menu>
-            <MenuButton
-              className="underline-on-hover"
-              color={isTop ? "white" : "black"}
-              bg="none"
-              as={Button}
-              _hover={{ bg: "none" }}
-              rightIcon={<FaChevronDown />}
-            >
-              Products
-            </MenuButton>
-            <MenuList bg="#000000">
-              <MenuItem bg="#000000" color="#ffffff">
-                CodeDelite
-              </MenuItem>
-              <MenuItem bg="#000000" color="#ffffff">
-                WebTailory
-              </MenuItem>
-              <MenuItem bg="#000000" color="#ffffff">
-                Softwerve
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          
           <Button
             className="underline-on-hover"
             color={isTop ? "white" : "black"}
@@ -126,9 +102,19 @@ const Navbar = () => {
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
+            onClick={() => router.push("/components")}
+          >
+            Components
+          </Button>
+          {/* <Button
+            className="underline-on-hover"
+            color={isTop ? "white" : "black"}
+            bg={"none"}
+            as={Button}
+            _hover={{ bg: "none" }}
           >
             Pricing
-          </Button>
+          </Button> */}
           <Button
             className="underline-on-hover"
             color={isTop ? "white" : "black"}
@@ -178,6 +164,7 @@ const Navbar = () => {
             variant={"outline"}
             color={isTop ? "white" : "black"}
             _hover={{ bg: "none" }}
+            onClick={()=> window.location.href = 'http://localhost:3000/login'}
           >
             Login <FiArrowUpRight fontWeight="bold" />
           </Button>

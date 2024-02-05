@@ -16,17 +16,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 
-interface Card {
-  id: number;
-  image: string;
-  author: string;
-  authorProfileLink: string;
-  authorProfileImage: string;
-  category: string;
-  price: number;
-  title: string;
-}
-
 const Favourites = () => {
   const store = useAppStore();
   const { lovedItems } = useAppSelector((store) => store.templates);
@@ -52,7 +41,7 @@ const Favourites = () => {
                 gap={"10"}
               >
                 {lovedItems?.map((card, index) =>
-                  card.tempType === "Website" ? (
+                  card?.tempType === "Website" ? (
                     <GridItem key={index} color={"#17171A"}>
                       <TemplateCard card={card} isLoved={true} />
                     </GridItem>
@@ -67,7 +56,7 @@ const Favourites = () => {
                 gap={"10"}
               >
                 {lovedItems?.map((card, index) =>
-                  card.tempType === "Components" ? (
+                  card?.tempType === "Components" ? (
                     <GridItem key={index} color={"#17171A"}>
                       <TemplateCard card={card} isLoved={true} />
                     </GridItem>

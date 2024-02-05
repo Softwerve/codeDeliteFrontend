@@ -12,7 +12,6 @@ import {
   InputRightElement,
   Spinner,
   Stack,
-  Text,
   useToast,
 } from "@chakra-ui/react";
 import OTPInput from "react-otp-input";

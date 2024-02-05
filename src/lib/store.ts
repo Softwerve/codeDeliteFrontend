@@ -2,6 +2,7 @@
 import authSlice from '@/slices/authSlice'
 import bagSlice  from '@/slices/bagSlice'
 import categorySlice from '@/slices/categorySlice'
+import followSlice from '@/slices/followSlice'
 import templateSlice from '@/slices/templateSlice'
 import userSlice  from '@/slices/userSlice'
 import { configureStore } from '@reduxjs/toolkit'
@@ -14,6 +15,7 @@ export const makeStore = () => {
       bag : bagSlice,
       user : userSlice,
       auth: authSlice,
+      follow: followSlice,
     }
   })
 }

@@ -1,36 +1,19 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../lib/store";
+import { createSlice } from "@reduxjs/toolkit";
 
 // Define a type for the slice state
-interface TemplatesState {
-  templates: [
-    {
-      tempId: number;
-      authorId: number;
-      authorName: string;
-      authorProfileImage: string;
-      title: string;
-      thumbnailImage: string;
-      price: number;
-      likes: number;
-      tempLink: string;
-      tempType: string;
-      category: string;
-      status: string;
-      authorProfileLink: string;
-      templatePage: {
-        images: [];
-        highlights: [];
-        overview: string;
-        sections: [];
-        technologiesUsed: [];
-      };
-    }
-  ];
+interface followState {
   isLoading: boolean;
   isError: boolean;
   message: string;
-  lovedItems: [
+  followedAuthors: [
+    {
+      authorId: number;
+      profileImage: string;
+      name: string;
+      username: string;
+    }
+  ];
+  authorPublishedWebsites: [
     {
       tempId: number;
       authorId: number;
@@ -54,141 +37,168 @@ interface TemplatesState {
       };
     }
   ];
-  isSuccess: boolean;
+  authorPublishedComponents: [
+    {
+      tempId: number;
+      authorId: number;
+      authorName: string;
+      authorProfileImage: string;
+      title: string;
+      thumbnailImage: string;
+      price: number;
+      likes: number;
+      tempLink: string;
+      tempType: string;
+      category: string;
+      status: string;
+      authorProfileLink: string;
+      templatePage: {
+        images: [];
+        highlights: [];
+        overview: string;
+        sections: [];
+        technologiesUsed: [];
+      };
+    }
+  ];
 }
 
 // Define the initial state using that type
-const initialState: TemplatesState = {
-  templates: [
-    {
-      tempId: 0,
-      authorId: 0,
-      authorName: "",
-      authorProfileImage: "",
-      title: "",
-      thumbnailImage: "",
-      price: 0.0,
-      likes: 0,
-      tempLink: "",
-      tempType: "",
-      category: "",
-      status: "",
-      authorProfileLink: "",
-      templatePage: {
-        images: [],
-        highlights: [],
-        overview: "",
-        sections: [],
-        technologiesUsed: [],
-      },
-    }
-  ],
-  lovedItems: [
-    {
-      tempId: 0,
-      authorId: 0,
-      authorName: "",
-      authorProfileImage: "",
-      title: "",
-      thumbnailImage: "",
-      price: 0.0,
-      likes: 0,
-      tempLink: "",
-      tempType: "",
-      category: "",
-      status: "",
-      authorProfileLink: "",
-      templatePage: {
-        images: [],
-        highlights: [],
-        overview: "",
-        sections: [],
-        technologiesUsed: [],
-      },
-    }
-  ],
+const initialState: followState = {
   isLoading: false,
   isError: false,
   message: "",
-  isSuccess: false,
+  followedAuthors: [
+    {
+      authorId: 0,
+      profileImage: "",
+      name: "",
+      username: "",
+    },
+  ],
+  authorPublishedWebsites: [
+    {
+      tempId: 0,
+      authorId: 0,
+      authorName: "",
+      authorProfileImage: "",
+      title: "",
+      thumbnailImage: "",
+      price: 0.0,
+      likes: 0,
+      tempLink: "",
+      tempType: "",
+      category: "",
+      status: "",
+      authorProfileLink: "",
+      templatePage: {
+        images: [],
+        highlights: [],
+        overview: "",
+        sections: [],
+        technologiesUsed: [],
+      },
+    },
+  ],
+  authorPublishedComponents: [
+    {
+      tempId: 0,
+      authorId: 0,
+      authorName: "",
+      authorProfileImage: "",
+      title: "",
+      thumbnailImage: "",
+      price: 0.0,
+      likes: 0,
+      tempLink: "",
+      tempType: "",
+      category: "",
+      status: "",
+      authorProfileLink: "",
+      templatePage: {
+        images: [],
+        highlights: [],
+        overview: "",
+        sections: [],
+        technologiesUsed: [],
+      },
+    },
+  ],
 };
 
-export const templateSlice = createSlice({
-  name: "templates",
+export const followSlice = createSlice({
+  name: "follow",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    getAllPublishedTemplatesOfACategoryStart: (state) => {
+    getAllFollowedAuthorsStart: (state) => {
       state.isLoading = true;
       state.isError = false;
     },
-    getAllPublishedTemplatesOfACategorySuccess: (state, action) => {
+    getAllFollowedAuthorsSuccess: (state, action) => {
       state.isLoading = false;
-      state.templates = action.payload;
+      state.followedAuthors = action.payload;
     },
-    getAllPublishedTemplatesOfACategoryFailure: (state, action) => {
+    getAllFollowedAuthorsFailure: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload.message;
     },
-    addItemToLovedListStart: (state) => {
+    followAuthorStart: (state) => {
       state.isLoading = true;
       state.isError = false;
     },
-    addItemToLovedListSuccess: (state, action) => {
-      state.isLoading = false;
-      state.message = action.payload.message;
-      state.isSuccess = action.payload.isSuccess;
-    },
-    addItemToLovedListFailure: (state, action) => {
+    followAuthorSuccess: (state, action) => {
       state.isLoading = false;
       state.message = action.payload.message;
     },
-    getAllLovedTemplatesStart: (state) => {
-      state.isLoading = true;
-      state.isError = false;
-    },
-    getAllLovedTemplatesSuccess: (state, action) => {
-      state.isLoading = false;
-      state.lovedItems = action.payload;
-    },
-    getAllLovedTemplatesFailure: (state, action) => {
+    followAuthorFailure: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload.message;
     },
-    removeItemFromLovedListStart: (state) => {
+    authorPublishedWebsitesStart: (state) => {
       state.isLoading = true;
       state.isError = false;
     },
-    removeItemFromLovedListSuccess: (state, action) => {
+    authorPublishedWebsitesSuccess: (state, action) => {
       state.isLoading = false;
-      state.message = action.payload.message;
-      state.isSuccess = action.payload.isSuccess;
+      state.authorPublishedWebsites = action.payload;
     },
-    removeItemFromLovedListFailure: (state, action) => {
+    authorPublishedWebsitesFailure: (state, action) => {
       state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload.message;
+    },
+    authorPublishedComponentsStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    authorPublishedComponentsSuccess: (state, action) => {
+      state.isLoading = false;
+      state.authorPublishedComponents = action.payload;
+    },
+    authorPublishedComponentsFailure: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
       state.message = action.payload.message;
     },
   },
 });
 
 export const {
-  getAllPublishedTemplatesOfACategoryStart,
-  getAllPublishedTemplatesOfACategorySuccess,
-  getAllPublishedTemplatesOfACategoryFailure,
-  addItemToLovedListStart,
-  addItemToLovedListSuccess,
-  addItemToLovedListFailure,
-  getAllLovedTemplatesStart,
-  getAllLovedTemplatesSuccess,
-  getAllLovedTemplatesFailure,
-  removeItemFromLovedListStart,
-  removeItemFromLovedListSuccess,
-  removeItemFromLovedListFailure,
-} = templateSlice.actions;
+  getAllFollowedAuthorsStart,
+  getAllFollowedAuthorsSuccess,
+  getAllFollowedAuthorsFailure,
+  followAuthorStart,
+  followAuthorSuccess,
+  followAuthorFailure,
+  authorPublishedWebsitesStart,
+  authorPublishedWebsitesSuccess,
+  authorPublishedWebsitesFailure,
+  authorPublishedComponentsStart,
+  authorPublishedComponentsSuccess,
+  authorPublishedComponentsFailure,
+} = followSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.sendOtp.value;
-
-export default templateSlice.reducer;
+export default followSlice.reducer;

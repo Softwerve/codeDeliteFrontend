@@ -32,16 +32,6 @@ const Sidebar = () => {
       link: "/dashboard/following",
     },
     {
-      icon: <HiTemplate />,
-      title: "Templates",
-      link: "/dashboard/templates",
-    },
-    {
-      icon: <CgComponents />,
-      title: "Components",
-      link: "/dashboard/components",
-    },
-    {
       icon: <IoBagHandle />,
       title: "Bag",
       link: "/dashboard/bag",

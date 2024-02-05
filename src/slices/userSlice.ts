@@ -16,7 +16,7 @@ interface userState {
     name: string,
     email: string,
     profileImage: string,
-  }
+  },
 }
 
 // Define the initial state using that type
@@ -97,7 +97,7 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload.message;
-    }
+    },
   },
 });
 

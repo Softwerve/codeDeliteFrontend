@@ -1,18 +1,31 @@
-import { Box, Image, Flex, Text, Divider, useToast, Avatar } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Flex,
+  Text,
+  Divider,
+  useToast,
+  Avatar,
+} from "@chakra-ui/react";
 import { IoBagHandleSharp } from "react-icons/io5";
-import React from "react";
-import { FaEye } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaEye, FaUserMinus } from "react-icons/fa";
 import { FaHeartCircleMinus, FaHeartCirclePlus } from "react-icons/fa6";
 import { BiLike } from "react-icons/bi";
 import { IoMdPersonAdd } from "react-icons/io";
-import './TemplateCard.css';
+import "./TemplateCard.css";
 import { useRouter } from "next/navigation";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import { handleAddItemToBag } from "@/apiActions/bagAction";
-import { handleAddItemToLovedList, handleRemoveItemFromLovedList } from "@/apiActions/templatesAction";
+import {
+  handleAddItemToLovedList,
+  handleRemoveItemFromLovedList,
+} from "@/apiActions/templatesAction";
+import { handleFollowAuthor } from "@/apiActions/followAction";
 interface CardProps {
   card: {
     tempId: number;
+    authorId: number;
     authorName: string;
     thumbnailImage: string;
     title: string;
@@ -22,7 +35,7 @@ interface CardProps {
     category: string;
     tempLink: string;
   };
-  isLoved : boolean;
+  isLoved: boolean;
 }
 
 const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
@@ -30,44 +43,52 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
   const router = useRouter();
   const store = useAppStore();
   const toast = useToast();
-  const {isLoading, isSuccess, message} = useAppSelector((state)=>state.bag);
-  const data = useAppSelector((state)=>state.templates);
-  const handleBag = () =>{
+  const [isFollowed, setIsFollowed] = useState(false);
+  const { isLoading, isSuccess, message } = useAppSelector(
+    (state) => state.bag
+  );
+  const data = useAppSelector((state) => state.templates);
+  const handleBag = () => {
     store.dispatch(handleAddItemToBag(card.tempId));
-    if(!isLoading && isSuccess)
-    {
-      handleToast(message,"success");
+    if (!isLoading && isSuccess) {
+      handleToast(message, "success");
+    } else if (!isLoading && !isSuccess) {
+      handleToast(message, "error");
     }
-    else if( !isLoading && !isSuccess)
-    {
-      handleToast(message,"error")
-    }
-  }
+  };
 
   const handleAddLovedItem = () => {
     store.dispatch(handleAddItemToLovedList(card.tempId));
-    if(!data.isLoading && data.isSuccess)
-    {
-      handleToast(message,"success");
+    if (!data.isLoading && data.isSuccess) {
+      handleToast(message, "success");
+    } else if (!isLoading && !isSuccess) {
+      handleToast(message, "error");
     }
-    else if( !isLoading && !isSuccess)
-    {
-      handleToast(message,"error")
-    }
-  }
+  };
+
+  const handleFollow = () => {
+    store.dispatch(handleFollowAuthor(card.authorId)).then((response) => {
+      if (response?.payload?.success) {
+        setIsFollowed(true);
+        handleToast(response?.payload.message, "success");
+      } else {
+        handleToast(response?.payload.message, "error");
+      }
+    });
+  };
 
   const handleRemoveLovedItem = (tempId: any) => {
     store.dispatch(handleRemoveItemFromLovedList(tempId));
-  }
+  };
 
-  const handleToast = (message: any,status: any) =>{
+  const handleToast = (message: any, status: any) => {
     toast({
       title: message,
       status: status,
       duration: 3000,
       isClosable: true,
-    })
-  }
+    });
+  };
 
   return (
     <Box
@@ -79,15 +100,19 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
         <Flex justifyContent={"space-between"} gap={5} alignItems={"center"}>
           <Avatar
             src={card.authorProfileImage}
-            name={card.authorName.split(' ')[0]}
+            name={card.authorName.split(" ")[0]}
             borderRadius={"50%"}
             height={"20px"}
             width={"20px"}
-            padding={'4'}
+            padding={"4"}
           />
-          <Text>{card.authorName.split(' ')[0]}</Text>
+          <Text>{card.authorName.split(" ")[0]}</Text>
         </Flex>
-        <IoMdPersonAdd />
+        {isFollowed ? (
+          <FaUserMinus />
+        ) : (
+          <IoMdPersonAdd onClick={handleFollow} />
+        )}
       </Flex>
       <Image src={card.thumbnailImage} alt={card.authorName} />
       <Flex justifyContent={"space-between"} alignContent={"center"} p={"2%"}>
@@ -106,12 +131,21 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
         fontSize={"20"}
       >
         <BiLike className="temp-icons" />
-        <FaEye className="temp-icons" onClick={()=> router.push(`${card?.tempLink}`) } />
-        {
-          !isLoved?
-          <FaHeartCirclePlus className="temp-icons" onClick={handleAddLovedItem} /> :
-          <FaHeartCircleMinus className ="temp-icons" onClick={()=>handleRemoveLovedItem(card?.tempId)} />
-        }
+        <FaEye
+          className="temp-icons"
+          onClick={() => router.push(`${card?.tempLink}`)}
+        />
+        {!isLoved ? (
+          <FaHeartCirclePlus
+            className="temp-icons"
+            onClick={handleAddLovedItem}
+          />
+        ) : (
+          <FaHeartCircleMinus
+            className="temp-icons"
+            onClick={() => handleRemoveLovedItem(card?.tempId)}
+          />
+        )}
         <IoBagHandleSharp className="temp-icons" onClick={handleBag} />
       </Flex>
     </Box>

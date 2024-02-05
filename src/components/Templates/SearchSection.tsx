@@ -4,7 +4,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  InputRightAddon,
   Stack,
   Text,
 } from "@chakra-ui/react";

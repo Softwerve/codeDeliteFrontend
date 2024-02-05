@@ -1,7 +1,7 @@
 "use client";
 import { Heading, Stack, Grid, GridItem } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import TemplateCard from "./TemplateCard";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
@@ -65,7 +65,9 @@ const Templates = () => {
               >
                 {templates?.map((card, index) => (
                   <GridItem key={index}>
-                    <TemplateCard card={card} isLoved={false} />
+                    <Suspense>
+                      <TemplateCard card={card} isLoved={false} />
+                    </Suspense>
                   </GridItem>
                 ))}
               </Grid>

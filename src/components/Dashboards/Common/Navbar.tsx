@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Avatar,
   Button,
@@ -33,15 +33,15 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import { handleUserDetails } from "@/apiActions/userAction";
-
+import { FaUserAlt } from "react-icons/fa";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const displayValue = useBreakpointValue({base: "flex",md: "none"});
+  const displayValue = useBreakpointValue({ base: "flex", md: "none" });
   const btnRef = React.useRef();
   const router = useRouter();
   const store = useAppStore();
-  const {user} = useAppSelector((state)=> state.user); 
+  const { user } = useAppSelector((state) => state.user);
   const navItems = [
     {
       icon: <BiSolidDashboard />,
@@ -51,7 +51,7 @@ const Navbar = () => {
     {
       icon: <HiUsers />,
       title: "Followers",
-      link: "/followers",
+      link: "/dashboard/followers",
     },
     {
       icon: <HiTemplate />,
@@ -64,21 +64,38 @@ const Navbar = () => {
       link: "/components",
     },
     {
-      icon: <TbMoneybag />,
-      title: "Earning",
-      link: "/earnings",
+      icon: <FaUserAlt/>,
+      title: "Connect With Authors",
+      link: "/authors"
     },
     {
       icon: <IoBagHandle />,
       title: "Bag",
-      link: "/bag",
+      link: "/dashboard/bag",
     },
     {
       icon: <MdOutlineFileDownload />,
       title: "Purchase Bag",
-      link: "/purchase",
+      link: "/dashboard/purchase",
     },
   ];
+  const navItemsSmall = [
+    {
+      icon: <HiTemplate />,
+      title: "Templates",
+      link: "/templates",
+    },
+    {
+      icon: <CgComponents />,
+      title: "Components",
+      link: "/components",
+    },
+    {
+      icon: <FaUserAlt/>,
+      title: "Connect With Authors",
+      link: "/authors"
+    }
+  ]
   const [isTop, setIsTop] = useState(true);
   useEffect(() => {
     store.dispatch(handleUserDetails());
@@ -98,7 +115,7 @@ const Navbar = () => {
   }, []);
   return (
     <Flex
-      justifyContent={["space-between","flex-end"]}
+      justifyContent={"space-between"}
       padding={"5px 15px 5px 5px"}
       position={"sticky"}
       top={0}
@@ -107,13 +124,14 @@ const Navbar = () => {
       alignItems={"center"}
       bg={"#ffffff"}
     >
-      <Flex display={displayValue} width={'30%'} justifyContent={'space-between'} alignItems={'center'}>
-        <HiMenuAlt1 ref={btnRef} colorScheme="teal" onClick={onOpen}  />
-        <Drawer
-          isOpen={isOpen}
-          placement="right"
-          onClose={onClose}
-        >
+      <Flex
+        display={displayValue}
+        width={"30%"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <HiMenuAlt1 ref={btnRef} colorScheme="teal" onClick={onOpen} />
+        <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
           <DrawerOverlay />
           <DrawerContent>
             <DrawerCloseButton />
@@ -137,16 +155,34 @@ const Navbar = () => {
         </Drawer>
         <Image src={CodeDelite.src} alt="codedelite" width={100} height={50} />
       </Flex>
+      <Flex display={['none','flex']}>
+        {navItemsSmall?.map((item, index) => (
+          <Button
+            key={index}
+            bg={"none"}
+            _hover={{ bg: "none" }}
+            onClick={() => router.push(item.link)}
+            leftIcon={item.icon}
+            fontSize={"15"}
+          >
+            {item.title}
+          </Button>
+        ))}
+      </Flex>
       <Flex justifyContent={"space-between"} alignItems={"center"} gap={5}>
         <Menu>
           {({ isOpen }) => (
             <>
               <MenuButton>
-                <Avatar name={user.username} src={user.profileImage} size={'md'} />
+                <Avatar
+                  name={user.username}
+                  src={user.profileImage}
+                  size={"md"}
+                />
               </MenuButton>
               <MenuList>
                 <MenuItem>Profile</MenuItem>
-                <MenuItem onClick={() => alert("Kagebunshin")}>LogOut</MenuItem>
+                <MenuItem>LogOut</MenuItem>
               </MenuList>
             </>
           )}
