@@ -1,0 +1,32 @@
+import { AppDispatch } from "@/lib/store";
+import {
+  authorsFollowCardsFailure,
+  authorsFollowCardsStart,
+  authorsFollowCardsSuccess,
+} from "@/slices/authorsSlice";
+
+import Cookies from "universal-cookie";
+
+const baseUrl = "http://localhost:8080";
+
+const cookies = new Cookies();
+const token = cookies.get("token");
+
+// -------------------------handling all authors follow cards----------------------------------
+export const handleGetAllAuthorsFollowCards = () => (dispatch: AppDispatch) => {
+  dispatch(authorsFollowCardsStart());
+  return fetch(`${baseUrl}/author/all`,{
+    method: 'GET',
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+  })
+    .then((response) => response.json())
+    .then((response) => {
+    //   console.log(response);
+      return dispatch(authorsFollowCardsSuccess(response));
+    })
+    .catch((error: any) => {
+      dispatch(authorsFollowCardsFailure(error.message));
+    });
+};

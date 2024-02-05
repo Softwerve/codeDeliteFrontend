@@ -1,7 +1,9 @@
 
 import authSlice from '@/slices/authSlice'
+import authorsSlice from '@/slices/authorsSlice'
 import bagSlice  from '@/slices/bagSlice'
 import categorySlice from '@/slices/categorySlice'
+import componentsSlice from '@/slices/componentsSlice'
 import followSlice from '@/slices/followSlice'
 import templateSlice from '@/slices/templateSlice'
 import userSlice  from '@/slices/userSlice'
@@ -16,6 +18,8 @@ export const makeStore = () => {
       user : userSlice,
       auth: authSlice,
       follow: followSlice,
+      components: componentsSlice,
+      authors: authorsSlice,
     }
   })
 }

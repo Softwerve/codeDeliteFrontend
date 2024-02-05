@@ -10,6 +10,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
+  IconButton,
   Input,
   Menu,
   MenuButton,
@@ -26,9 +27,11 @@ import { useEffect, useState } from "react";
 import { HiMenuAlt1, HiTemplate, HiUsers } from "react-icons/hi";
 import { BiSolidDashboard } from "react-icons/bi";
 import { CgComponents } from "react-icons/cg";
-import { TbMoneybag } from "react-icons/tb";
 import { IoBagHandle } from "react-icons/io5";
-import { MdOutlineFileDownload } from "react-icons/md";
+import {
+  MdOutlineArrowDropDownCircle,
+  MdOutlineFileDownload,
+} from "react-icons/md";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
@@ -64,9 +67,9 @@ const Navbar = () => {
       link: "/components",
     },
     {
-      icon: <FaUserAlt/>,
+      icon: <FaUserAlt />,
       title: "Connect With Authors",
-      link: "/authors"
+      link: "/authors",
     },
     {
       icon: <IoBagHandle />,
@@ -91,11 +94,11 @@ const Navbar = () => {
       link: "/components",
     },
     {
-      icon: <FaUserAlt/>,
+      icon: <FaUserAlt />,
       title: "Connect With Authors",
-      link: "/authors"
-    }
-  ]
+      link: "/author/all",
+    },
+  ];
   const [isTop, setIsTop] = useState(true);
   useEffect(() => {
     store.dispatch(handleUserDetails());
@@ -155,7 +158,7 @@ const Navbar = () => {
         </Drawer>
         <Image src={CodeDelite.src} alt="codedelite" width={100} height={50} />
       </Flex>
-      <Flex display={['none','flex']}>
+      <Flex display={["none", "flex"]}>
         {navItemsSmall?.map((item, index) => (
           <Button
             key={index}
@@ -173,21 +176,31 @@ const Navbar = () => {
         <Menu>
           {({ isOpen }) => (
             <>
-              <MenuButton>
-                <Avatar
-                  name={user.username}
-                  src={user.profileImage}
-                  size={"md"}
+              <Avatar
+                name={user.username}
+                src={user.profileImage}
+                size={"md"}
+              />
+              <Text>{user.name}</Text>
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  aria-label="Options"
+                  icon={<MdOutlineArrowDropDownCircle />}
+                  backgroundColor={"transparent"}
+                  _hover={{ backgroundColor: "transparent" }}
+                  _expanded={{ bg: "transparent" }}
                 />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>LogOut</MenuItem>
-              </MenuList>
+                <MenuList>
+                  <MenuItem as="a" href="/profile">
+                    Profile
+                  </MenuItem>
+                  <MenuItem>Logout</MenuItem>
+                </MenuList>
+              </Menu>
             </>
           )}
         </Menu>
-        <Text>{user.name}</Text>
       </Flex>
     </Flex>
   );

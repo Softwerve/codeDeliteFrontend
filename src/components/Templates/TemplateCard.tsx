@@ -49,21 +49,13 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
   );
   const data = useAppSelector((state) => state.templates);
   const handleBag = () => {
-    store.dispatch(handleAddItemToBag(card.tempId));
-    if (!isLoading && isSuccess) {
-      handleToast(message, "success");
-    } else if (!isLoading && !isSuccess) {
-      handleToast(message, "error");
-    }
-  };
-
-  const handleAddLovedItem = () => {
-    store.dispatch(handleAddItemToLovedList(card.tempId));
-    if (!data.isLoading && data.isSuccess) {
-      handleToast(message, "success");
-    } else if (!isLoading && !isSuccess) {
-      handleToast(message, "error");
-    }
+    store.dispatch(handleAddItemToBag(card.tempId)).then((response) => {
+      if (response?.payload.success) {
+        handleToast(response?.payload.message, "success");
+      } else {
+        handleToast(response?.payload.message, "error");
+      }
+    });
   };
 
   const handleFollow = () => {
@@ -75,6 +67,14 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
         handleToast(response?.payload.message, "error");
       }
     });
+  };
+  const handleAddLovedItem = () => {
+    store.dispatch(handleAddItemToLovedList(card.tempId));
+    if (!data.isLoading && data.isSuccess) {
+      handleToast(message, "success");
+    } else if (!isLoading && !isSuccess) {
+      handleToast(message, "error");
+    }
   };
 
   const handleRemoveLovedItem = (tempId: any) => {

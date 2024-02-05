@@ -26,7 +26,7 @@ export const handleAddItemToBag = (tempId: number) => async (dispatch: AppDispat
         }
       );
       const payload = await response.json();
-      dispatch(addItemToBagSuccess(payload));
+      return dispatch(addItemToBagSuccess(payload));
     } catch (error: any) {
         dispatch(addItemToBagFailure(error.message));
     }
@@ -42,7 +42,7 @@ export const handleGetBag = () => async(dispatch: AppDispatch) => {
       }
     })
     const payload = await response.json();
-    dispatch(getUserBagSuccess(payload));
+    return dispatch(getUserBagSuccess(payload));
   } catch (error: any) {
     dispatch(getUserBagFailure(error));
   }
@@ -58,7 +58,7 @@ export const handleRemoveItemFromBag = (tempId: any) => async(dispatch: AppDispa
       }
     })
     const payload = await response.json();
-    dispatch(removeItemFromBagSuccess(payload));
+    return dispatch(removeItemFromBagSuccess(payload));
   } catch (error: any) {
     dispatch(removeItemFromBagFailure(error));
   }

@@ -10,7 +10,9 @@ interface componentState {
       tempId: number;
       authorId: number;
       authorName: string;
+      username: string;
       authorProfileImage: string;
+      monetizationLevel: string;
       title: string;
       thumbnailImage: string;
       price: number;
@@ -32,7 +34,9 @@ const initialState: componentState = {
       tempId: 0,
       authorId: 0,
       authorName: "",
+      username: "",
       authorProfileImage: "",
+      monetizationLevel: "",
       title: "",
       thumbnailImage: "",
       price: 0,

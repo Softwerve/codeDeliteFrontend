@@ -28,6 +28,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import { handleUserDetails } from "@/apiActions/userAction";
+import { MdOutlineArrowDropDownCircle } from "react-icons/md";
 
 const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
@@ -85,7 +86,6 @@ const Navbar = () => {
           alignItems="center"
           width={["60%", "50%"]}
         >
-          
           <Button
             className="underline-on-hover"
             color={isTop ? "white" : "black"}
@@ -158,13 +158,33 @@ const Navbar = () => {
             <Text color={isTop ? "#ffffff" : "#000000"}>
               {data?.user.username}
             </Text>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Options"
+                icon={<MdOutlineArrowDropDownCircle />}
+                backgroundColor={'transparent'}
+                _hover={{backgroundColor:'transparent'}}
+                color={isTop? '#ffffff':'#000000'}
+                _expanded={{bg: 'transparent'}}
+              />
+              <MenuList bg={'transparent'}>
+                <MenuItem as='a' href='/dashboard' bg={'transparent'} color={isTop?'#ffffff':'#000000'}>Dashboard</MenuItem>
+                <MenuItem as='a' href='/dashboard/bag' bg={'transparent'} color={isTop?'#ffffff':'#000000'}>Bag</MenuItem>
+                <MenuItem as='a' href='/dashboard/purchased' bg={'transparent'} color={isTop?'#ffffff':'#000000'}>Purchase</MenuItem>
+                <MenuItem as='a' href='/profile' bg={'transparent'} color={isTop?'#ffffff':'#000000'}>Profile</MenuItem>
+                <MenuItem bg={'transparent'} color={isTop?'#ffffff':'#000000'}>Logout</MenuItem>
+              </MenuList>
+            </Menu>
           </Flex>
         ) : (
           <Button
             variant={"outline"}
             color={isTop ? "white" : "black"}
             _hover={{ bg: "none" }}
-            onClick={()=> window.location.href = 'http://localhost:3000/login'}
+            onClick={() =>
+              (window.location.href = "http://localhost:3000/login")
+            }
           >
             Login <FiArrowUpRight fontWeight="bold" />
           </Button>

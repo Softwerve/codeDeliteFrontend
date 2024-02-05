@@ -15,7 +15,7 @@ export const handleSendOtp = (email: string) => (dispatch: AppDispatch) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         return dispatch(sendOtpSuccess(response));
       })
       .catch((error: any) => {
