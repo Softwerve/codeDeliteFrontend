@@ -29,6 +29,7 @@ import { useRouter } from "next/navigation";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import { handleUserDetails } from "@/apiActions/userAction";
 import { MdOutlineArrowDropDownCircle } from "react-icons/md";
+import Cookies from "universal-cookie";
 
 const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
@@ -37,9 +38,13 @@ const Navbar = () => {
   const data = useAppSelector((state) => state.user);
   const navItemsDisplay = useBreakpointValue({ base: "none", md: "flex" });
   const showLoginButton = useBreakpointValue({ base: false, md: true });
-
+  const cookies = new Cookies();
+  const token = cookies.get('token');
   useEffect(() => {
-    store.dispatch(handleUserDetails());
+    if(token!=null)
+    {
+      store.dispatch(handleUserDetails());
+    }
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       if (scrollPosition > 50) {

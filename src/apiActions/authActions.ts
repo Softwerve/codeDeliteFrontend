@@ -4,6 +4,7 @@ import { availableUsernameFailure, availableUsernameStart, availableUsernameSucc
 import Cookies from "universal-cookie";
 
 const baseUrl = "http://localhost:8080";
+const authorDashboard = 'http://localhost:3002/'
 
 const cookies = new Cookies();
 
@@ -26,9 +27,9 @@ export const handleSendOtp = (email: string) => (dispatch: AppDispatch) => {
   
   // -----------------------Handling Signup Author-----------------------
   export const handleSignUpUser =
-    (user: any) => async (dispatch: AppDispatch) => {
+    (user: any,otp:number) => async (dispatch: AppDispatch) => {
       dispatch(signupStart());
-      return fetch(`${baseUrl}/author/signup`, {
+      return fetch(`${baseUrl}/author/signup?otp=${otp}`, {
         method: "POST",
         body: JSON.stringify(user),
         headers: {
@@ -63,8 +64,8 @@ export const handleSendOtp = (email: string) => (dispatch: AppDispatch) => {
       .then((response) => {
         const date = new Date();
         date.setDate(date.getDate()+365);
-        cookies.set("authortoken", response.token, { expires: date , secure:true, sameSite:'none' });
-        window.location.href = "http://localhost:3002/";
+        cookies.set("token", response.token, { expires: date , secure:true, sameSite:'none' });
+        window.location.href = authorDashboard;
         return dispatch(loginSuccess(response));
       })
       .catch((error) => {
@@ -79,7 +80,7 @@ export const handleAvailableUsername =
   return fetch(`${baseUrl}/user/username/available?username=${username}`)
     .then((response) => response.json())
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       return dispatch(availableUsernameSuccess(response));
     })
     .catch((error) => {

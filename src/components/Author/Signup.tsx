@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -12,6 +12,7 @@ import {
   InputRightElement,
   Spinner,
   Stack,
+  Text,
   useToast,
 } from "@chakra-ui/react";
 import OTPInput from "react-otp-input";
@@ -38,13 +39,14 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
-
+  const [selectedCurrency, setSelectedCurrency] = useState(null);
+  const [currencyOptions, setCurrencyOptions] = useState([]);
   const store = useAppStore();
   const data = useAppSelector((state) => state.user);
   const toast = useToast();
   const time = new Date();
   time.setSeconds(time.getSeconds() + 300);
-  const expiryTimestamp = time; 
+  const expiryTimestamp = time;
 
   const { totalSeconds, minutes, seconds, isRunning, restart } = useTimer({
     expiryTimestamp,
@@ -64,28 +66,25 @@ const SignUp = () => {
     });
   };
 
-  const handleSignUp = (event:any) => {
+  const handleSignUp = (event: any) => {
     event.preventDefault();
     const user = {
       name: name,
-      profileImage: "dfadsf",
-      email: email,
-      password: password,
       username: username,
-      otp : +otp,
+      email: email,
+      country: selectedCountry?.value,
+      currency: selectedCurrency,
+      password: password,
     };
-    console.log(user);
-    store.dispatch(handleSignUpUser(user)).then((response) => {
+    // console.log(user);
+    store.dispatch(handleSignUpUser(user,+otp)).then((response) => {
       if (response?.payload.success == true) {
         handleToast(response?.payload.message, "success");
+        window.location.reload();
       } else {
         handleToast(response?.payload.message, "error");
       }
     });
-  };
-
-  const handleCountryChange = (selectedOption:any) => {
-    setSelectedCountry(selectedOption);
   };
 
   useEffect(() => {
@@ -104,11 +103,37 @@ const SignUp = () => {
               {country.name.common}
             </Flex>
           ),
+          currencies: country.currencies,
         }));
         setCountries(countryOptions);
       })
       .catch((error) => console.error("Error fetching countries:", error));
   }, []);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      const countryCurrencies = selectedCountry?.currencies;
+      const currencyKeys = Object.keys(countryCurrencies);
+      if (currencyKeys.length > 1) {
+        const options = currencyKeys.map((currency) => ({
+          value: currency,
+          label: `${currency} (${countryCurrencies[currency].symbol})`,
+        }));
+        setCurrencyOptions(options);
+        setSelectedCurrency(null);
+      } else {
+        setSelectedCurrency(currencyKeys[0]);
+      }
+    }
+  }, [selectedCountry,currencyOptions]);
+
+  const handleCountryChange = (selectedOption: any) => {
+    setSelectedCountry(selectedOption);
+  };
+
+  const handleCurrencyChange = (selectedOption:any) => {
+    setSelectedCurrency(selectedOption.value);
+  };
 
   const handleAvailableUserName = (value: string) => {
     setUsername(value);
@@ -133,7 +158,7 @@ const SignUp = () => {
   return (
     <Stack>
       <Heading fontSize={"20"}>Create An Account</Heading>
-      <form action="POST" onSubmit={(event)=> handleSignUp(event)}>
+      <form action="POST" onSubmit={(event) => handleSignUp(event)}>
         <Stack spacing={3}>
           <Flex gap={5}>
             <Input
@@ -174,11 +199,24 @@ const SignUp = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Select
-            placeholder="Select your country"
-            value={selectedCountry}
-            onChange={handleCountryChange}
             options={countries}
+            onChange={handleCountryChange}
+            value={selectedCountry}
+            placeholder="Select Country"
           />
+          {currencyOptions.length > 1 ? (
+            <Select
+              options={currencyOptions}
+              onChange={handleCurrencyChange}
+              value={selectedCurrency}
+              placeholder="Select Currency"
+            />
+          ) : (
+            <Flex alignItems={'center'} gap={3}>
+              <Text>Country Currency:</Text>
+              <Text>{selectedCurrency}</Text>
+            </Flex>
+          )}
           <InputGroup size="md">
             <Input
               pr="4.5rem"
