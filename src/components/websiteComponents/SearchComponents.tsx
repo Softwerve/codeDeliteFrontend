@@ -21,7 +21,7 @@ const SearchComponents = () => {
         </Heading>
         <Flex width={'70%'} gap={5}>
           <Input backgroundColor={'#ffffff'} type="text" placeholder="Search For Component Templates" />
-          <Button leftIcon={<BiSearchAlt2/>} colorScheme="yellow" >Search</Button>
+          <Button leftIcon={<BiSearchAlt2/>}w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}}colorScheme="yellow" >Search</Button>
         </Flex>
       </Stack>
     </Stack>

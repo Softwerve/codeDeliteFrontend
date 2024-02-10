@@ -8,7 +8,7 @@ const Footer = () => {
     {
       id: 1,
       title: "Product",
-      content: ["CodeDelite", "WebTailory", "Softwerve"],
+      content: ["CodeDelite", "WebTailory"],
     },
     {
       id: 2,
@@ -28,8 +28,8 @@ const Footer = () => {
   ];
   let currentYear = new Date().getFullYear();
   return (
-    <Stack borderTop={"1px solid white"} spacing={"5"} p={"5% 5% 2% 5%"} bg={'#000000'} color={'#FFFFFF'}>
-      <Image src={softwerve} alt="codedelite" width={"100"} />
+    <Stack borderTop={"1px solid white"} spacing={"5"} p={"5% 5% 2% 5%"} bg={'#343434'} color={'#FFFFFF'}>
+      <Image src={softwerve} alt="codedelite" width={"200"} />
       <Flex justifyContent={"space-between"} p={"5%"} borderBottom={'1px solid white'}>
         {boxes.map((box, index) => (
           <Stack key={index}>

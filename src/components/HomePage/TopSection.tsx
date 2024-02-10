@@ -1,16 +1,22 @@
 import { Button, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
-import bga from '../../assets/wall1.png'; 
+import bga from '../../assets/home.png'; 
+import { useRouter } from 'next/navigation';
 
 const TopSection = () => {
+  const router = useRouter();
   return (
-    <Flex p={'5%'} backgroundImage={`url(${bga.src})`} backgroundSize={'cover'} backgroundRepeat={'no-repeat'}>
-        <Stack spacing={'5'} p={'5%'} color={'#ffffff'} width={['100%','90%','80%','60%']}>
+    <Flex p={'4%'} minH={'60vh'} backgroundImage={`url(${bga.src})`} backgroundSize={'cover'} backgroundRepeat={'no-repeat'}>
+        <Stack spacing={'5'} p={'5%'} color={'#ffffff'} width={['100%','90%','80%','55%']}>
             <Heading fontSize={['30px','40px','50px','60px']}>Code Your Vision into Reality</Heading>
             <Text>Explore Our Comprehensive Coding Templates</Text>
             <Text>Dive into the world of code-based creativity! Discover our extensive library of website coding templates. From HTML to CSS, JavaScript to Python - unleash your ideas with our diverse coding components.</Text>
-            <Button w={'fit-content'} bg={'#0793E1'} color={'#ffffff'} _hover={{bg:'#076DE1'}} >Explore Templates</Button>
+            <Flex gap={5} alignItems={'center'}>
+              <Button w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}} onClick={()=>router.push("/templates")} >Explore Templates</Button>
+              <Button w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}} onClick={()=>router.push("/components")} >Explore Components</Button>
+            </Flex>
         </Stack>
+
     </Flex>
   )
 }

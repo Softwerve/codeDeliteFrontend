@@ -25,7 +25,7 @@ const SearchSection = () => {
             </InputLeftElement>
             <Input type="text" placeholder="Search Templates...." />
           </InputGroup>
-          <Button leftIcon={<FaSearch/>} colorScheme="yellow">Search</Button>
+          <Button leftIcon={<FaSearch/>} w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}}>Search</Button>
         </Flex>
       </Stack>
     </Stack>

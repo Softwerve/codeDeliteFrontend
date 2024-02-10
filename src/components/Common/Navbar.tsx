@@ -39,10 +39,9 @@ const Navbar = () => {
   const navItemsDisplay = useBreakpointValue({ base: "none", md: "flex" });
   const showLoginButton = useBreakpointValue({ base: false, md: true });
   const cookies = new Cookies();
-  const token = cookies.get('token');
+  const token = cookies.get("token");
   useEffect(() => {
-    if(token!=null)
-    {
+    if (token != null) {
       store.dispatch(handleUserDetails());
     }
     const handleScroll = () => {
@@ -126,6 +125,7 @@ const Navbar = () => {
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
+            onClick={() => router.push("/about")}
           >
             About Us
           </Button>
@@ -135,6 +135,7 @@ const Navbar = () => {
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
+            onClick={() => router.push("/blog")}
           >
             Blog
           </Button>
@@ -168,17 +169,50 @@ const Navbar = () => {
                 as={IconButton}
                 aria-label="Options"
                 icon={<MdOutlineArrowDropDownCircle />}
-                backgroundColor={'transparent'}
-                _hover={{backgroundColor:'transparent'}}
-                color={isTop? '#ffffff':'#000000'}
-                _expanded={{bg: 'transparent'}}
+                backgroundColor={"transparent"}
+                _hover={{ backgroundColor: "transparent" }}
+                color={isTop ? "#ffffff" : "#000000"}
+                _expanded={{ bg: "transparent" }}
               />
-              <MenuList bg={'transparent'}>
-                <MenuItem as='a' href='/dashboard' bg={'transparent'} color={isTop?'#ffffff':'#000000'}>Dashboard</MenuItem>
-                <MenuItem as='a' href='/dashboard/bag' bg={'transparent'} color={isTop?'#ffffff':'#000000'}>Bag</MenuItem>
-                <MenuItem as='a' href='/dashboard/purchased' bg={'transparent'} color={isTop?'#ffffff':'#000000'}>Purchase</MenuItem>
-                <MenuItem as='a' href='/profile' bg={'transparent'} color={isTop?'#ffffff':'#000000'}>Profile</MenuItem>
-                <MenuItem bg={'transparent'} color={isTop?'#ffffff':'#000000'}>Logout</MenuItem>
+              <MenuList bg={"transparent"}>
+                <MenuItem
+                  as="a"
+                  href="/dashboard"
+                  bg={"transparent"}
+                  color={isTop ? "#ffffff" : "#000000"}
+                >
+                  Dashboard
+                </MenuItem>
+                <MenuItem
+                  as="a"
+                  href="/dashboard/bag"
+                  bg={"transparent"}
+                  color={isTop ? "#ffffff" : "#000000"}
+                >
+                  Bag
+                </MenuItem>
+                <MenuItem
+                  as="a"
+                  href="/dashboard/purchased"
+                  bg={"transparent"}
+                  color={isTop ? "#ffffff" : "#000000"}
+                >
+                  Purchase
+                </MenuItem>
+                <MenuItem
+                  as="a"
+                  href="/profile"
+                  bg={"transparent"}
+                  color={isTop ? "#ffffff" : "#000000"}
+                >
+                  Profile
+                </MenuItem>
+                <MenuItem
+                  bg={"transparent"}
+                  color={isTop ? "#ffffff" : "#000000"}
+                >
+                  Logout
+                </MenuItem>
               </MenuList>
             </Menu>
           </Flex>
@@ -210,62 +244,56 @@ const Navbar = () => {
           <DrawerCloseButton />
           <DrawerHeader>Menu</DrawerHeader>
 
-          <DrawerBody bg={"#000000"}>
-            <Menu>
-              <MenuButton
-                className="underline-on-hover"
-                color="white"
-                bg="none"
-                as={Button}
-                _hover={{ bg: "none" }}
-                rightIcon={<FaChevronDown />}
-              >
-                Products
-              </MenuButton>
-              <MenuList bg="#000000">
-                <MenuItem bg="#000000" color="#ffffff">
-                  CodeDelite
-                </MenuItem>
-                <MenuItem bg="#000000" color="#ffffff">
-                  WebTailory
-                </MenuItem>
-              </MenuList>
-            </Menu>
+          <DrawerBody>
             <Button
               className="underline-on-hover"
-              color={"white"}
+              color={"black"}
               bg={"none"}
               as={Button}
               _hover={{ bg: "none" }}
+              onClick={() => router.push("/templates")}
             >
               Templates
             </Button>
             <Button
               className="underline-on-hover"
-              color={"white"}
+              color={"black"}
               bg={"none"}
               as={Button}
               _hover={{ bg: "none" }}
+              onClick={() => router.push("/components")}
             >
-              Pricing
+              Components
             </Button>
             <Button
               className="underline-on-hover"
-              color={"white"}
+              color={"black"}
               bg={"none"}
               as={Button}
               _hover={{ bg: "none" }}
+              onClick={() => router.push("/about")}
             >
               About Us
             </Button>
             <Button
               className="underline-on-hover"
-              color={"white"}
+              color={"black"}
               bg={"none"}
               as={Button}
               _hover={{ bg: "none" }}
+              onClick={() => router.push("/blog")}
             >
               Blog
+            </Button>
+            <Button
+              className="underline-on-hover"
+              color={"black"}
+              bg={"none"}
+              as={Button}
+              _hover={{ bg: "none" }}
+              onClick={() => router.push("/author")}
+            >
+              Become An Author
             </Button>
           </DrawerBody>
         </DrawerContent>
