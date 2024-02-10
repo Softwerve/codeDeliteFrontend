@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Checkbox,
   CircularProgress,
   CircularProgressLabel,
   Flex,
@@ -279,6 +280,7 @@ const SignUp = () => {
               }}
             />
           </Box>
+          <Checkbox isRequired >Read and Accept <a style={{textDecoration:'underline',color:'blue'}} href="https://localhost:3000/termsandconditions" target="blank">Terms & Conditions</a></Checkbox>
           <Button type="submit" colorScheme="blue">
             Submit
           </Button>

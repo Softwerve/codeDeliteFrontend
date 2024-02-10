@@ -29,7 +29,6 @@ const Templates = () => {
     setSelectedTab(title);
     store.dispatch(handleGetAllPublishedTemplatesOfACategory(title));
   };
-  // console.log("Templates: ",data,templates);
 
   return (
     <Stack spacing={10} p={"5%"}>

@@ -18,6 +18,7 @@ import {
   DrawerCloseButton,
   Avatar,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -27,7 +28,7 @@ import { FaBars, FaChevronDown, FaLocationArrow } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
-import { handleUserDetails } from "@/apiActions/userAction";
+import { handleLogout, handleUserDetails } from "@/apiActions/userAction";
 import { MdOutlineArrowDropDownCircle } from "react-icons/md";
 import Cookies from "universal-cookie";
 
@@ -40,6 +41,7 @@ const Navbar = () => {
   const showLoginButton = useBreakpointValue({ base: false, md: true });
   const cookies = new Cookies();
   const token = cookies.get("token");
+  const toast = useToast();
   useEffect(() => {
     if (token != null) {
       store.dispatch(handleUserDetails());
@@ -59,8 +61,30 @@ const Navbar = () => {
     };
   }, []);
 
-  const router = useRouter();
+  const logout = () => {
+    store.dispatch(handleLogout()).then((response)=> {
+      if(response?.payload?.success)
+      {
+        handleToast(response?.payload?.message,"success");
+      }
+      else{
+        handleToast(response?.payload?.message,"error");
+      }
+    })
+  }
 
+  const handleToast = (message: any, status: any ) => {
+      toast({
+        title: message,
+        status: status,
+        duration: 3000,
+        isClosable: true,
+        position: 'top'
+      })
+  }
+
+  const router = useRouter();
+  const authorDashboard = "http://localhost:3002/"
   return (
     <Flex
       as="nav"
@@ -154,7 +178,7 @@ const Navbar = () => {
         ""
       )}
       {showLoginButton == true ? (
-        data.isLogin ? (
+        data.user.username!=null ? (
           <Flex justifyContent={"space-between"} gap={3} alignItems={"center"}>
             <Avatar
               name={data.user?.username}
@@ -177,7 +201,7 @@ const Navbar = () => {
               <MenuList bg={"transparent"}>
                 <MenuItem
                   as="a"
-                  href="/dashboard"
+                  href={ data.user.role==="USER" ? "/dashboard": `${authorDashboard}/purchased`}
                   bg={"transparent"}
                   color={isTop ? "#ffffff" : "#000000"}
                 >
@@ -185,7 +209,7 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem
                   as="a"
-                  href="/dashboard/bag"
+                  href={ data.user.role==="USER" ? "/dashboard/bag": `${authorDashboard}/purchased`}
                   bg={"transparent"}
                   color={isTop ? "#ffffff" : "#000000"}
                 >
@@ -193,23 +217,16 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem
                   as="a"
-                  href="/dashboard/purchased"
+                  href={ data.user.role==="USER" ? "/dashboard/purchased": `${authorDashboard}/purchased`}
                   bg={"transparent"}
                   color={isTop ? "#ffffff" : "#000000"}
                 >
                   Purchase
                 </MenuItem>
                 <MenuItem
-                  as="a"
-                  href="/profile"
                   bg={"transparent"}
                   color={isTop ? "#ffffff" : "#000000"}
-                >
-                  Profile
-                </MenuItem>
-                <MenuItem
-                  bg={"transparent"}
-                  color={isTop ? "#ffffff" : "#000000"}
+                  onClick={logout}
                 >
                   Logout
                 </MenuItem>
@@ -229,7 +246,7 @@ const Navbar = () => {
           </Button>
         )
       ) : (
-        ""
+        null
       )}
 
       <IconButton

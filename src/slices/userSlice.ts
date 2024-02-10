@@ -12,10 +12,13 @@ interface userState {
   isRegister: boolean;
   isAvailable: boolean;
   user: {
-    username: string,
-    name: string,
-    email: string,
-    profileImage: string,
+    username: string;
+    name: string;
+    email: string;
+    profileImage: string;
+    country: string;
+    currency: string;
+    role: string;
   },
 }
 
@@ -31,6 +34,9 @@ const initialState: userState = {
     name: "",
     email: "",
     profileImage: "",
+    country: "",
+    currency: "",
+    role: "",
   },
   otpSuccess: false,
   isRegister: false,

@@ -73,6 +73,9 @@ export const handleSendOtp = (email: string) => (dispatch: AppDispatch) => {
       });
   };
 
+  
+    
+
   // ----------------------------Handling Available Username-------------------------------
 export const handleAvailableUsername =
 (username: string) => (dispatch: AppDispatch) => {
