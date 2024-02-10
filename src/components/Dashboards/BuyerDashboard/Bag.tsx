@@ -1,4 +1,4 @@
-import {handleGetBag, handleRemoveItemFromBag } from "@/apiActions/bagAction";
+import { handleGetBag, handleRemoveItemFromBag } from "@/apiActions/bagAction";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   Box,
@@ -14,32 +14,34 @@ import {
 import React, { useEffect } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoBagHandle, IoBagRemove } from "react-icons/io5";
+import { MdRemoveShoppingCart } from "react-icons/md";
 
 const Bag = () => {
   const store = useAppStore();
-  const {bagItems,bagTotalAmount} = useAppSelector((state)=> state.bag);
-  useEffect(()=>{
+  const { bagItems, bagTotalAmount } = useAppSelector((state) => state.bag);
+  useEffect(() => {
     store.dispatch(handleGetBag());
-  },[bagItems])
+  }, [bagItems]);
 
   const handleRemoveItem = (tempId: any) => {
     store.dispatch(handleRemoveItemFromBag(tempId));
-  }
+  };
   let flexStyle = {
     justifyContent: "space-between",
     alignContent: "center",
     fontSize: "20",
   };
   return (
-      <Stack p={"5%"}>
-        <Flex justifyContent={"space-between"} alignItems={"center"}>
-          <Heading>Your Bag</Heading>
-          <IoBagHandle fontSize="30px" />
-        </Flex>
-        <Divider />
-        <Text fontStyle={"oblique"} fontSize={"20px"}>
-          Building Your Web Solution: Finalize Your Selections
-        </Text>
+    <Stack p={"5%"}>
+      <Flex justifyContent={"space-between"} alignItems={"center"}>
+        <Heading>Your Bag</Heading>
+        <IoBagHandle fontSize="30px" />
+      </Flex>
+      <Divider />
+      <Text fontStyle={"oblique"} fontSize={"20px"}>
+        Building Your Web Solution: Finalize Your Selections
+      </Text>
+      {bagItems.length > 0 ? (
         <Flex justifyContent={"space-between"} mt={"2%"}>
           <Box width={"60%"}>
             {bagItems?.map((item, index) => (
@@ -47,13 +49,12 @@ const Bag = () => {
                 height={"120px"}
                 key={index}
                 justifyContent={"space-between"}
-                // alignContent={"center"}
-                alignItems={'center'}
+                alignItems={"center"}
                 padding={"2%"}
                 boxShadow="rgba(0, 0, 0, 0.08) 0px 4px 12px"
                 mb={"5"}
               >
-                <Image src={item?.thumbnailImage}height={'100%'} />
+                <Image src={item?.thumbnailImage} height={"100%"} />
                 <Stack spacing={2}>
                   <Text fontWeight={"bold"}>{item?.authorName}</Text>
                   <Text>{item?.authorUserName}</Text>
@@ -66,7 +67,11 @@ const Bag = () => {
                 >
                   Buy
                 </Button>
-                <IoBagRemove className="temp-icons" fontSize="25" onClick={()=>handleRemoveItem(item?.tempId)} />
+                <IoBagRemove
+                  className="temp-icons"
+                  fontSize="25"
+                  onClick={() => handleRemoveItem(item?.tempId)}
+                />
               </Flex>
             ))}
           </Box>
@@ -102,7 +107,19 @@ const Bag = () => {
             </Stack>
           </Box>
         </Flex>
-      </Stack>
+      ) : (
+        <Stack
+          justifyContent={"center"}
+          alignItems={"center"}
+          boxShadow="rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"
+        >
+          <Stack justifyContent={"center"} alignItems={"center"} p={20}>
+            <MdRemoveShoppingCart fontSize="120px" />
+            <Text fontSize={"20px"}>You have not purchased any item</Text>
+          </Stack>
+        </Stack>
+      )}
+    </Stack>
   );
 };
 
