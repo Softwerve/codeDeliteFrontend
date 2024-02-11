@@ -12,6 +12,7 @@ interface bagState {
     authorName: string;
     authorUserName: string;
     price: number;
+    currency: string;
     tempId: number;
   }]
   bagTotalAmount: any;
@@ -27,6 +28,7 @@ const initialState: bagState = {
     thumbnailImage: "",
     authorName: "",
     authorUserName: "",
+    currency: "",
     price: 0.0,
     tempId: 0,
   }],

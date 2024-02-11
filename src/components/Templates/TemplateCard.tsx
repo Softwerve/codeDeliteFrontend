@@ -22,7 +22,7 @@ import {
   handleRemoveItemFromLovedList,
 } from "@/apiActions/templatesAction";
 import { handleFollowAuthor } from "@/apiActions/followAction";
-import { convertCurrency, getCurrencySymbol } from "@/apiActions/currencyExchange";
+import { convertCurrency } from "@/apiActions/currencyExchange";
 interface CardProps {
   card: {
     tempId: number;
@@ -119,7 +119,7 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
       <Image src={card.thumbnailImage} alt={card.authorName} />
       <Flex justifyContent={"space-between"} alignContent={"center"} p={"2%"}>
         <Text>{card.title}</Text>
-        <Text>{card.price <= 0 ? "Free" : `${getCurrencySymbol(user.currency)} ${card.currency} ${convertCurrency(card.price,card.currency,user.currency)}`}</Text>
+        <Text>{card.price <= 0 ? "Free" : `${user.currencySymbol} ${convertCurrency(card.price,card.currency,user.currency)}`}</Text>
       </Flex>
       <Divider />
       <Box p={"2%"}>

@@ -18,6 +18,7 @@ interface userState {
     profileImage: string;
     country: string;
     currency: string;
+    currencySymbol: string;
     role: string;
   },
 }
@@ -36,6 +37,7 @@ const initialState: userState = {
     profileImage: "",
     country: "",
     currency: "",
+    currencySymbol: "",
     role: "",
   },
   otpSuccess: false,

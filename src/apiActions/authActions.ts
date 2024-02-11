@@ -26,8 +26,8 @@ export const handleSendOtp = (email: string) => (dispatch: AppDispatch) => {
   
   
   // -----------------------Handling Signup Author-----------------------
-  export const handleSignUpUser =
-    (user: any,otp:number) => async (dispatch: AppDispatch) => {
+  export const handleSignUpUser = (user: any,otp:number) => async (dispatch: AppDispatch) => {
+    console.log(user);
       dispatch(signupStart());
       return fetch(`${baseUrl}/author/signup?otp=${otp}`, {
         method: "POST",

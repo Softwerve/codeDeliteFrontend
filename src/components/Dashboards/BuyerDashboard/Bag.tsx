@@ -1,4 +1,5 @@
 import { handleGetBag, handleRemoveItemFromBag } from "@/apiActions/bagAction";
+import { convertCurrency } from "@/apiActions/currencyExchange";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   Box,
@@ -11,7 +12,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoBagHandle, IoBagRemove } from "react-icons/io5";
 import { MdRemoveShoppingCart } from "react-icons/md";
@@ -19,9 +20,11 @@ import { MdRemoveShoppingCart } from "react-icons/md";
 const Bag = () => {
   const store = useAppStore();
   const { bagItems, bagTotalAmount } = useAppSelector((state) => state.bag);
+  const {user} = useAppSelector((state)=> state.user);
+  const [totalBagAmount, setTotalBagAmount] = useState(0);
   useEffect(() => {
     store.dispatch(handleGetBag());
-  }, [bagItems]);
+  }, []);
 
   const handleRemoveItem = (tempId: any) => {
     store.dispatch(handleRemoveItemFromBag(tempId));
@@ -31,6 +34,20 @@ const Bag = () => {
     alignContent: "center",
     fontSize: "20",
   };
+  
+  const handleCurrencyConversion = async (amount:number,currency: string) => {
+    if(currency===user.currency)
+    {
+      setTotalBagAmount((prevTotal: number) => prevTotal+amount);
+      return amount;
+    }
+    else{
+      let covertedAmount = await convertCurrency(amount,currency,user.currency);
+      setTotalBagAmount((prevTotal: number) => prevTotal+covertedAmount);
+      return covertedAmount;
+    }
+  }
+
   return (
     <Stack p={"5%"}>
       <Flex justifyContent={"space-between"} alignItems={"center"}>
@@ -59,7 +76,10 @@ const Bag = () => {
                   <Text fontWeight={"bold"}>{item?.authorName}</Text>
                   <Text>{item?.authorUserName}</Text>
                 </Stack>
-                <Text>{item?.price <= 0 ? "Free" : "$ " + item?.price}</Text>
+                <Flex alignItems={'center'}>
+                  <Text>{user.currencySymbol}</Text>
+                  <Text>{handleCurrencyConversion(item?.price,item?.currency)}</Text>
+                </Flex>
                 <Button
                   bg={"#2D7F80"}
                   color={"#ffffff"}
@@ -87,15 +107,15 @@ const Bag = () => {
               </Text>
               <Flex style={flexStyle}>
                 <Text>Subtotal</Text>
-                <Text>{"$ " + bagTotalAmount}</Text>
+                <Text>{user?.currencySymbol + totalBagAmount }</Text>
               </Flex>
               <Flex style={flexStyle}>
                 <Text>GST & Taxes</Text>
-                <Text>{"$ " + 0}</Text>
+                <Text>{user?.currencySymbol + 0}</Text>
               </Flex>
               <Flex style={flexStyle}>
                 <Text fontWeight={"bold"}>Total</Text>
-                <Text fontWeight={"bold"}>{"$ " + bagTotalAmount}</Text>
+                <Text fontWeight={"bold"}>{user?.currencySymbol + totalBagAmount}</Text>
               </Flex>
               <Button
                 bg={"#2D7F80"}

@@ -42,6 +42,7 @@ const Navbar = () => {
   const cookies = new Cookies();
   const token = cookies.get("token");
   const toast = useToast();
+  const softwerveLink = "http://localhost:3000";
   useEffect(() => {
     if (token != null) {
       store.dispatch(handleUserDetails());
@@ -62,29 +63,27 @@ const Navbar = () => {
   }, []);
 
   const logout = () => {
-    store.dispatch(handleLogout()).then((response)=> {
-      if(response?.payload?.success)
-      {
-        handleToast(response?.payload?.message,"success");
+    store.dispatch(handleLogout()).then((response) => {
+      if (response?.payload?.success) {
+        handleToast(response?.payload?.message, "success");
+      } else {
+        handleToast(response?.payload?.message, "error");
       }
-      else{
-        handleToast(response?.payload?.message,"error");
-      }
-    })
-  }
+    });
+  };
 
-  const handleToast = (message: any, status: any ) => {
-      toast({
-        title: message,
-        status: status,
-        duration: 3000,
-        isClosable: true,
-        position: 'top'
-      })
-  }
+  const handleToast = (message: any, status: any) => {
+    toast({
+      title: message,
+      status: status,
+      duration: 3000,
+      isClosable: true,
+      position: "top",
+    });
+  };
 
   const router = useRouter();
-  const authorDashboard = "http://localhost:3002/"
+  const authorDashboard = "http://localhost:3002/";
   return (
     <Flex
       as="nav"
@@ -159,7 +158,7 @@ const Navbar = () => {
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
-            onClick={() => router.push("/blog")}
+            onClick={() => router.push(`${softwerveLink}/blog`)}
           >
             Blog
           </Button>
@@ -178,7 +177,7 @@ const Navbar = () => {
         ""
       )}
       {showLoginButton == true ? (
-        data.user.username!=null ? (
+        data.user.username != null ? (
           <Flex justifyContent={"space-between"} gap={3} alignItems={"center"}>
             <Avatar
               name={data.user?.username}
@@ -195,41 +194,41 @@ const Navbar = () => {
                 icon={<MdOutlineArrowDropDownCircle />}
                 backgroundColor={"transparent"}
                 _hover={{ backgroundColor: "transparent" }}
-                color={isTop ? "#ffffff" : "#000000"}
+                color={"#000000"}
                 _expanded={{ bg: "transparent" }}
               />
-              <MenuList bg={"transparent"}>
+              <MenuList>
                 <MenuItem
                   as="a"
-                  href={ data.user.role==="USER" ? "/dashboard": `${authorDashboard}/purchased`}
-                  bg={"transparent"}
-                  color={isTop ? "#ffffff" : "#000000"}
+                  href={
+                    data.user.role === "USER"
+                      ? "/dashboard"
+                      : `${authorDashboard}/purchased`
+                  }
                 >
                   Dashboard
                 </MenuItem>
                 <MenuItem
                   as="a"
-                  href={ data.user.role==="USER" ? "/dashboard/bag": `${authorDashboard}/purchased`}
-                  bg={"transparent"}
-                  color={isTop ? "#ffffff" : "#000000"}
+                  href={
+                    data.user.role === "USER"
+                      ? "/dashboard/bag"
+                      : `${authorDashboard}/purchased`
+                  }
                 >
                   Bag
                 </MenuItem>
                 <MenuItem
                   as="a"
-                  href={ data.user.role==="USER" ? "/dashboard/purchased": `${authorDashboard}/purchased`}
-                  bg={"transparent"}
-                  color={isTop ? "#ffffff" : "#000000"}
+                  href={
+                    data.user.role === "USER"
+                      ? "/dashboard/purchased"
+                      : `${authorDashboard}/purchased`
+                  }
                 >
                   Purchase
                 </MenuItem>
-                <MenuItem
-                  bg={"transparent"}
-                  color={isTop ? "#ffffff" : "#000000"}
-                  onClick={logout}
-                >
-                  Logout
-                </MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
@@ -245,9 +244,7 @@ const Navbar = () => {
             Login <FiArrowUpRight fontWeight="bold" />
           </Button>
         )
-      ) : (
-        null
-      )}
+      ) : null}
 
       <IconButton
         display={{ base: "flex", md: "none" }}

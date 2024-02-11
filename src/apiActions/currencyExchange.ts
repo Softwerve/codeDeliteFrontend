@@ -11,29 +11,19 @@ async function fetchExchangeRates(baseCurrency:string) {
         const data = await response.json();
         return data.conversion_rates;
     } catch (error) {
-        return null;
+        return 0;
     }
 }
 
 // Function to convert amount from one currency to another
 export async function convertCurrency(amount:number, fromCurrency:string, toCurrency:string) {
-    const exchangeRates = await fetchExchangeRates(fromCurrency);
-    if (!exchangeRates) {
-        return null;
+    if(fromCurrency === toCurrency)
+    {
+        return amount;
     }
-
-    const exchangeRate = exchangeRates[toCurrency];
-    if (!exchangeRate) {
-        return null;
+    else{
+        const exchangeRates = await fetchExchangeRates(fromCurrency);
+        const exchangeRate = exchangeRates[toCurrency];
+        return amount * exchangeRate;
     }
-    console.log(amount*exchangeRate);
-    return amount * exchangeRate;
 };
-
-
-// Function to get currency symbol dynamically
-export function getCurrencySymbol(currencyCode: string) {
-    const symbolMap = currencySymbolMap(currencyCode);
-    return symbolMap || currencyCode;
-}
-

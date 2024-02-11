@@ -41,6 +41,7 @@ const SignUp = () => {
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCurrency, setSelectedCurrency] = useState(null);
+  const [currencySymbol,setCurrencySymbol] = useState("");
   const [currencyOptions, setCurrencyOptions] = useState([]);
   const store = useAppStore();
   const data = useAppSelector((state) => state.user);
@@ -75,6 +76,7 @@ const SignUp = () => {
       email: email,
       country: selectedCountry?.value,
       currency: selectedCurrency,
+      currencySymbol: currencySymbol,
       password: password,
     };
     // console.log(user);
@@ -124,6 +126,7 @@ const SignUp = () => {
         setSelectedCurrency(null);
       } else {
         setSelectedCurrency(currencyKeys[0]);
+        setCurrencySymbol(countryCurrencies[currencyKeys[0]]?.symbol);
       }
     }
   }, [selectedCountry,currencyOptions]);

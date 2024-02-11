@@ -25,12 +25,10 @@ import { FaEye, FaHeartCircleMinus, FaHeartCirclePlus } from "react-icons/fa6";
 import { IoMdPersonAdd } from "react-icons/io";
 import { IoBagHandleSharp, IoPricetags } from "react-icons/io5";
 import ComponentNotAvailable from "../CustomLoaders/ComponentNotAvailable";
-import {
-  convertCurrency,
-  getCurrencySymbol,
-} from "@/apiActions/currencyExchange";
+import { convertCurrency } from "@/apiActions/currencyExchange";
 import { handleUserDetails } from "@/apiActions/userAction";
 import { FaTag } from "react-icons/fa";
+import { handleAddItemToBag } from "@/apiActions/bagAction";
 
 const ComponentCategoryPage = ({ category }: { category: string }) => {
   const store = useAppStore();
@@ -65,6 +63,16 @@ const ComponentCategoryPage = ({ category }: { category: string }) => {
     }
   };
 
+  const handleAddToBag = (tempId: number) => {
+    store.dispatch(handleAddItemToBag(tempId)).then((response) => {
+      if (response?.payload?.success) {
+        handleToast(response?.payload?.message, "success");
+      } else {
+        handleToast(response?.payload?.message, "error");
+      }
+    });
+  };
+
   const handleRemoveLovedItem = (tempId: any) => {
     store.dispatch(handleRemoveItemFromLovedList(tempId));
   };
@@ -92,7 +100,7 @@ const ComponentCategoryPage = ({ category }: { category: string }) => {
               <Stack
                 backgroundColor={"#ffffff"}
                 boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
-                borderRadius={'10px'}
+                borderRadius={"10px"}
               >
                 <Flex
                   justifyContent={"space-between"}
@@ -125,7 +133,11 @@ const ComponentCategoryPage = ({ category }: { category: string }) => {
                   />
                 </Flex>
                 <Box>
-                  <Image src={component.thumbnailImage} width={'100%'} height={'200px'} />
+                  <Image
+                    src={component.thumbnailImage}
+                    width={"100%"}
+                    height={"200px"}
+                  />
                 </Box>
                 <Flex
                   justifyContent={"space-between"}
@@ -146,10 +158,14 @@ const ComponentCategoryPage = ({ category }: { category: string }) => {
                     onClick={() => handleAddLovedItem(component?.tempId)}
                   />
 
-                  <IoBagHandleSharp className="temp-icons" cursor="pointer" />
+                  <IoBagHandleSharp
+                    className="temp-icons"
+                    cursor="pointer"
+                    onClick={() => handleAddToBag(component?.tempId)}
+                  />
                   <Badge colorScheme="purple" p={2}>
-                    <Flex gap={2} alignItems={'center'}>
-                      <Text>{getCurrencySymbol(user.currency)}</Text>
+                    <Flex gap={2} alignItems={"center"}>
+                      <Text>{user.currencySymbol}</Text>
                       <Text>
                         {convertCurrency(
                           component.price,
