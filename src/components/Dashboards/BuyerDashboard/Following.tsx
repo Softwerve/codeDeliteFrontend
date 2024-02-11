@@ -40,9 +40,14 @@ const Following = () => {
     store.dispatch(handleGetAllFollowedAuthors()).then((response)=>{
       setSelectedAuthor(response?.payload[0]?.authorId);
     })
+    console.log(selectedAuthor);
     store.dispatch(handleGetAuthorsPublishedWebsites(selectedAuthor));
     store.dispatch(handleGetAuthorsPublishedComponents(selectedAuthor));
   }, []);
+
+  const handleClick=(authorId:number)=> {
+
+  }
   
   return (
     <Stack p={5} background={"#FFEFEF"} minH={"90vh"} spacing={5}>
@@ -69,7 +74,6 @@ const Following = () => {
                 <Stack
                   spacing={1}
                   height={"180px"}
-                  onClick={() => setSelectedAuthor(author.authorId)}
                   borderRadius={'10px'}
                   backgroundColor={'#ffffff'}
                   boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px'
@@ -78,7 +82,7 @@ const Following = () => {
                   alignItems={'center'}
                   cursor={'pointer'}
                 >
-                  <Avatar size={'xl'} src={author.profileImage} name={author.username} />
+                  <Avatar size={'xl'} src={author.profileImage} name={author.username} onClick={() => handleClick(author.authorId)} />
                   <Text>{author.name}</Text>
                   <Text>{author.username}</Text>
                 </Stack>

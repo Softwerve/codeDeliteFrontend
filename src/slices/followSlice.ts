@@ -26,6 +26,7 @@ interface followState {
       tempLink: string;
       tempType: string;
       category: string;
+      currency: string;
       status: string;
       authorProfileLink: string;
       templatePage: {
@@ -50,6 +51,7 @@ interface followState {
       tempLink: string;
       tempType: string;
       category: string;
+      currency: string;
       status: string;
       authorProfileLink: string;
       templatePage: {
@@ -86,6 +88,7 @@ const initialState: followState = {
       thumbnailImage: "",
       price: 0.0,
       likes: 0,
+      currency: "",
       tempLink: "",
       tempType: "",
       category: "",
@@ -114,6 +117,7 @@ const initialState: followState = {
       tempType: "",
       category: "",
       status: "",
+      currency: "",
       authorProfileLink: "",
       templatePage: {
         images: [],

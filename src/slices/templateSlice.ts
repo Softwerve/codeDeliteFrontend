@@ -15,7 +15,7 @@ interface TemplatesState {
       likes: number;
       tempLink: string;
       tempType: string;
-      category: string;
+      currency: string;
       status: string;
       authorProfileLink: string;
       templatePage: {
@@ -42,7 +42,7 @@ interface TemplatesState {
       likes: number;
       tempLink: string;
       tempType: string;
-      category: string;
+      currency: string;
       status: string;
       authorProfileLink: string;
       templatePage: {
@@ -71,7 +71,7 @@ const initialState: TemplatesState = {
       likes: 0,
       tempLink: "",
       tempType: "",
-      category: "",
+      currency: "",
       status: "",
       authorProfileLink: "",
       templatePage: {
@@ -95,7 +95,7 @@ const initialState: TemplatesState = {
       likes: 0,
       tempLink: "",
       tempType: "",
-      category: "",
+      currency: "",
       status: "",
       authorProfileLink: "",
       templatePage: {

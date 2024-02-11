@@ -10,9 +10,14 @@ import Sidebar from "./Common/Sidebar";
 import Following from "./BuyerDashboard/Following";
 import PurchaseBag from "./BuyerDashboard/PurchaseBag";
 import Templates from "../Templates/Templates";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppSelector, useAppStore } from "@/lib/hooks";
+import { handleUserDetails } from "@/apiActions/userAction";
 export default function LayoutPage({ title }: { title: any }) {
+  const store = useAppStore();
   const { user } = useAppSelector((state) => state.user);
+  useEffect(()=>{
+    store.dispatch(handleUserDetails());
+  },[])
   return (
     <ChakraProvider>
       {user.role === "USER" ? (

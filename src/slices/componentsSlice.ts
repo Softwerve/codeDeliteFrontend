@@ -19,6 +19,7 @@ interface componentState {
       likes: number;
       tempLink: string;
       category: string;
+      currency: string;
       authorProfileLink: string;
     }
   ];
@@ -42,6 +43,7 @@ const initialState: componentState = {
       price: 0,
       likes: 0,
       tempLink: "",
+      currency: "",
       category: "",
       authorProfileLink: "",
     }

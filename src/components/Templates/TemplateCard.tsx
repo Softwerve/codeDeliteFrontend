@@ -22,6 +22,7 @@ import {
   handleRemoveItemFromLovedList,
 } from "@/apiActions/templatesAction";
 import { handleFollowAuthor } from "@/apiActions/followAction";
+import { convertCurrency, getCurrencySymbol } from "@/apiActions/currencyExchange";
 interface CardProps {
   card: {
     tempId: number;
@@ -32,7 +33,7 @@ interface CardProps {
     price: number;
     authorProfileImage: string;
     authorProfileLink: string;
-    category: string;
+    currency: string;
     tempLink: string;
   };
   isLoved: boolean;
@@ -48,6 +49,7 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
     (state) => state.bag
   );
   const data = useAppSelector((state) => state.templates);
+  const {user} = useAppSelector((state)=> state.user);
   const handleBag = () => {
     store.dispatch(handleAddItemToBag(card.tempId)).then((response) => {
       if (response?.payload.success) {
@@ -117,11 +119,11 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
       <Image src={card.thumbnailImage} alt={card.authorName} />
       <Flex justifyContent={"space-between"} alignContent={"center"} p={"2%"}>
         <Text>{card.title}</Text>
-        <Text>{card.price <= 0 ? "Free" : "₹ " + card.price}</Text>
+        <Text>{card.price <= 0 ? "Free" : `${getCurrencySymbol(user.currency)} ${card.currency} ${convertCurrency(card.price,card.currency,user.currency)}`}</Text>
       </Flex>
       <Divider />
       <Box p={"2%"}>
-        <Text fontSize={"10"}>Liked By abhishek and 32 mores</Text>
+        <Text fontSize={"10"}>10</Text>
       </Box>
       <Divider />
       <Flex
