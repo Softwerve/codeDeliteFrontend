@@ -28,13 +28,20 @@ interface CardProps {
     tempId: number;
     authorId: number;
     authorName: string;
-    thumbnailImage: string;
-    title: string;
-    price: number;
     authorProfileImage: string;
-    authorProfileLink: string;
-    currency: string;
+    title: string;
+    thumbnailImage: string;
+    price: number;
+    likes: number;
+    itemInLovedlist: boolean;
+    liked: boolean;
+    itemInBag: boolean;
+    followingAuthor: boolean;
     tempLink: string;
+    tempType: string;
+    currency: string;
+    status: string;
+    authorProfileLink: string;
   };
   isLoved: boolean;
 }
@@ -44,12 +51,11 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
   const router = useRouter();
   const store = useAppStore();
   const toast = useToast();
-  const [isFollowed, setIsFollowed] = useState(false);
   const { isLoading, isSuccess, message } = useAppSelector(
     (state) => state.bag
   );
   const data = useAppSelector((state) => state.templates);
-  const {user} = useAppSelector((state)=> state.user);
+  const { user, isLogin } = useAppSelector((state) => state.user);
   const handleBag = () => {
     store.dispatch(handleAddItemToBag(card.tempId)).then((response) => {
       if (response?.payload.success) {
@@ -63,7 +69,6 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
   const handleFollow = () => {
     store.dispatch(handleFollowAuthor(card.authorId)).then((response) => {
       if (response?.payload?.success) {
-        setIsFollowed(true);
         handleToast(response?.payload.message, "success");
       } else {
         handleToast(response?.payload.message, "error");
@@ -110,27 +115,40 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
           />
           <Text>{card.authorName.split(" ")[0]}</Text>
         </Flex>
-        {isFollowed ? (
-          <FaUserMinus />
-        ) : (
-          <IoMdPersonAdd onClick={handleFollow} />
-        )}
+        {isLogin ? (
+          card?.followingAuthor ? (
+            <FaUserMinus />
+          ) : (
+            <IoMdPersonAdd onClick={handleFollow} />
+          )
+        ) : null}
       </Flex>
       <Image src={card.thumbnailImage} alt={card.authorName} />
       <Flex justifyContent={"space-between"} alignContent={"center"} p={"2%"}>
         <Text>{card.title}</Text>
-        <Text>{card.price <= 0 ? "Free" : `${user.currencySymbol} ${convertCurrency(card.price,card.currency,user.currency)}`}</Text>
+        <Text>
+          {card.price <= 0
+            ? "Free"
+            : `${user.currencySymbol} ${convertCurrency(
+                card.price,
+                card.currency,
+                user.currency
+              )}`}
+        </Text>
       </Flex>
       <Divider />
       <Box p={"2%"}>
         <Text fontSize={"10"}>10</Text>
       </Box>
       <Divider />
+      {
+        isLogin ?
       <Flex
         justifyContent={"space-between"}
         alignContent={"center"}
         p={"5%"}
         fontSize={"20"}
+        
       >
         <BiLike className="temp-icons" />
         <FaEye
@@ -150,6 +168,8 @@ const TemplateCard: React.FC<CardProps> = ({ card, isLoved }) => {
         )}
         <IoBagHandleSharp className="temp-icons" onClick={handleBag} />
       </Flex>
+         :null
+      }
     </Box>
   );
 };

@@ -8,6 +8,7 @@ import {
   handleGetAllCategories,
   handleGetAllPublishedTemplatesOfACategory,
 } from "@/apiActions/templatesAction";
+import { handleGetItemsWhenLoggedIn } from "@/apiActions/loggedInActions";
 
 interface TabData {
   id: number;
@@ -19,16 +20,32 @@ const Templates = () => {
 
   const store = useAppStore();
   const data = useAppSelector((state) => state.templates);
-  const templates = data.templates;
+  const {templates} = useAppSelector((state)=> state.loggedIn); 
+  const {isLogin} = useAppSelector((state)=> state.auth);
+  const beforeLogintemplates = data.templates;
   const tabs = useAppSelector((state) => state.categories).categories;
   useEffect(() => {
     store.dispatch(handleGetAllCategories());
-    store.dispatch(handleGetAllPublishedTemplatesOfACategory("All"));
+    if(isLogin)
+    {
+      store.dispatch(handleGetItemsWhenLoggedIn("All","Template"));
+    }
+    else{
+      store.dispatch(handleGetAllPublishedTemplatesOfACategory("All"));
+    }
   }, []);
   const handleTabChange = (title: string) => {
     setSelectedTab(title);
-    store.dispatch(handleGetAllPublishedTemplatesOfACategory(title));
+    if(isLogin)
+    {
+      store.dispatch(handleGetItemsWhenLoggedIn(title,"Template"));
+    }
+    else{
+      store.dispatch(handleGetAllPublishedTemplatesOfACategory(title));
+    }
   };
+
+  const cards = isLogin ? templates : beforeLogintemplates;
 
   return (
     <Stack spacing={10} p={"5%"}>
@@ -62,7 +79,7 @@ const Templates = () => {
                 templateRows={"repeat(auto,auto)"}
                 gap={5}
               >
-                {templates?.map((card, index) => (
+                {cards?.map((card, index) => (
                   <GridItem key={index}>
                     <Suspense>
                       <TemplateCard card={card} isLoved={false} />
