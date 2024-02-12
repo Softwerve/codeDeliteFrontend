@@ -283,7 +283,7 @@ const SignUp = () => {
               }}
             />
           </Box>
-          <Checkbox isRequired >Read and Accept <a style={{textDecoration:'underline',color:'blue'}} href="https://localhost:3000/termsandconditions" target="blank">Terms & Conditions</a></Checkbox>
+          <Checkbox isRequired >Read and Accept <a style={{textDecoration:'underline',color:'blue'}} href="https://www.softwerve.com/termsandconditions" target="blank">Terms & Conditions</a>, <a style={{textDecoration:'underline',color:'blue'}} href="https://www.softwerve.com/privacypolicy" target="blank">Privacy Policy</a>, and <a style={{textDecoration:'underline',color:'blue'}} href="https://www.softwerve.com/paymentpolicy" target="blank">Payment Policy</a></Checkbox>
           <Button type="submit" colorScheme="blue">
             Submit
           </Button>

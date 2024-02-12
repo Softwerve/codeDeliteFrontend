@@ -23,16 +23,16 @@ const Footer = () => {
         <Stack>
           <Text fontWeight={'bold'} fontSize={'20px'} >Explore</Text>
           <a href={`/templates`} style={{opacity:'0.6', fontSize:"15px"}}>Templates</a>
-          <a style={{opacity:'0.6', fontSize:"15px"}}>Components</a>
-          <a style={{opacity:'0.6', fontSize:"15px"}}>Blogs</a>
+          <a href="/components" style={{opacity:'0.6', fontSize:"15px"}}>Components</a>
+          <a href={`https://www.${link}/blog`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Blogs</a>
         </Stack>
         <Stack>
           <Text fontWeight={'bold'} fontSize={'20px'} >Company</Text>
-          <a href={`https://www.codedelite.${link}`} style={{opacity:'0.6', fontSize:"15px"}}>Softwerve</a>
-          <a href={`https://${link}/about`} style={{opacity:'0.6', fontSize:"15px"}}>About Softwerve</a>
-          <a style={{opacity:'0.6', fontSize:"15px"}}>Terms & Conditions</a>
-          <a style={{opacity:'0.6', fontSize:"15px"}}>Privacy Policy</a>
-          <a style={{opacity:'0.6', fontSize:"15px"}}>Payment Policy</a>
+          <a href={`https://www.${link}`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Softwerve</a>
+          <a href={`https://${link}/about`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>About Softwerve</a>
+          <a href={`https://${link}/termsandconditions`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Terms & Conditions</a>
+          <a href={`https://${link}/privacypolicy`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Privacy Policy</a>
+          <a href={`/paymentpolicy`} style={{opacity:'0.6', fontSize:"15px"}}>Payment Policy</a>
         </Stack>
         <Stack>
           <Text fontWeight={'bold'} fontSize={'20px'} >Contact Us</Text>
@@ -56,7 +56,7 @@ const Footer = () => {
           </Flex>
           <Flex alignItems={'center'} gap={2} fontSize="15px">
             <FaYoutube/>
-            <a href={`https://www.codedelite.${link}`} style={{opacity:'0.6', }}>YouTube</a>
+            <a href={`https://www.youtube.com/@Softwerve`} style={{opacity:'0.6', }}>YouTube</a>
           </Flex>
         </Stack>
       </Flex>
