@@ -44,7 +44,7 @@ const Footer = () => {
           <Text fontWeight={'bold'} fontSize={'20px'} >Follow Us On</Text>
           <Flex alignItems={'center'} gap={2} fontSize="15px">
             <IoLogoLinkedin/>
-            <a href={`https://www.linkedin.com/company/softwerve`} style={{opacity:'0.6', }}>Linkedin</a>
+            <a href={`https://www.linkedin.com/company/softwerve`} target="blank" style={{opacity:'0.6', }}>Linkedin</a>
           </Flex>
           <Flex alignItems={'center'} gap={2} fontSize="15px">
             <FaXTwitter/>
@@ -52,11 +52,11 @@ const Footer = () => {
           </Flex>
           <Flex alignItems={'center'} gap={2} fontSize="15px">
             <RiInstagramFill/>
-            <a href={`https://www.codedelite.${link}`} style={{opacity:'0.6', }}>Instagram</a>
+            <a href={`https://www.instagram.com/softwerve/`} target="blank" style={{opacity:'0.6', }}>Instagram</a>
           </Flex>
           <Flex alignItems={'center'} gap={2} fontSize="15px">
             <FaYoutube/>
-            <a href={`https://www.youtube.com/@Softwerve`} style={{opacity:'0.6', }}>YouTube</a>
+            <a href={`https://www.youtube.com/@Softwerve`} target="blank" style={{opacity:'0.6', }}>YouTube</a>
           </Flex>
         </Stack>
       </Flex>

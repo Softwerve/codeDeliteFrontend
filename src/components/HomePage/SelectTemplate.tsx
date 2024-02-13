@@ -16,40 +16,24 @@ import {
   Button,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import wall from "../../assets/wall1.png";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import TemplateCard from "../Templates/TemplateCard";
 import { useAppDispatch, useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   handleGetAllCategories,
   handleGetAllPublishedTemplatesOfACategory,
 } from "@/apiActions/templatesAction";
-import CardSkeleton from "../CustomLoaders/CardSkeleton";
+import CurrentUserBasedTemplates from "../Templates/CurrentUserBasedTemplates";
+import PublicTemplates from "../Templates/PublicTemplates";
 
 const SelectTemplate = () => {
   const store = useAppStore();
-  const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.templates);
   const { categories } = useAppSelector((state) => state.categories);
-  const [category, setCategory] = useState("All");
-  const templates = data.templates;
+  const {user} = useAppSelector((state)=> state.user);
   useEffect(() => {
-    store.dispatch(handleGetAllPublishedTemplatesOfACategory(category));
     store.dispatch(handleGetAllCategories());
   }, []);
-
-  const handleTabChange = (index: number) => {
-    if(tabIndex === 0){
-      setCategory("All");
-    }else {
-      setCategory(categories[index-1].category);
-    }
-    
-    store.dispatch(handleGetAllPublishedTemplatesOfACategory(category));
-
-  };
 
   const gridColumns = useBreakpointValue({
     base: "repeat(1, 1fr)",
@@ -95,7 +79,6 @@ const SelectTemplate = () => {
         </Text>
         <Box></Box>
         <Tabs
-          onChange={(index) => handleTabChange(index)}
           bg={bgColor}
           p={"2%"}
           borderRadius={"10"}
@@ -107,21 +90,12 @@ const SelectTemplate = () => {
             ))}
           </TabList>
           <TabPanels>
+            <TabPanel>
+            {user.email!="" ? <CurrentUserBasedTemplates category={'All'}/> : <PublicTemplates category={"All"} />}
+            </TabPanel>
             {categories?.map((category, index) => (
               <TabPanel key={index}>
-                <Grid
-                  gridTemplateColumns={gridColumns}
-                  gridTemplateRows={"repeat(2,auto)"}
-                  gap={"10"}
-                >
-                  {data.isLoading
-                    ? <CardSkeleton/>
-                    : templates?.map((card, ind) => (
-                        <GridItem borderRadius={"10"} key={ind}>
-                          <TemplateCard card={card} isLoved={false} />
-                        </GridItem>
-                      ))}
-                </Grid>
+                  {user.email!="" ? <CurrentUserBasedTemplates category={category.category}/> : <PublicTemplates category={category.category} />}
               </TabPanel>
             ))}
             <Button

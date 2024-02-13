@@ -66,6 +66,7 @@ const Navbar = () => {
     store.dispatch(handleLogout()).then((response) => {
       if (response?.payload?.success) {
         handleToast(response?.payload?.message, "success");
+        window.location.reload();
       } else {
         handleToast(response?.payload?.message, "error");
       }
@@ -203,7 +204,7 @@ const Navbar = () => {
                   href={
                     data.user.role === "USER"
                       ? "/dashboard"
-                      : `${authorDashboard}/purchased`
+                      : `${authorDashboard}`
                   }
                 >
                   Dashboard
@@ -213,7 +214,7 @@ const Navbar = () => {
                   href={
                     data.user.role === "USER"
                       ? "/dashboard/bag"
-                      : `${authorDashboard}/purchased`
+                      : `${authorDashboard}bag`
                   }
                 >
                   Bag
@@ -223,7 +224,7 @@ const Navbar = () => {
                   href={
                     data.user.role === "USER"
                       ? "/dashboard/purchased"
-                      : `${authorDashboard}/purchased`
+                      : `${authorDashboard}purchased`
                   }
                 >
                   Purchase

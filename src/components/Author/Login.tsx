@@ -80,7 +80,7 @@ const LogIn = () => {
             </InputRightElement>
           </InputGroup>
           <Flex justifyContent={"flex-end"}>
-            <a href="" style={{ color: "blue" }}>
+            <a href="https://www.softwerve.com/forgetpassword" style={{ color: "blue" }}>
               Forgot Password ?
             </a>
           </Flex>

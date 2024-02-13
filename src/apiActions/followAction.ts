@@ -40,6 +40,25 @@ export const handleFollowAuthor =
       });
   };
 
+  // handle follow a author
+export const handleUnfollowAuthor =
+(authorId: number) => (dispatch: AppDispatch) => {
+  dispatch(followAuthorStart());
+  return fetch(`${baseUrl}/user/unfollow/author?authorId=${authorId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      return dispatch(followAuthorSuccess(response));
+    })
+    .catch((error: any) => {
+      dispatch(followAuthorFailure(error));
+    });
+};
+
 
 // handling get all followed authors
 export const handleGetAllFollowedAuthors = () => (dispatch: AppDispatch) => {

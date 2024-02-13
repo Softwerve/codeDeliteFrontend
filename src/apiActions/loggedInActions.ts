@@ -1,5 +1,5 @@
 import { AppDispatch } from "@/lib/store";
-import { templatesByCategoryFailure, templatesByCategoryStart, templatesByCategorySuccess } from "@/slices/loggedIn";
+import { likeItemFailure, likeItemStart, likeItemSuccess, templatesByCategoryFailure, templatesByCategoryStart, templatesByCategorySuccess, unlikeItemFailure, unlikeItemStart, unlikeItemSuccess } from "@/slices/loggedIn";
 import Cookies from "universal-cookie";
 
 const baseUrl = "http://localhost:8080";
@@ -21,5 +21,41 @@ export const handleGetItemsWhenLoggedIn = (category: string,tempType: string) =>
     })
     .catch((error: any) => {
       dispatch(templatesByCategoryFailure(error));
+    });
+};
+
+export const handleLikeTemplate = (tempId:number) => (dispatch: AppDispatch) => {
+  dispatch(likeItemStart());
+  return fetch(`${baseUrl}/user/like?templateId=${tempId}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      return dispatch(likeItemSuccess(response));
+    })
+    .catch((error: any) => {
+      dispatch(likeItemFailure(error));
+    });
+};
+
+export const handleUnlikeTemplate = (tempId:number) => (dispatch: AppDispatch) => {
+  dispatch(unlikeItemStart());
+  return fetch(`${baseUrl}/user/unlike?templateId=${tempId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      return dispatch(unlikeItemSuccess(response));
+    })
+    .catch((error: any) => {
+      dispatch(unlikeItemFailure(error));
     });
 };

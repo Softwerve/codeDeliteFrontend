@@ -3,12 +3,13 @@ import type { RootState } from "../lib/store";
 
 // Define a type for the slice state
 interface authState {
-  isLogin: boolean;
   isLoading: boolean;
   isError: boolean;
   message: string;
   templates: [
     {
+      authorUsername: string;
+      monetizationLevel: string;
       tempId: number;
       authorId: number;
       authorName: string;
@@ -17,10 +18,10 @@ interface authState {
       thumbnailImage: string;
       price: number;
       likes: number;
-      itemInLovedlist: boolean;
-      liked: boolean;
-      itemInBag: boolean;
-      followingAuthor: boolean;
+      isFollowingAuthor: boolean;
+      isItemInBag: boolean;
+      isItemInLovedlist: boolean;
+      isLiked: boolean;
       tempLink: string;
       tempType: string;
       currency: string;
@@ -39,7 +40,6 @@ interface authState {
 
 // Define the initial state using that type
 const initialState: authState = {
-  isLogin: false,
   isLoading: false,
   isError: false,
   message: "",
@@ -48,15 +48,17 @@ const initialState: authState = {
       tempId: 0,
       authorId: 0,
       authorName: "",
+      authorUsername: "",
+      monetizationLevel: "",
       authorProfileImage: "",
       title: "",
       thumbnailImage: "",
       price: 0.0,
       likes: 0,
-      itemInLovedlist: false,
-      liked: false,
-      itemInBag: false,
-      followingAuthor: false,
+      isFollowingAuthor: false,
+      isItemInBag: false,
+      isItemInLovedlist: false,
+      isLiked: false,
       tempLink: "",
       tempType: "",
       currency: "",
@@ -69,7 +71,7 @@ const initialState: authState = {
         sections: [],
         technologiesUsed: [],
       },
-    }
+    },
   ],
 };
 
@@ -90,11 +92,46 @@ export const loggedInSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload.message;
-    }
+    },
+    likeItemStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    likeItemSuccess: (state, action) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+    },
+    likeItemFailure: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload.message;
+    },
+    unlikeItemStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    unlikeItemSuccess: (state, action) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+    },
+    unlikeItemFailure: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload.message;
+    },
   },
 });
 
-export const { templatesByCategoryStart,templatesByCategorySuccess,templatesByCategoryFailure  } =
-  loggedInSlice.actions;
+export const {
+  templatesByCategoryStart,
+  templatesByCategorySuccess,
+  templatesByCategoryFailure,
+  likeItemStart,
+  likeItemSuccess,
+  likeItemFailure,
+  unlikeItemStart,
+  unlikeItemSuccess,
+  unlikeItemFailure,
+} = loggedInSlice.actions;
 
 export default loggedInSlice.reducer;

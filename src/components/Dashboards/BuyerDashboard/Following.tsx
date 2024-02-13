@@ -5,7 +5,6 @@ import {
 } from "@/apiActions/followAction";
 import NotFollowingAnyAuthor from "@/components/CustomLoaders/NotFollowingAnyAuthor";
 import TemplateEmptyCard from "@/components/CustomLoaders/TemplateEmptyCard";
-import TemplateCard from "@/components/Templates/TemplateCard";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   Avatar,
@@ -109,7 +108,6 @@ const Following = () => {
                   {authorPublishedWebsites.length > 0 ? (
                     authorPublishedWebsites?.map((card, index) => (
                       <GridItem key={index}>
-                        <TemplateCard card={card} isLoved={false} />
                       </GridItem>
                     ))
                   ) : (
@@ -131,7 +129,6 @@ const Following = () => {
                   {authorPublishedComponents.length > 0 ? (
                     authorPublishedComponents?.map((card, index) => (
                       <GridItem key={index}>
-                        <TemplateCard card={card} isLoved={false} />
                       </GridItem>
                     ))
                   ) : (

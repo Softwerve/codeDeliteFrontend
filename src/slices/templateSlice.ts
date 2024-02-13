@@ -5,6 +5,7 @@ import type { RootState } from "../lib/store";
 interface TemplatesState {
   templates: [
     {
+      username: ReactNode;
       tempId: number;
       authorId: number;
       authorName: string;

@@ -1,5 +1,4 @@
 import { handleGetAllLovedLists } from "@/apiActions/templatesAction";
-import TemplateCard from "@/components/Templates/TemplateCard";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   ChakraProvider,
@@ -43,7 +42,6 @@ const Favourites = () => {
                 {lovedItems?.map((card, index) =>
                   card?.tempType === "Website" ? (
                     <GridItem key={index} color={"#17171A"}>
-                      <TemplateCard card={card} isLoved={true} />
                     </GridItem>
                   ) : null
                 )}
@@ -58,7 +56,6 @@ const Favourites = () => {
                 {lovedItems?.map((card, index) =>
                   card?.tempType === "Components" ? (
                     <GridItem key={index} color={"#17171A"}>
-                      <TemplateCard card={card} isLoved={true} />
                     </GridItem>
                   ) : null
                 )}

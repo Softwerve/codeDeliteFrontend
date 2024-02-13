@@ -12,7 +12,7 @@ export const handleComponentsByCategory = (category: string) => (dispatch: AppDi
   return fetch(`${baseUrl}/component/?category=${category}`)
     .then((response) => response.json())
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       return dispatch(componentsOfACategorySuccess(response));
     })
     .catch((error: any) => {
