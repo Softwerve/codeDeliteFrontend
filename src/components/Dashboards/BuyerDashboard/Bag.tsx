@@ -1,5 +1,5 @@
 import { handleGetBag, handleRemoveItemFromBag } from "@/apiActions/bagAction";
-import { convertCurrency } from "@/apiActions/currencyExchange";
+import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   Box,
@@ -12,44 +12,65 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import Script from "next/script";
 import React, { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoBagHandle, IoBagRemove } from "react-icons/io5";
 import { MdRemoveShoppingCart } from "react-icons/md";
-
 const Bag = () => {
   const store = useAppStore();
   const { bagItems, bagTotalAmount } = useAppSelector((state) => state.bag);
   const {user} = useAppSelector((state)=> state.user);
-  const [totalBagAmount, setTotalBagAmount] = useState(0);
   useEffect(() => {
     store.dispatch(handleGetBag());
   }, []);
 
   const handleRemoveItem = (tempId: any) => {
-    store.dispatch(handleRemoveItemFromBag(tempId));
+    store.dispatch(handleRemoveItemFromBag(tempId)).then((response)=>{
+      if(response?.payload?.success)
+      {
+        store.dispatch(handleGetBag());
+      }
+    })
   };
   let flexStyle = {
     justifyContent: "space-between",
     alignContent: "center",
     fontSize: "20",
   };
+
+
+  const handleCheckout = (e: { preventDefault: () => void; }) => {
+    var options = {
+      "key": "rzp_test_KaDYxmh6DwVNSe", // Enter the Key ID generated from the Dashboard
+      "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "Acme Corp", //your business name
+      "description": "Test Transaction",
+      "image": "https://example.com/your_logo",
+      "order_id": "order_NapUflHuPa8q3e", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+      "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+          "name": "Gaurav Kumar", //your customer's name
+          "email": "gaurav.kumar@example.com",
+          "contact": "9000090000" //Provide the customer's phone number for better conversion rates 
+      },
+      "notes": {
+          "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+          "color": "#3399cc"
+      }
+  };
   
-  const handleCurrencyConversion = async (amount:number,currency: string) => {
-    if(currency===user.currency)
-    {
-      setTotalBagAmount((prevTotal: number) => prevTotal+amount);
-      return amount;
-    }
-    else{
-      let covertedAmount = await convertCurrency(amount,currency,user.currency);
-      setTotalBagAmount((prevTotal: number) => prevTotal+covertedAmount);
-      return covertedAmount;
-    }
+  const paymentObject = new Razorpay(options);
+    paymentObject.open();
+
   }
 
   return (
     <Stack p={"5%"}>
+      <Script id="razorpay-checkout-js" src="https://checkout.razorpay.com/v1/checkout.js" />
       <Flex justifyContent={"space-between"} alignItems={"center"}>
         <Heading>Your Bag</Heading>
         <IoBagHandle fontSize="30px" />
@@ -77,8 +98,8 @@ const Bag = () => {
                   <Text>{item?.authorUserName}</Text>
                 </Stack>
                 <Flex alignItems={'center'}>
-                  <Text>{user.currencySymbol}</Text>
-                  <Text>{handleCurrencyConversion(item?.price,item?.currency)}</Text>
+                  <Text>{user?.currencySymbol}</Text>
+                  <Text>{convertCurrencyFromINR(item?.price,user?.currency)}</Text>
                 </Flex>
                 <Button
                   bg={"#2D7F80"}
@@ -99,7 +120,9 @@ const Bag = () => {
             width={"35%"}
             p={"3%"}
             borderRadius={"10px"}
+            height={'min-content'}
             boxShadow="rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"
+            position={'sticky'}
           >
             <Stack spacing={5}>
               <Text fontSize={"20"} fontWeight={"bold"}>
@@ -107,23 +130,26 @@ const Bag = () => {
               </Text>
               <Flex style={flexStyle}>
                 <Text>Subtotal</Text>
-                <Text>{user?.currencySymbol + totalBagAmount }</Text>
+                <Text>{user?.currencySymbol}{convertCurrencyFromINR(bagTotalAmount,user.currency) }</Text>
               </Flex>
               <Flex style={flexStyle}>
-                <Text>GST & Taxes</Text>
-                <Text>{user?.currencySymbol + 0}</Text>
+                <Text>GST & Taxes(18%)</Text>
+                <Text>{user?.currencySymbol}{convertCurrencyFromINR(bagTotalAmount*0.18,user.currency)}</Text>
               </Flex>
               <Flex style={flexStyle}>
                 <Text fontWeight={"bold"}>Total</Text>
-                <Text fontWeight={"bold"}>{user?.currencySymbol + totalBagAmount}</Text>
+                <Text fontWeight={"bold"}>{user?.currencySymbol}{convertCurrencyFromINR((bagTotalAmount+(bagTotalAmount*0.18)),user.currency)}</Text>
               </Flex>
               <Button
+                id="rzp-button1"
                 bg={"#2D7F80"}
                 color={"#ffffff"}
                 _hover={{ bg: "#277273" }}
+                onClick={handleCheckout}
               >
                 Checkout <FaArrowRightLong />
               </Button>
+             
             </Stack>
           </Box>
         </Flex>

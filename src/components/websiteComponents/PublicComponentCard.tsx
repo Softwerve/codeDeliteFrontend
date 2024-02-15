@@ -1,4 +1,4 @@
-import { convertCurrency } from "@/apiActions/currencyExchange";
+
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   Avatar,
@@ -16,6 +16,7 @@ import ComponentNotAvailable from "../CustomLoaders/ComponentNotAvailable";
 import { handleComponentsByCategory } from "@/apiActions/components";
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { useRouter } from "next/navigation";
+import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
 
 
 const PublicComponentCard = ({ category }: { category: string }) => {
@@ -82,7 +83,7 @@ const PublicComponentCard = ({ category }: { category: string }) => {
                   <Text>
                     {component.price == 0
                       ? "Free"
-                      : component.price}
+                      : convertCurrencyFromINR(component?.price,user?.currency)}
                   </Text>
                 </Flex>
               </Badge>

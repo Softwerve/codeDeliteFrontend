@@ -2,7 +2,6 @@ import {
   handleAddItemToBag,
   handleRemoveItemFromBag,
 } from "@/apiActions/bagAction";
-import { convertCurrency } from "@/apiActions/currencyExchange";
 import {
   handleFollowAuthor,
   handleUnfollowAuthor,
@@ -51,6 +50,7 @@ import removeFromLovedSound from '../../../public/audio/removeFromLovedItemsSoun
 import addToBagSound from '../../../public/audio/addToBagSound.wav';
 import removeFromBagSound from "../../../public/audio/removeFromBagSound.wav";
 import followSound from '../../../public/audio/followSound.wav';
+import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
 
 
 const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
@@ -328,12 +328,7 @@ const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
                   </Text>
                   <Text>
                     {template.price == 0
-                      ? "Free"
-                      : convertCurrency(
-                          template.price,
-                          template.currency,
-                          user.currency
-                        )}
+                      ? "Free" : convertCurrencyFromINR(template.price,user.currency)}
                   </Text>
                 </Flex>
               </Badge>

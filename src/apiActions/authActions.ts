@@ -3,7 +3,7 @@ import { loginFailure, loginStart, loginSuccess } from "@/slices/authSlice";
 import { availableUsernameFailure, availableUsernameStart, availableUsernameSuccess, sendOtpFailure, sendOtpStart, sendOtpSuccess, signupFailure, signupStart, signupSuccess } from "@/slices/userSlice";
 import Cookies from "universal-cookie";
 
-const baseUrl = "http://localhost:8080";
+const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 const authorDashboard = 'http://localhost:3002/'
 
 const cookies = new Cookies();

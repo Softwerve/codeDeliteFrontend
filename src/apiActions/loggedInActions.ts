@@ -2,7 +2,7 @@ import { AppDispatch } from "@/lib/store";
 import { likeItemFailure, likeItemStart, likeItemSuccess, templatesByCategoryFailure, templatesByCategoryStart, templatesByCategorySuccess, unlikeItemFailure, unlikeItemStart, unlikeItemSuccess } from "@/slices/loggedIn";
 import Cookies from "universal-cookie";
 
-const baseUrl = "http://localhost:8080";
+const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const cookies = new Cookies();
 const token = cookies.get("token");

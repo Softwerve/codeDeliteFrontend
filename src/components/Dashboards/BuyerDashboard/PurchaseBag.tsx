@@ -1,3 +1,5 @@
+import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
+import { useAppSelector } from "@/lib/hooks";
 import {
   Avatar,
   Badge,
@@ -16,6 +18,7 @@ import { MdRemoveShoppingCart } from "react-icons/md";
 
 const PurchaseBag = () => {
   const purchasedItems: any[] = [];
+  const {user} = useAppSelector((state)=> state.user);
   return (
     <Stack p={5}>
       <Heading>Your Purchases</Heading>
@@ -44,7 +47,7 @@ const PurchaseBag = () => {
                   </Box>
                 </Flex>
                 <Text>{item.title}</Text>
-                <Text> Purchased Price: {item.priceOfPurchase}</Text>
+                <Text> Purchased Price: {convertCurrencyFromINR(item?.priceOfPurchase,user?.currency)}</Text>
                 <Flex justifyContent={"flex-end"}>
                   <BiDownload
                     cursor="pointer"

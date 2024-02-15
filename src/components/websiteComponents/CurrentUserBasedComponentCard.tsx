@@ -2,7 +2,6 @@ import {
   handleAddItemToBag,
   handleRemoveItemFromBag,
 } from "@/apiActions/bagAction";
-import { convertCurrency } from "@/apiActions/currencyExchange";
 import {
   handleFollowAuthor,
   handleUnfollowAuthor,
@@ -44,14 +43,14 @@ import { IoBagAdd, IoBagHandleSharp, IoBagRemove } from "react-icons/io5";
 import ComponentNotAvailable from "../CustomLoaders/ComponentNotAvailable";
 import { TbHeartMinus } from "react-icons/tb";
 import { BsBox2HeartFill } from "react-icons/bs";
-import likeSound from '../../../public/audio/likeSound.wav';
-import unlikeSound from '../../../public/audio/unlike.mp3';
-import addToLovedSound from '../../../public/audio/addToLovedItemsSound.wav';
-import removeFromLovedSound from '../../../public/audio/removeFromLovedItemsSound.wav';
-import addToBagSound from '../../../public/audio/addToBagSound.wav';
+import likeSound from "../../../public/audio/likeSound.wav";
+import unlikeSound from "../../../public/audio/unlike.mp3";
+import addToLovedSound from "../../../public/audio/addToLovedItemsSound.wav";
+import removeFromLovedSound from "../../../public/audio/removeFromLovedItemsSound.wav";
+import addToBagSound from "../../../public/audio/addToBagSound.wav";
 import removeFromBagSound from "../../../public/audio/removeFromBagSound.wav";
-import followSound from '../../../public/audio/followSound.wav';
-
+import followSound from "../../../public/audio/followSound.wav";
+import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
 
 const CurrentUserBasedComponentCard = ({ category }: { category: string }) => {
   const store = useAppStore();
@@ -59,7 +58,7 @@ const CurrentUserBasedComponentCard = ({ category }: { category: string }) => {
   const router = useRouter();
   const { templates } = useAppSelector((state) => state.loggedIn);
   const { user } = useAppSelector((state) => state.user);
- 
+
   const { isLoading, isSuccess, message } = useAppSelector(
     (state) => state.bag
   );
@@ -321,7 +320,7 @@ const CurrentUserBasedComponentCard = ({ category }: { category: string }) => {
                   color="#5EB921"
                   onClick={() => handleAddToBag(component?.tempId)}
                 >
-                  <IoBagAdd/>
+                  <IoBagAdd />
                 </Box>
               )}
               <Badge colorScheme="purple" p={2}>
@@ -332,11 +331,7 @@ const CurrentUserBasedComponentCard = ({ category }: { category: string }) => {
                   <Text>
                     {component.price == 0
                       ? "Free"
-                      : convertCurrency(
-                          component.price,
-                          component.currency,
-                          user.currency
-                        )}
+                      : convertCurrencyFromINR(component.price, user.currency)}
                   </Text>
                 </Flex>
               </Badge>

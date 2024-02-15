@@ -7,7 +7,7 @@ import {
 } from "@/slices/userSlice";
 import Cookies from "universal-cookie";
 
-const baseUrl = "http://localhost:8080";
+const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const cookies = new Cookies();
 const token = cookies.get("token");
