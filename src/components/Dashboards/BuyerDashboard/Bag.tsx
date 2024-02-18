@@ -1,5 +1,6 @@
 import { handleGetBag, handleRemoveItemFromBag } from "@/apiActions/bagAction";
 import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
+import { handleCreateAnOrder, handleOrderPaymentSuccess } from "@/apiActions/paymentAction";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   Box,
@@ -17,10 +18,12 @@ import React, { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoBagHandle, IoBagRemove } from "react-icons/io5";
 import { MdRemoveShoppingCart } from "react-icons/md";
+import logo from '../../../app/favicon.ico';
 const Bag = () => {
   const store = useAppStore();
   const { bagItems, bagTotalAmount } = useAppSelector((state) => state.bag);
   const {user} = useAppSelector((state)=> state.user);
+  const {orderResponse,success} = useAppSelector((state)=> state.payment);
   useEffect(() => {
     store.dispatch(handleGetBag());
   }, []);
@@ -39,11 +42,48 @@ const Bag = () => {
     fontSize: "20",
   };
 
+  const handleBuyItem = (tempId: number) => {
+    store.dispatch(handleCreateAnOrder(tempId)).then((response) => {
+      if (response?.payload?.success && response?.payload.orderResponse.orderId) {
+        const { amount, name, description, orderId, prefill } = response?.payload?.orderResponse;
+        const options = {
+          "key": process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, 
+          "amount": amount,
+          "currency": "INR",
+          "name": name,
+          "description": description,
+          "image": logo.src,
+          "order_id": orderId,
+          "handler": function(response: { razorpay_payment_id: any; razorpay_order_id: any; razorpay_signature: any; }) {
+            store.dispatch(handleOrderPaymentSuccess({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature
+            }));
+            store.dispatch(handleGetBag());
+          },
+          "prefill": {
+            "name": prefill.name,
+            "email": prefill.email
+          },
+          "theme": {
+            "color": "#3399cc"
+          }
+        };
+  
+        const paymentObject = new Razorpay(options);
+        paymentObject.open();
+      }
+    });
+  }
+  
+
 
   const handleCheckout = (e: { preventDefault: () => void; }) => {
+    
     var options = {
-      "key": "rzp_test_KaDYxmh6DwVNSe", // Enter the Key ID generated from the Dashboard
-      "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "key": process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, 
+      "amount": "4566",
       "currency": "INR",
       "name": "Acme Corp", //your business name
       "description": "Test Transaction",
@@ -105,6 +145,7 @@ const Bag = () => {
                   bg={"#2D7F80"}
                   color={"#ffffff"}
                   _hover={{ bg: "#277273" }}
+                  onClick={()=> handleBuyItem(item?.tempId)}
                 >
                   Buy
                 </Button>

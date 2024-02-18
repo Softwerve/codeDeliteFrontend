@@ -12,15 +12,16 @@ import PurchaseBag from "./BuyerDashboard/PurchaseBag";
 import Templates from "../Templates/Templates";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import { handleUserDetails } from "@/apiActions/userAction";
+import Orders from "./BuyerDashboard/Orders";
 export default function LayoutPage({ title }: { title: any }) {
   const store = useAppStore();
   const { user } = useAppSelector((state) => state.user);
-  useEffect(()=>{
+  useEffect(() => {
     store.dispatch(handleUserDetails());
-  },[])
+  }, []);
   return (
     <ChakraProvider>
-      {user.role === "USER" ? (
+      {/* {user.role === "USER" ? ( */}
         <Flex>
           <Box position={"sticky"} width={["0%", "20%"]}>
             <Sidebar />
@@ -37,6 +38,8 @@ export default function LayoutPage({ title }: { title: any }) {
               <Bag />
             ) : title == "Loved Items" ? (
               <Favourites />
+            ) : title == "Orders" ? (
+              <Orders />
             ) : title == "Purchase Bag" ? (
               <PurchaseBag />
             ) : (
@@ -44,11 +47,11 @@ export default function LayoutPage({ title }: { title: any }) {
             )}
           </Stack>
         </Flex>
-      ) : 
-      <Stack justifyContent={'center'} minH={'100vh'} alignItems={'center'}>
-        <Text fontSize='80px'>No Access</Text>
-      </Stack>
-      }
+      {/* ) : (
+        <Stack justifyContent={"center"} minH={"100vh"} alignItems={"center"}>
+          <Text fontSize="80px">No Access</Text>
+        </Stack>
+      )} */}
     </ChakraProvider>
   );
 }
