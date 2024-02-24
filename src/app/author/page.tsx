@@ -1,6 +1,6 @@
 "use client"
 import LogIn from "@/components/Author/Login";
-import SignUp from "@/components/Author/Signup";
+import SignUp from "@/components/Author/Signup.jsx";
 import {
   Box,
   ChakraProvider,
@@ -19,8 +19,10 @@ import React from "react";
 import logo from "../../assets/logo.png";
 import StoreProvider from "../StoreProvider";
 import { IoWarning } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
   return (
     <StoreProvider>
       <ChakraProvider>
@@ -30,12 +32,12 @@ const page = () => {
           justifyContent={"space-between"}
           h={"100vh"}
         >
-          <Stack spacing={30} width={'60%'} p={"5%"}>
-            <Image src={logo.src} alt="softwerve" width={"200px"} />
+          <Stack spacing={30} width={'60%'} p={"5%"}  >
+            <Image src={logo.src} cursor={'pointer'} alt="softwerve" width={"200px"} onClick={()=> router.push('/')} />
             <Stack p={3} border={'1px solid #FFC09C'} borderRadius={'10px'} color={'#ffffff'}>
               <IoWarning fontSize='30px' color='#FFC09C'/>
-              <Text fontSize={'15px'}>Due to payment security concerns, we currently restrict paid services to India only. However, we continue to offer free services to all users, regardless of location.</Text>
-              <Text fontSize={'10px'} opacity={0.8} >Paid services refer to the ability for authors to sell their templates for a fee.</Text>
+              <Text fontSize={'15px'}>Important Notice: Please ensure accurate credentials during signup, as these details will be utilized for payment processing on our platform.</Text>
+              <Text fontSize={'10px'} opacity={0.8} >When Signup,Kindly provide your full name, valid email address, country, and preferred currency for seamless transactions.</Text>
             </Stack>
             <Box>
               <Box>
@@ -49,7 +51,7 @@ const page = () => {
               </Box>
             </Box>
           </Stack>
-          <Box bg={"#ffffff"} width={"40%"} p={"5%"}>
+          <Box bg={"#ffffff"} width={"50%"} p={'5%'}>
             <Tabs isFitted>
               <TabList mb="1em">
                 <Tab>LogIn</Tab>

@@ -4,7 +4,7 @@ import { availableUsernameFailure, availableUsernameStart, availableUsernameSucc
 import Cookies from "universal-cookie";
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-const authorDashboard = 'http://localhost:3002/'
+const authorDashboard = process.env.NEXT_PUBLIC_AUTHOR_DASHBOARD_URL;
 
 const cookies = new Cookies();
 
@@ -62,10 +62,6 @@ export const handleSendOtp = (email: string) => (dispatch: AppDispatch) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        const date = new Date();
-        date.setDate(date.getDate()+365);
-        cookies.set("token", response.token, { expires: date , secure:true, sameSite:'none' });
-        window.location.href = authorDashboard;
         return dispatch(loginSuccess(response));
       })
       .catch((error) => {

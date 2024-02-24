@@ -13,6 +13,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
@@ -21,6 +22,7 @@ import { IoMdEye } from "react-icons/io";
 import { IoEyeOff } from "react-icons/io5";
 
 const LogIn = () => {
+  const authorDashboard = process.env.NEXT_PUBLIC_AUTHOR_DASHBOARD_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = React.useState(false);
@@ -33,9 +35,9 @@ const LogIn = () => {
     store
       .dispatch(handleLogin({ email: email, password: password }))
       .then((response) => {
-        console.log(response);
         if (response?.payload.isSuccess == true) {
           handleToast("Logged In Successfully", "success");
+          window.location.href = `${authorDashboard}?access=${response?.payload.token}`;
         } else {
           handleToast(response?.payload.message, "error");
         }
@@ -80,30 +82,18 @@ const LogIn = () => {
             </InputRightElement>
           </InputGroup>
           <Flex justifyContent={"flex-end"}>
-            <a href="https://www.softwerve.com/forgetpassword" style={{ color: "blue" }}>
+            <Link target="blank" href="https://www.softwerve.com/forgetpassword" style={{ color: "blue" }}>
               Forgot Password ?
-            </a>
+            </Link>
           </Flex>
-          {data?.isLoading ? (
-            <Flex alignItems={"center"} gap={2} alignContent={'center'}>
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="md"
-                label="Sending.."
-              />
-              <Text>Processing...</Text>
-            </Flex>
-          ) : (
-            <Button colorScheme="blue" type="submit">
+           (
+            <Button isLoading={data?.isLoading} loadingText="Submitting" colorScheme="blue" type="submit">
               Submit
             </Button>
-          )}
+          )
         </Stack>
       </form>
-      <Divider />
+      {/* <Divider />
       <Text textAlign={"center"}>Or</Text>
       <Divider />
       <Button variant={"outline"} colorScheme="blue" leftIcon={<FcGoogle />}>
@@ -111,7 +101,7 @@ const LogIn = () => {
       </Button>
       <Button variant={"outline"} colorScheme="gray" leftIcon={<FaGithub />}>
         {"Continue With GitHub"}
-      </Button>
+      </Button> */}
     </Stack>
   );
 };

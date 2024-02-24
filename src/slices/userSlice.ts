@@ -11,6 +11,7 @@ interface userState {
   otpSuccess: boolean;
   isRegister: boolean;
   isAvailable: boolean;
+  isAvailableLoading: boolean;
   user: {
     username: string;
     name: string;
@@ -43,6 +44,7 @@ const initialState: userState = {
   otpSuccess: false,
   isRegister: false,
   isAvailable: false,
+  isAvailableLoading: false,
 };
 
 export const userSlice = createSlice({
@@ -65,16 +67,16 @@ export const userSlice = createSlice({
       state.message = action.payload.message;
     },
     availableUsernameStart: (state) => {
-      state.isLoading= true;
+      state.isAvailableLoading= true;
       state.isError = false;
     },
     availableUsernameSuccess: (state,action) => {
-      state.isLoading = false;
+      state.isAvailableLoading = false;
       state.isAvailable = action.payload.success;
       state.message = action.payload.message;
     },
     availableUsernameFailure: (state,action) => {
-      state.isLoading = false;
+      state.isAvailableLoading = false;
       state.isError = true;
       state.message = action.payload.message;
     },

@@ -31,6 +31,7 @@ import { useAppSelector, useAppStore } from "@/lib/hooks";
 import { handleLogout, handleUserDetails } from "@/apiActions/userAction";
 import { MdOutlineArrowDropDownCircle } from "react-icons/md";
 import Cookies from "universal-cookie";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
@@ -42,7 +43,7 @@ const Navbar = () => {
   const cookies = new Cookies();
   const token = cookies.get("token");
   const toast = useToast();
-  const softwerveLink = "http://localhost:3000";
+  const softwerveLink = process.env.NEXT_PUBLIC_SOFTWERVE_URL;
   useEffect(() => {
     if (token != null) {
       store.dispatch(handleUserDetails());
@@ -159,9 +160,8 @@ const Navbar = () => {
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
-            onClick={() => router.push(`${softwerveLink}/blog`)}
           >
-            Blog
+            <Link href={`${softwerveLink}/blog`} target="blank">Blog</Link>
           </Button>
           <Button
             className="underline-on-hover"
