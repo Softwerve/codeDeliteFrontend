@@ -53,7 +53,7 @@ import followSound from '../../../public/audio/followSound.wav';
 import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
 
 
-const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
+const CurrentUserBasedTemplates = ({ category }) => {
   const store = useAppStore();
   const toast = useToast();
   const router = useRouter();
@@ -64,7 +64,7 @@ const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
     store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
   }, []);
 
-  const handleFollow = (authorId: number) => {
+  const handleFollow = (authorId) => {
     store.dispatch(handleFollowAuthor(authorId)).then((response) => {
       if (response?.payload?.success) {
         store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
@@ -76,7 +76,7 @@ const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
     });
   };
 
-  const handleUnfollow = (authorId: number) => {
+  const handleUnfollow = (authorId) => {
     store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
       if (response?.payload?.success) {
         store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
@@ -86,7 +86,7 @@ const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
     });
   };
 
-  const handleAddLovedItem = (tempId: number) => {
+  const handleAddLovedItem = (tempId) => {
     store.dispatch(handleAddItemToLovedList(tempId)).then((response) => {
       if (response?.payload?.success) {
         store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
@@ -98,7 +98,7 @@ const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
     });
   };
 
-  const handleRemoveLovedItem = (tempId: any) => {
+  const handleRemoveLovedItem = (tempId) => {
     store.dispatch(handleRemoveItemFromLovedList(tempId)).then((response) => {
       if (response?.payload?.success) {
         store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
@@ -110,7 +110,7 @@ const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
     });
   };
 
-  const handleAddToBag = (tempId: number) => {
+  const handleAddToBag = (tempId) => {
     store.dispatch(handleAddItemToBag(tempId)).then((response) => {
       if (response?.payload?.success) {
         store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
@@ -122,7 +122,7 @@ const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
     });
   };
 
-  const handleRemoveFromBag = (tempId: number) => {
+  const handleRemoveFromBag = (tempId) => {
     store.dispatch(handleRemoveItemFromBag(tempId)).then((response) => {
       if (response?.payload?.success) {
         store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
@@ -134,7 +134,7 @@ const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
     });
   };
 
-  const handleLike = (tempId: number) => {
+  const handleLike = (tempId) => {
     store.dispatch(handleLikeTemplate(tempId)).then((response) => {
       if (response?.payload?.success) {
         store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
@@ -146,7 +146,7 @@ const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
     });
   };
 
-  const handleUnLike = (tempId: number) => {
+  const handleUnLike = (tempId) => {
     store.dispatch(handleUnlikeTemplate(tempId)).then((response) => {
       if (response?.payload?.success) {
         store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
@@ -158,7 +158,7 @@ const CurrentUserBasedTemplates = ({ category }: { category: string }) => {
     });
   };
 
-  const handleToast = (message: any, status: any) => {
+  const handleToast = (message, status) => {
     toast({
       title: message,
       status: status,

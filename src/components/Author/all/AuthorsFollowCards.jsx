@@ -15,7 +15,7 @@ import React, { useEffect } from "react";
 import { FaCubes, FaUserCheck, FaUserFriends } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
 import followSound from '../../../../public/audio/followSound.wav';
-const AuthorsFollowCards = ({ searchParams }: { searchParams: any }) => {
+const AuthorsFollowCards = ({ searchParams }) => {
   const store = useAppStore();
   const toast = useToast();
   const { authorsCards } = useAppSelector((state) => state.authors);
@@ -23,7 +23,7 @@ const AuthorsFollowCards = ({ searchParams }: { searchParams: any }) => {
     store.dispatch(handleGetAllAuthorsFollowCards());
   }, []);
 
-  const handleFollow = (authorId: number) => {
+  const handleFollow = (authorId) => {
     store.dispatch(handleFollowAuthor(authorId)).then((response) => {
       if (response?.payload?.success) {
         store.dispatch(handleGetAllAuthorsFollowCards());
@@ -35,7 +35,7 @@ const AuthorsFollowCards = ({ searchParams }: { searchParams: any }) => {
     });
   };
 
-  const handleUnfollow = (authorId: number) => {
+  const handleUnfollow = (authorId) => {
     store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
       if (response?.payload?.success) {
         store.dispatch(handleGetAllAuthorsFollowCards());
@@ -45,7 +45,7 @@ const AuthorsFollowCards = ({ searchParams }: { searchParams: any }) => {
     });
   };
 
-  const handleToast = (message: any, status: any) => {
+  const handleToast = (message, status) => {
     toast({
       title: message,
       status: status,

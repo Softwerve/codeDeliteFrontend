@@ -28,7 +28,7 @@ const Bag = () => {
     store.dispatch(handleGetBag());
   }, []);
 
-  const handleRemoveItem = (tempId: any) => {
+  const handleRemoveItem = (tempId) => {
     store.dispatch(handleRemoveItemFromBag(tempId)).then((response)=>{
       if(response?.payload?.success)
       {
@@ -42,7 +42,7 @@ const Bag = () => {
     fontSize: "20",
   };
 
-  const handleBuyItem = (tempId: number) => {
+  const handleBuyItem = (tempId) => {
     store.dispatch(handleCreateAnOrder(tempId)).then((response) => {
       if (response?.payload?.success && response?.payload.orderResponse.orderId) {
         const { amount, name, description, orderId, prefill } = response?.payload?.orderResponse;
@@ -54,7 +54,7 @@ const Bag = () => {
           "description": description,
           "image": logo.src,
           "order_id": orderId,
-          "handler": function(response: { razorpay_payment_id: any; razorpay_order_id: any; razorpay_signature: any; }) {
+          "handler": function(response) {
             store.dispatch(handleOrderPaymentSuccess({
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_order_id: response.razorpay_order_id,
@@ -79,8 +79,8 @@ const Bag = () => {
   
 
 
-  const handleCheckout = (e: { preventDefault: () => void; }) => {
-    
+  const handleCheckout = (e) => {
+    e.preventDefault();
     var options = {
       "key": process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, 
       "amount": "4566",
