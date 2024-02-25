@@ -10,7 +10,7 @@ import { HiTemplate, HiUsers } from "react-icons/hi";
 import { BiSolidDashboard } from "react-icons/bi";
 import { TbMoneybag } from "react-icons/tb";
 import { MdOutlineFileDownload } from "react-icons/md";
-import { FaHeartCirclePlus } from "react-icons/fa6";
+import { FaFileInvoiceDollar, FaHeartCirclePlus } from "react-icons/fa6";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -24,7 +24,7 @@ const Sidebar = () => {
     {
       icon: <FaHeartCirclePlus/>,
       title: "Loved Items",
-      link: "/dasboard/favouritetemplates"
+      link: "/dashboard/loveditems"
     },
     {
       icon: <HiUsers />,
@@ -32,19 +32,14 @@ const Sidebar = () => {
       link: "/dashboard/following",
     },
     {
-      icon: <HiTemplate />,
-      title: "Templates",
-      link: "/dashboard/templates",
-    },
-    {
-      icon: <CgComponents />,
-      title: "Components",
-      link: "/dashboard/components",
-    },
-    {
       icon: <IoBagHandle />,
       title: "Bag",
       link: "/dashboard/bag",
+    },
+    {
+      icon: <FaFileInvoiceDollar />,
+      title: "Orders",
+      link: "/dashboard/orders",
     },
     {
       icon: <MdOutlineFileDownload />,

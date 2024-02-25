@@ -5,37 +5,53 @@ import Favourites from "./BuyerDashboard/Favourites";
 import Bag from "./BuyerDashboard/Bag";
 import StoreProvider from "@/app/StoreProvider";
 import Navbar from "./Common/Navbar";
-import { Box, ChakraProvider, Flex, Stack } from "@chakra-ui/react";
+import { Box, ChakraProvider, Flex, Stack, Text } from "@chakra-ui/react";
 import Sidebar from "./Common/Sidebar";
 import Following from "./BuyerDashboard/Following";
 import PurchaseBag from "./BuyerDashboard/PurchaseBag";
-import { useAppDispatch, useAppSelector, useAppStore } from "@/lib/hooks";
+import Templates from "../Templates/Templates";
+import { useAppSelector, useAppStore } from "@/lib/hooks";
 import { handleUserDetails } from "@/apiActions/userAction";
-export default function LayoutPage({ title }) {
+import Orders from "./BuyerDashboard/Orders";
+export default function LayoutPage({ title }: { title: any }) {
   const store = useAppStore();
+  const { user } = useAppSelector((state) => state.user);
+  useEffect(() => {
+    store.dispatch(handleUserDetails());
+  }, []);
   return (
     <ChakraProvider>
-      <Flex>
-        <Box position={"sticky"} width={["0%", "20%"]}>
-          <Sidebar />
-        </Box>
-        <Stack width={["100%", "80%"]}>
-          <Navbar />
-          {title == "Home" ? (
-            <Home />
-          ) : title == "Following" ? (
-            <Following />
-          ) : title == "Bag" ? (
-            <Bag />
-          ) : title == "Loved Templates" ? (
-            <Favourites />
-          ) : title == "Purchase Bag" ? (
-            <PurchaseBag />
-          ) : (
-            "Error"
-          )}
+      {/* {user.role === "USER" ? ( */}
+        <Flex>
+          <Box position={"sticky"} width={["0%", "20%"]}>
+            <Sidebar />
+          </Box>
+          <Stack width={["100%", "80%"]}>
+            <Navbar />
+            {title == "Home" ? (
+              <Home />
+            ) : title == "Templates" ? (
+              <Templates />
+            ) : title == "Following" ? (
+              <Following />
+            ) : title == "Bag" ? (
+              <Bag />
+            ) : title == "Loved Items" ? (
+              <Favourites />
+            ) : title == "Orders" ? (
+              <Orders />
+            ) : title == "Purchase Bag" ? (
+              <PurchaseBag />
+            ) : (
+              "Error"
+            )}
+          </Stack>
+        </Flex>
+      {/* ) : (
+        <Stack justifyContent={"center"} minH={"100vh"} alignItems={"center"}>
+          <Text fontSize="80px">No Access</Text>
         </Stack>
-      </Flex>
+      )} */}
     </ChakraProvider>
   );
 }

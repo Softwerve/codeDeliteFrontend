@@ -1,20 +1,12 @@
 "use client";
-import {
-  Heading,
-  Stack,
-  Grid,
-  GridItem,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Heading, Stack, Grid, GridItem } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import TemplateCard from "./TemplateCard";
-import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector, useAppStore } from "@/lib/hooks";
-import {
-  handleGetAllCategories,
-  handleGetAllPublishedTemplatesOfACategory,
-} from "@/apiActions/templatesAction";
+import React, { useCallback, useEffect, useState } from "react";
+import { useAppSelector, useAppStore } from "@/lib/hooks";
+import CurrentUserBasedTemplates from "./CurrentUserBasedTemplates";
+import PublicTemplates from "./PublicTemplates";
+import { handleGetAllCategories } from "@/apiActions/templatesAction";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface TabData {
   id: number;
@@ -22,30 +14,29 @@ interface TabData {
 }
 
 const Templates = () => {
-  const [selectedTab, setSelectedTab] = useState("All");
-
   const store = useAppStore();
-  const data = useAppSelector((state) => state.templates);
-  const templates = data.templates;
-  const tabs = useAppSelector((state) => state.categories).categories;
+  const [selectedTab, setSelectedTab] = useState("All");
+  const {user} = useAppSelector((state)=> state.user);
+  const {categories} = useAppSelector((state) => state.categories);
   const router = useRouter();
-  useEffect(() => {
+  
+  useEffect(()=>{
     store.dispatch(handleGetAllCategories());
-    store.dispatch(handleGetAllPublishedTemplatesOfACategory("All"));
-  }, []);
-  const handleTabChange = (title: string) => {
-    setSelectedTab(title);
-    store.dispatch(handleGetAllPublishedTemplatesOfACategory(title));
-  };
-  // console.log("Templates: ",data,templates);
+  },[])
+  
+  const handleTabChange = (category:string) => {
+    setSelectedTab(category);
+  }
 
   return (
     <Stack spacing={10} p={"5%"}>
       <Heading>Templates</Heading>
       <Tabs variant="soft-rounded" align="center">
         <TabList gap={"3"} flexWrap={"wrap"}>
-          <Tab border={"1px solid gray"} onClick={() => handleTabChange("All")}>All</Tab>
-          {tabs.map((tab, id) => (
+          <Tab border={"1px solid gray"} onClick={()=> handleTabChange("All")}>
+            All
+          </Tab>
+          {categories.map((tab, id) => (
             <Tab
               mr={2}
               border={"1px solid gray"}
@@ -57,24 +48,12 @@ const Templates = () => {
           ))}
         </TabList>
         <TabPanels>
-          {tabs?.map((tab, index) => (
+          <TabPanel>
+          {user.email !=null ? <CurrentUserBasedTemplates category={selectedTab} /> : <PublicTemplates category={selectedTab} />}
+          </TabPanel>
+          {categories?.map((tab, index) => (
             <TabPanel key={index}>
-              <Grid
-                templateColumns={[
-                  "repeat(1,1fr)",
-                  "repeat(2,1fr)",
-                  "repeat(3,1fr)",
-                  "repeat(4,1fr)",
-                ]}
-                templateRows={"repeat(auto,auto)"}
-                gap={5}
-              >
-                {templates?.map((card, index) => (
-                  <GridItem key={index}>
-                    <TemplateCard card={card} isLoved={false} />
-                  </GridItem>
-                ))}
-              </Grid>
+              {user.email !=null ? <CurrentUserBasedTemplates category={selectedTab} /> : <PublicTemplates category={selectedTab} />}
             </TabPanel>
           ))}
         </TabPanels>

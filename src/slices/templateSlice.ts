@@ -3,18 +3,111 @@ import type { RootState } from "../lib/store";
 
 // Define a type for the slice state
 interface TemplatesState {
-  templates: [];
+  templates: [
+    {
+      username: ReactNode;
+      tempId: number;
+      authorId: number;
+      authorName: string;
+      authorProfileImage: string;
+      title: string;
+      thumbnailImage: string;
+      price: number;
+      likes: number;
+      tempLink: string;
+      tempType: string;
+      currency: string;
+      status: string;
+      authorProfileLink: string;
+      templatePage: {
+        images: [];
+        highlights: [];
+        overview: string;
+        sections: [];
+        technologiesUsed: [];
+      };
+    }
+  ];
   isLoading: boolean;
   isError: boolean;
   message: string;
-  lovedItems: [];
+  lovedItems: [
+    {
+      tempId: number;
+      authorId: number;
+      authorName: string;
+      authorProfileImage: string;
+      title: string;
+      thumbnailImage: string;
+      price: number;
+      likes: number;
+      tempLink: string;
+      tempType: string;
+      currency: string;
+      status: string;
+      authorProfileLink: string;
+      templatePage: {
+        images: [];
+        highlights: [];
+        overview: string;
+        sections: [];
+        technologiesUsed: [];
+      };
+    }
+  ];
   isSuccess: boolean;
 }
 
 // Define the initial state using that type
 const initialState: TemplatesState = {
-  templates: [],
-  lovedItems: [],
+  templates: [
+    {
+      tempId: 0,
+      authorId: 0,
+      authorName: "",
+      authorProfileImage: "",
+      title: "",
+      thumbnailImage: "",
+      price: 0.0,
+      likes: 0,
+      tempLink: "",
+      tempType: "",
+      currency: "",
+      status: "",
+      authorProfileLink: "",
+      templatePage: {
+        images: [],
+        highlights: [],
+        overview: "",
+        sections: [],
+        technologiesUsed: [],
+      },
+    }
+  ],
+  lovedItems: [
+    {
+      tempId: 0,
+      authorId: 0,
+      authorName: "",
+      authorProfileImage: "",
+      title: "",
+      thumbnailImage: "",
+      price: 0.0,
+      likes: 0,
+      tempLink: "",
+      tempType: "",
+      currency: "",
+      status: "",
+      authorProfileLink: "",
+      templatePage: {
+        images: [],
+        highlights: [],
+        overview: "",
+        sections: [],
+        technologiesUsed: [],
+      },
+    }
+  ],
   isLoading: false,
   isError: false,
   message: "",

@@ -16,60 +16,24 @@ import {
   Button,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import wall from "../../assets/wall1.png";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import TemplateCard from "../Templates/TemplateCard";
 import { useAppDispatch, useAppSelector, useAppStore } from "@/lib/hooks";
-import { handleGetAllPublishedTemplatesOfACategory } from "@/apiActions/templatesAction";
-
-
-interface TabData {
-  id: number;
-  title: string;
-}
-
+import {
+  handleGetAllCategories,
+  handleGetAllPublishedTemplatesOfACategory,
+} from "@/apiActions/templatesAction";
+import CurrentUserBasedTemplates from "../Templates/CurrentUserBasedTemplates";
+import PublicTemplates from "../Templates/PublicTemplates";
 
 const SelectTemplate = () => {
-  const tabs: TabData[] = [
-    {
-      id: 1,
-      title: "All",
-    },
-    {
-      id: 2,
-      title: "Business",
-    },
-    {
-      id: 3,
-      title: "E-commerce",
-    },
-    {
-      id: 4,
-      title: "Blog",
-    },
-    {
-      id: 5,
-      title: "Personal Website",
-    },
-    {
-      id: 6,
-      title: "Educational",
-    },
-    {
-      id: 7,
-      title: "Dashboards",
-    },
-  ];
-
   const store = useAppStore();
-  const dispatch = useAppDispatch();
-  const data = useAppSelector((state)=> state.templates);
-  const templates = data.templates;
-  useEffect(()=>{
-    store.dispatch(handleGetAllPublishedTemplatesOfACategory("All"));
-  },[])
+  const { categories } = useAppSelector((state) => state.categories);
+  const {user} = useAppSelector((state)=> state.user);
+  useEffect(() => {
+    store.dispatch(handleGetAllCategories());
+  }, []);
 
   const gridColumns = useBreakpointValue({
     base: "repeat(1, 1fr)",
@@ -79,8 +43,28 @@ const SelectTemplate = () => {
   });
 
   const colors = useColorModeValue(
-    ["red.50", "teal.50", "blue.50","red.50", "teal.50", "blue.50","red.50", "teal.50", "blue.50"],
-    ["red.900", "teal.900", "blue.900","red.900", "teal.900", "blue.900","red.900", "teal.900", "blue.900"]
+    [
+      "red.50",
+      "teal.50",
+      "blue.50",
+      "red.50",
+      "teal.50",
+      "blue.50",
+      "red.50",
+      "teal.50",
+      "blue.50",
+    ],
+    [
+      "red.900",
+      "teal.900",
+      "blue.900",
+      "red.900",
+      "teal.900",
+      "blue.900",
+      "red.900",
+      "teal.900",
+      "blue.900",
+    ]
   );
   const [tabIndex, setTabIndex] = useState(0);
   const bgColor = colors[tabIndex];
@@ -95,36 +79,32 @@ const SelectTemplate = () => {
         </Text>
         <Box></Box>
         <Tabs
-          onChange={(index) => setTabIndex(index)}
           bg={bgColor}
           p={"2%"}
           borderRadius={"10"}
         >
-          <TabList flexWrap={'wrap'}>
-            {tabs?.map((tab, index) => (
-              <Tab key={index}>{tab.title}</Tab>
+          <TabList flexWrap={"wrap"}>
+            <Tab>All</Tab>
+            {categories?.map((category, index) => (
+              <Tab key={index}>{category?.category}</Tab>
             ))}
           </TabList>
           <TabPanels>
-            {tabs?.map((tab, index) => (
+            <TabPanel>
+            {user.email!="" ? <CurrentUserBasedTemplates category={'All'}/> : <PublicTemplates category={"All"} />}
+            </TabPanel>
+            {categories?.map((category, index) => (
               <TabPanel key={index}>
-                <Grid
-                  gridTemplateColumns={gridColumns}
-                  gridTemplateRows={"repeat(2,auto)"}
-                  gap={"10"}
-                >
-                  {templates?.map((card, ind) => (
-                    <GridItem
-                      borderRadius={"10"}
-                      key={ind}
-                    >
-                      <TemplateCard card={card}/>
-                    </GridItem>
-                  ))}
-                </Grid>
+                  {user.email!="" ? <CurrentUserBasedTemplates category={category.category}/> : <PublicTemplates category={category.category} />}
               </TabPanel>
             ))}
-            <Button className="underline-on-hover"  bg={'none'} _hover={{bg:'none'}}>See All <FaLongArrowAltRight/> </Button>
+            <Button
+              className="underline-on-hover"
+              bg={"none"}
+              _hover={{ bg: "none" }}
+            >
+              See All <FaLongArrowAltRight />{" "}
+            </Button>
           </TabPanels>
         </Tabs>
       </Stack>
