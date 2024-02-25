@@ -54,11 +54,7 @@ const WhyFromUs = () => {
         Why Choose Our Templates and Components ?
       </Heading>
       <Text textAlign={"center"}>
-        At CodeDelite, we're committed to providing you with the tools you need
-        to succeed in your web development projects. Our templates and
-        components offer unparalleled value, helping you streamline your
-        workflow, enhance your designs, and deliver exceptional results. Here
-        are the reasons why you should choose our offerings
+        {"At CodeDelite, we're committed to providing you with the tools you need to succeed in your web development projects. Our templates and components offer unparalleled value, helping you streamline your workflow, enhance your designs, and deliver exceptional results. Here are the reasons why you should choose our offerings"}
       </Text>
 
       {cards.map((card, index) => (

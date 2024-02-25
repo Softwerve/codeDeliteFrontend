@@ -5,7 +5,7 @@ import type { RootState } from "../lib/store";
 interface TemplatesState {
   templates: [
     {
-      username: ReactNode;
+      username: string;
       tempId: number;
       authorId: number;
       authorName: string;
@@ -62,6 +62,7 @@ interface TemplatesState {
 const initialState: TemplatesState = {
   templates: [
     {
+      username: "",
       tempId: 0,
       authorId: 0,
       authorName: "",

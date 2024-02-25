@@ -83,7 +83,7 @@ const PublicComponentCard = ({ category }: { category: string }) => {
                   <Text>
                     {component.price == 0
                       ? "Free"
-                      : convertCurrencyFromINR(component?.price,user?.currency)}
+                      : `₹ ${component.price}`}
                   </Text>
                 </Flex>
               </Badge>

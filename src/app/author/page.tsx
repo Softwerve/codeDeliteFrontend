@@ -21,7 +21,7 @@ import StoreProvider from "../StoreProvider";
 import { IoWarning } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   return (
     <StoreProvider>
@@ -36,8 +36,8 @@ const page = () => {
             <Image src={logo.src} cursor={'pointer'} alt="softwerve" width={"200px"} onClick={()=> router.push('/')} />
             <Stack p={3} border={'1px solid #FFC09C'} borderRadius={'10px'} color={'#ffffff'}>
               <IoWarning fontSize='30px' color='#FFC09C'/>
-              <Text fontSize={'15px'}>Important Notice: Please ensure accurate credentials during signup, as these details will be utilized for payment processing on our platform.</Text>
-              <Text fontSize={'10px'} opacity={0.8} >When Signup,Kindly provide your full name, valid email address, country, and preferred currency for seamless transactions.</Text>
+              <Text fontSize={'15px'}>{"Important Notice: Please ensure accurate credentials during signup, as these details will be utilized for payment processing on our platform."}</Text>
+              <Text fontSize={'10px'} opacity={0.8} >{"When Signup,Kindly provide your full name, valid email address, country, and preferred currency for seamless transactions."}</Text>
             </Stack>
             <Box>
               <Box>
@@ -73,4 +73,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
