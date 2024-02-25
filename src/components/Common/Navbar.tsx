@@ -135,6 +135,16 @@ const Navbar = () => {
           >
             Components
           </Button>
+          <Button
+            className="underline-on-hover"
+            color={isTop ? "white" : "black"}
+            bg={"none"}
+            as={Button}
+            _hover={{ bg: "none" }}
+            onClick={() => router.push("/pricingandcharges")}
+          >
+            Pricing & Charges
+          </Button>
           {/* <Button
             className="underline-on-hover"
             color={isTop ? "white" : "black"}
@@ -163,7 +173,7 @@ const Navbar = () => {
           >
             <Link href={`${softwerveLink}/blog`} target="blank">Blog</Link>
           </Button>
-          <Button
+          {/* <Button
             className="underline-on-hover"
             color={isTop ? "white" : "black"}
             bg={"none"}
@@ -172,7 +182,7 @@ const Navbar = () => {
             onClick={() => router.push("/author")}
           >
             Become An Author
-          </Button>
+          </Button> */}
         </Flex>
       ) : (
         ""
@@ -234,15 +244,27 @@ const Navbar = () => {
             </Menu>
           </Flex>
         ) : (
+          // <Button
+          //   variant={"outline"}
+          //   color={isTop ? "white" : "black"}
+          //   _hover={{ bg: "none" }}
+          //   onClick={() =>
+          //     (window.location.href = "http://localhost:3000/login")
+          //   }
+          // >
+          //   Login <FiArrowUpRight fontWeight="bold" />
+          // </Button>
           <Button
+            // className="underline-on-hover"
             variant={"outline"}
             color={isTop ? "white" : "black"}
+            bg={"none"}
+            as={Button}
             _hover={{ bg: "none" }}
-            onClick={() =>
-              (window.location.href = "http://localhost:3000/login")
-            }
+            onClick={() => router.push("/author")}
+            rightIcon={<FiArrowUpRight fontWeight="bold" />}
           >
-            Login <FiArrowUpRight fontWeight="bold" />
+            Become An Author
           </Button>
         )
       ) : null}

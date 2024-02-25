@@ -62,6 +62,7 @@ export const handleSendOtp = (email: string) => (dispatch: AppDispatch) => {
     })
       .then((response) => response.json())
       .then((response) => {
+        
         return dispatch(loginSuccess(response));
       })
       .catch((error) => {
