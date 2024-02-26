@@ -15,6 +15,9 @@ import {
   getAllPublishedTemplatesOfACategoryFailure,
   getAllPublishedTemplatesOfACategoryStart,
   getAllPublishedTemplatesOfACategorySuccess,
+  getTemplateOrComponentByIdFailure,
+  getTemplateOrComponentByIdStart,
+  getTemplateOrComponentByIdSuccess,
   removeItemFromLovedListFailure,
   removeItemFromLovedListStart,
   removeItemFromLovedListSuccess,
@@ -104,3 +107,20 @@ export const handleRemoveItemFromLovedList =
         dispatch(removeItemFromLovedListFailure(error));
       });
   };
+
+  // Handle Get Template or Component By Id
+
+  export const handleGetTemplateorComponentById = (id:number) => async (dispatch: AppDispatch) => {
+    dispatch(getTemplateOrComponentByIdStart());
+      return await fetch(`${baseUrl}/template/item?templateId=${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response)=> response.json())
+      .then((response)=> {
+        return dispatch(getTemplateOrComponentByIdSuccess(response));
+      }).catch((error)=>{
+        dispatch(getTemplateOrComponentByIdFailure(error));
+      });
+  }
