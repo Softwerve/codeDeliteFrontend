@@ -232,7 +232,7 @@ const CurrentUserBasedTemplates = ({ category }) => {
                   <Text fontSize="sm">{template.authorUsername}</Text>
                 </Box>
               </Flex>
-              { user.role=="AUTHOR" ? template.isAuthorInInspirationList : template.isFollowingAuthor ? (
+              { (user.role==="AUTHOR" ? template.isAuthorInInspirationList : template.isFollowingAuthor) ? (
                 <Button
                   variant={"outline"}
                   border={"2px solid #0A66C2"}
