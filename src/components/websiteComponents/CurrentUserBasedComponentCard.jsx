@@ -4,6 +4,8 @@ import {
 } from "@/apiActions/bagAction";
 import {
   handleFollowAuthor,
+  handleGetInspiredByAuthor,
+  handleRemoveFromInspiration,
   handleUnfollowAuthor,
 } from "@/apiActions/followAction";
 import {
@@ -67,25 +69,52 @@ const CurrentUserBasedComponentCard = ({ category }) => {
   }, []);
 
   const handleFollow = (authorId) => {
-    store.dispatch(handleFollowAuthor(authorId)).then((response) => {
-      if (response?.payload?.success) {
-        store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
-        const audio = new Audio(followSound);
-        audio.play();
-      } else {
-        handleToast(response?.payload.message, "error");
-      }
-    });
+    if(user.role === "USER")
+    {
+      store.dispatch(handleFollowAuthor(authorId)).then((response) => {
+        if (response?.payload?.success) {
+          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+          const audio = new Audio(followSound);
+          audio.play();
+        } else {
+          handleToast(response?.payload.message, "error");
+        }
+      });
+    }else if(user.role === "AUTHOR")
+    {
+      store.dispatch(handleGetInspiredByAuthor(authorId)).then((response) => {
+        if (response?.payload?.success) {
+          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+          const audio = new Audio(followSound);
+          audio.play();
+        } else {
+          handleToast(response?.payload.message, "error");
+        }
+      });
+    }
   };
 
   const handleUnfollow = (authorId) => {
-    store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
-      if (response?.payload?.success) {
-        store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
-      } else {
-        handleToast(response?.payload.message, "error");
-      }
-    });
+    if(user.role === "USER")
+    {
+      store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
+        if (response?.payload?.success) {
+          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+        } else {
+          handleToast(response?.payload.message, "error");
+        }
+      });
+    }
+    else if(user.role === "AUTHOR")
+    {
+      store.dispatch(handleRemoveFromInspiration(authorId)).then((response) => {
+        if (response?.payload?.success) {
+          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+        } else {
+          handleToast(response?.payload.message, "error");
+        }
+      });
+    }
   };
 
   const handleAddLovedItem = (tempId) => {
@@ -238,8 +267,12 @@ const CurrentUserBasedComponentCard = ({ category }) => {
                 src={component.thumbnailImage}
                 width={"100%"}
                 height={"200px"}
+                onClick={()=> router.push(`/webtemplates/${component.tempId}`)}
               />
             </Box>
+            <Divider/>
+            <Text>{component.title}</Text>
+            <Divider/>
             <Flex
               justifyContent={"space-between"}
               alignContent={"center"}

@@ -4,6 +4,8 @@ import {
 } from "@/apiActions/bagAction";
 import {
   handleFollowAuthor,
+  handleGetInspiredByAuthor,
+  handleRemoveFromInspiration,
   handleUnfollowAuthor,
 } from "@/apiActions/followAction";
 import {
@@ -42,7 +44,6 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { IoBagAdd, IoBagHandleSharp, IoBagRemove } from "react-icons/io5";
 import ComponentNotAvailable from "../CustomLoaders/ComponentNotAvailable";
 import { TbHeartMinus } from "react-icons/tb";
-import { BsBox2HeartFill } from "react-icons/bs";
 import likeSound from '../../../public/audio/likeSound.wav';
 import unlikeSound from '../../../public/audio/unlike.mp3';
 import addToLovedSound from '../../../public/audio/addToLovedItemsSound.wav';
@@ -65,25 +66,52 @@ const CurrentUserBasedTemplates = ({ category }) => {
   }, []);
 
   const handleFollow = (authorId) => {
-    store.dispatch(handleFollowAuthor(authorId)).then((response) => {
-      if (response?.payload?.success) {
-        store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
-        const audio = new Audio(followSound);
-        audio.play();
-      } else {
-        handleToast(response?.payload.message, "error");
-      }
-    });
+    if(user.role === "USER")
+    {
+      store.dispatch(handleFollowAuthor(authorId)).then((response) => {
+        if (response?.payload?.success) {
+          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+          const audio = new Audio(followSound);
+          audio.play();
+        } else {
+          handleToast(response?.payload.message, "error");
+        }
+      });
+    }else if(user.role === "AUTHOR")
+    {
+      store.dispatch(handleGetInspiredByAuthor(authorId)).then((response) => {
+        if (response?.payload?.success) {
+          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+          const audio = new Audio(followSound);
+          audio.play();
+        } else {
+          handleToast(response?.payload.message, "error");
+        }
+      });
+    }
   };
 
   const handleUnfollow = (authorId) => {
-    store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
-      if (response?.payload?.success) {
-        store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
-      } else {
-        handleToast(response?.payload.message, "error");
-      }
-    });
+    if(user.role === "USER")
+    {
+      store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
+        if (response?.payload?.success) {
+          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+        } else {
+          handleToast(response?.payload.message, "error");
+        }
+      });
+    }
+    else if(user.role === "AUTHOR")
+    {
+      store.dispatch(handleRemoveFromInspiration(authorId)).then((response) => {
+        if (response?.payload?.success) {
+          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+        } else {
+          handleToast(response?.payload.message, "error");
+        }
+      });
+    }
   };
 
   const handleAddLovedItem = (tempId) => {
