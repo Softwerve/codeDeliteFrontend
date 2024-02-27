@@ -15,7 +15,7 @@ const Footer = () => {
   return (
     <Stack borderTop={"1px solid white"} spacing={"5"} p={"5% 5% 2% 5%"} bg={'#343434'} color={'#FFFFFF'}>
       <Image style={{cursor:'pointer'}} onClick={()=>router.push(`https://www.${link}`)} src={softwerve} alt="codedelite" width={"200"} />
-      <Flex justifyContent={"space-between"} p={"5%"} borderBottom={'1px solid white'}>
+      <Flex justifyContent={"space-between"} p={"5%"} borderBottom={'1px solid white'} flexWrap={'wrap'} gap={5}>
         <Stack>
           <Text fontWeight={'bold'} fontSize={'20px'} >Products</Text>
           <Link href={`https://www.codedelite.${link}`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>CodeDelite</Link>

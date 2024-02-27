@@ -65,11 +65,13 @@ const WhyFromUs = () => {
           <Flex
             borderRadius={10}
             boxShadow="rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"
-            width={"60%"}
+            width={['100%',"60%"]}
             alignItems={"center"}
             gap={10}
+            p={2}
+            direction={['column-reverse','column']}
           >
-            <Image width={'35%'} src={card.image} />
+            <Image width={['100%','35%']} src={card.image} />
             <Stack color={'#000'} p={5}>
             <Text fontSize={"20px"}>
               {card.reason}

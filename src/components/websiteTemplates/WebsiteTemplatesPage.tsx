@@ -1,3 +1,4 @@
+"use client"
 import { handleGetTemplateorComponentById } from '@/apiActions/templatesAction';
 import { useAppSelector, useAppStore } from '@/lib/hooks'
 import { Avatar, Badge, Box, Button, Flex, Grid, GridItem, Heading, Image, Stack, Text } from '@chakra-ui/react'

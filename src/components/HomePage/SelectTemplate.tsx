@@ -48,7 +48,7 @@ const SelectTemplate = () => {
   }
   return (
     <Box p={"5%"}>
-      <Stack p={"5%"} spacing={'5'}>
+      <Stack p={["2%","5%"]} spacing={'5'}>
         <Box textAlign={'center'}>
           <Heading>Find Your Perfect Fit - Select a Template</Heading>
           <Text>
@@ -61,14 +61,15 @@ const SelectTemplate = () => {
         <Stack
           spacing={5}
           bg={'#FEF2DF'}
-          p={"2%"}
+          p={["2%"]}
           borderRadius={"10"}
+          alignItems={'center'}
         >
-         <Flex gap={8}>
-           <Text borderRadius={'30px'} color={selectedTab=="All"?"#ffffff":"#000000"} p={2} bg={selectedTab==="All" ? 'blue' : 'none'} cursor={'pointer'} onClick={()=> handleTabChange("All")} >All</Text>
+         <Flex gap={5} flexWrap={'wrap'}>
+           <Text border={'2px solid gray'} borderRadius={'30px'} color={selectedTab=="All"?"#ffffff":"gray"} p={2} bg={selectedTab==="All" ? 'blue' : 'none'} cursor={'pointer'} onClick={()=> handleTabChange("All")} >All</Text>
            {
             categories.map((category,index)=>(
-              <Text borderRadius={'30px'} color={selectedTab==category.category?"#ffffff":"#000000"} p={2} bg={selectedTab==category.category ? 'blue' : 'none'} cursor={'pointer'} onClick={()=> handleTabChange(category.category)} key={index}>{category.category}</Text>
+              <Text border={'2px solid gray'} borderRadius={'30px'} color={selectedTab==category.category?"#ffffff":"#626161"} p={2} bg={selectedTab==category.category ? 'blue' : 'none'} cursor={'pointer'} onClick={()=> handleTabChange(category.category)} key={index}>{category.category}</Text>
             ))
            }
          </Flex>
@@ -80,7 +81,7 @@ const SelectTemplate = () => {
                  <Flex gap={3}>
                     <Avatar src={template.authorProfileImage} name={template.authorName} />
                     <Box textAlign={'start'}>
-                      <Text fontWeight='bold'>
+                      <Text fontSize={'sm'} fontWeight='bold'>
                         {template.authorName}
                       </Text>
                       <Text fontSize='sm'>{template.username}</Text>

@@ -23,6 +23,7 @@ import {
   Badge,
   Box,
   Button,
+  Divider,
   Flex,
   Grid,
   GridItem,
