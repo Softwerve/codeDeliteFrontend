@@ -31,8 +31,9 @@ const Page = () => {
           margin={"auto"}
           justifyContent={"space-between"}
           h={"100vh"}
+          direction={['column','row']}
         >
-          <Stack spacing={30} width={'60%'} p={"5%"}  >
+          <Stack spacing={30} width={['100%','60%']} p={"5%"}  >
             <Image src={logo.src} cursor={'pointer'} alt="softwerve" width={"200px"} onClick={()=> router.push('/')} />
             <Stack p={3} border={'1px solid #FFC09C'} borderRadius={'10px'} color={'#ffffff'}>
               <IoWarning fontSize='30px' color='#FFC09C'/>
@@ -51,7 +52,7 @@ const Page = () => {
               </Box>
             </Box>
           </Stack>
-          <Box bg={"#ffffff"} width={"50%"} p={'5%'}>
+          <Box bg={"#ffffff"} width={['100%',"50%"]} p={'5%'}>
             <Tabs isFitted>
               <TabList mb="1em">
                 <Tab>LogIn</Tab>

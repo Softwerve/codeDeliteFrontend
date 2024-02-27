@@ -14,12 +14,12 @@ const SearchComponents = () => {
       backgroundSize={"cover"}
       backgroundRepeat={"no-repeat"}
     >
-      <Stack width={"60%"} spacing={5}>
-        <Heading fontSize={"45px"} color={"#ffffff"}>
+      <Stack width={['100%',"60%"]} spacing={5}>
+        <Heading fontSize={['30px',"45px"]} color={"#ffffff"}>
           Explore Powerful and Innovative Component Templates for Seamless
           Development
         </Heading>
-        <Flex width={'70%'} gap={5}>
+        <Flex direction={['column','row']} width={['100%','70%']} gap={5}>
           <Input backgroundColor={'#ffffff'} type="text" placeholder="Search For Component Templates" />
           <Button leftIcon={<BiSearchAlt2/>}w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}}colorScheme="yellow" >Search</Button>
         </Flex>

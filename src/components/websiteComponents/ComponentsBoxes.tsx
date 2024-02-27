@@ -98,7 +98,7 @@ const ComponentsBoxes = () => {
     <Stack p={10} spacing={'5'}>
       <Heading>Components</Heading>
       <Divider/>
-      <Grid gap={5} gridTemplateColumns={'repeat(4,1fr)'} gridTemplateRows={'repeat(auto,auto)'}>
+      <Grid gap={5} gridTemplateColumns={['repeat(1,1fr)','repeat(2,1fr)','repeat(3,1fr)','repeat(4,1fr)']} gridTemplateRows={'repeat(auto,auto)'}>
         {
           components.map((component,index)=> (
             <GridItem key={index}>

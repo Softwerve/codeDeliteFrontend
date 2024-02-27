@@ -48,18 +48,18 @@ const BecomeSeller = () => {
     ];
     
   return (
-    <Stack bg={'#8C53FF'} spacing={'10'} p={'10%'}>
+    <Stack bg={'#8C53FF'} spacing={'10'} p={['5%','10%']}>
         <Heading textAlign={'center'} color={'#ffffff'}>Become An Author - Showcase Your Templates</Heading>
         <Text textAlign={'center'} color={'#ffffff'}>Are you a talented designer or developer with unique web templates or code components? Join our platform and transform your creative skills into revenue! Becoming a author on our marketplace is simple and rewarding.</Text>
         {
             cards.map((card, index)=>(
-                <Flex gap={5} borderRadius={'10'} p={'2%'} key={index} bg={'#FFFFFF'} boxShadow='rgba(0, 0, 0, 0.24) 0px 3px 8px'>
-                    <Stack spacing={'4'} width={'60%'}>
+                <Flex direction={['column-reverse','row']} gap={5} borderRadius={'10'} p={'2%'} key={index} bg={'#FFFFFF'} boxShadow='rgba(0, 0, 0, 0.24) 0px 3px 8px'>
+                    <Stack spacing={'4'} width={['100%','60%']}>
                         <Heading fontSize={['20px','25px','30px','35px']} color={"#525252"}>{card.title}</Heading>
                         <Text fontStyle={'oblique'}>{card.description}</Text>
                     </Stack>
-                    <Box width={'5px'} bg={'#0793E1'}></Box>
-                    <Box width={'40%'} >
+                    <Box width={['0px','5px']} bg={'#0793E1'}></Box>
+                    <Box width={['100%','40%']} >
                         <Image margin={'auto'}  src={card.image} />
                     </Box>
                 </Flex>
