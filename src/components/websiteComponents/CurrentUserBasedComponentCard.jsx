@@ -217,7 +217,7 @@ const CurrentUserBasedComponentCard = ({ category }) => {
               <Flex
                 cursor={"pointer"}
                 onClick={() =>
-                  (window.location.href = `http://localhost:3003/profile/public/${component.authorUsername}`)
+                  (window.location.href = `${process.env.NEXT_PUBLIC_AUTHOR_PROFILE_URL}/${component.authorUsername}`)
                 }
               >
                 <Avatar

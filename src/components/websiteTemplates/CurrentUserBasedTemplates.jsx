@@ -52,6 +52,7 @@ import addToBagSound from '../../../public/audio/addToBagSound.wav';
 import removeFromBagSound from "../../../public/audio/removeFromBagSound.wav";
 import followSound from '../../../public/audio/followSound.wav';
 import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
+import Link from "next/link";
 
 
 const CurrentUserBasedTemplates = ({ category }) => {
@@ -214,7 +215,7 @@ const CurrentUserBasedTemplates = ({ category }) => {
               <Flex
                 cursor={"pointer"}
                 onClick={() =>
-                  (window.location.href = `http://localhost:3003/profile/public/${template.authorUsername}`)
+                  (window.location.href = `${process.env.NEXT_PUBLIC_AUTHOR_PROFILE_URL}/${template.authorUsername}`)
                 }
               >
                 <Avatar
@@ -264,7 +265,11 @@ const CurrentUserBasedTemplates = ({ category }) => {
                 src={template.thumbnailImage}
                 width={"100%"}
                 height={"200px"}
+                onClick={()=> router.push(`/webtemplates/${template.tempId}`)}
               />
+            </Box>
+            <Box>
+              <Text>{template.title}</Text>
             </Box>
             <Flex
               justifyContent={"space-between"}
@@ -300,9 +305,9 @@ const CurrentUserBasedTemplates = ({ category }) => {
                 _hover={{ transform: "scale(2)" }}
                 color="#5E6EF7"
               >
-                <a href={template.tempLink} target="blank">
+                <Link href={template.tempLink} target="blank">
                   <FaEye />
-                </a>
+                </Link>
               </Box>
 
               {user.role == "USER" ? (

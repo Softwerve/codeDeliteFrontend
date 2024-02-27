@@ -40,7 +40,7 @@ const PublicTemplates = ({ category }: { category: string }) => {
               <Flex
                 cursor={"pointer"}
                 onClick={() =>
-                  (window.location.href = `http://localhost:3003/profile/public/${template.username}`)
+                  (window.location.href = `${process.env.NEXT_PUBLIC_AUTHOR_PROFILE_URL}/${template.username}`)
                 }
               >
                 <Avatar
