@@ -119,6 +119,7 @@ export const loggedInSlice = createSlice({
       state.isError = true;
       state.message = action.payload.message;
     },
+    
   },
 });
 

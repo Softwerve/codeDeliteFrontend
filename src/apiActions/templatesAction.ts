@@ -1,5 +1,4 @@
 import { AppDispatch } from "@/lib/store";
-import { addItemToBagSuccess } from "@/slices/bagSlice";
 import {
   getAllCategoriesFailure,
   getAllCategoriesStart,
@@ -21,6 +20,9 @@ import {
   removeItemFromLovedListFailure,
   removeItemFromLovedListStart,
   removeItemFromLovedListSuccess,
+  searchTemplateFailure,
+  searchTemplateStart,
+  searchTemplateSuccess,,
 } from "@/slices/templateSlice";
 import Cookies from "universal-cookie";
 
@@ -124,3 +126,21 @@ export const handleRemoveItemFromLovedList =
         dispatch(getTemplateOrComponentByIdFailure(error));
       });
   }
+
+
+// Handle Search Template
+  export const handleSearchTemplate = (keyword:string) => async (dispatch: AppDispatch) => {
+    dispatch(searchTemplateStart());
+      return await fetch(`${baseUrl}/template/search/website?keyword=${keyword}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response)=> response.json())
+      .then((response)=> {
+        return dispatch(searchTemplateSuccess(response));
+      }).catch((error)=>{
+        dispatch(searchTemplateFailure(error));
+      });
+  }
+  

@@ -9,7 +9,7 @@ import { Box, ChakraProvider, Flex, Stack, Text } from "@chakra-ui/react";
 import Sidebar from "./Common/Sidebar";
 import Following from "./BuyerDashboard/Following";
 import PurchaseBag from "./BuyerDashboard/PurchaseBag";
-import Templates from "../Templates/Templates";
+import Templates from "../WebTemplates/WebTemplatesSection";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import { handleUserDetails } from "@/apiActions/userAction";
 import Orders from "./BuyerDashboard/Orders";

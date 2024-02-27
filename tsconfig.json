@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/Author/Signup.jsx", "src/components/websiteComponents/CurrentUserBasedComponentCard.jsx", "src/components/Templates/CurrentUserBasedTemplates.jsx", "src/components/Author/all/AuthorsFollowCards.jsx", "src/components/Dashboards/BuyerDashboard/Bag.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/Author/Signup.jsx", "src/components/websiteComponents/CurrentUserBasedComponentCard.jsx", "src/components/WebTemplates/CurrentUserBasedTemplates.jsx", "src/components/Author/all/AuthorsFollowCards.jsx", "src/components/Dashboards/BuyerDashboard/Bag.jsx"],
   "exclude": ["node_modules"]
 }

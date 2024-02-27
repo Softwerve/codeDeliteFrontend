@@ -9,11 +9,22 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import tempBg from '../../assets/templates.png'
+import { useAppStore } from "@/lib/hooks";
+import { handleSearchTemplate } from "@/apiActions/templatesAction";
 
 const SearchSection = () => {
+  const [keyword,setKeyword] = useState("");
+  const store = useAppStore();
+  const handleSearch=()=>{
+    store.dispatch(handleSearchTemplate(keyword));
+  }
+  const handleInput = (e: string) => {
+    setKeyword(e);
+    handleSearch();
+  }
   return (
     <Stack justifyContent={'center'} alignItems={'center'} minH={'50vh'} color={'#ffffff'} textAlign={"center"} backgroundImage={tempBg.src} backgroundRepeat={'no-repeat'} backgroundSize={'cover'}>
       <Stack width={["90%","80%","60%"]} spacing={5}>
@@ -23,9 +34,9 @@ const SearchSection = () => {
             <InputLeftElement pointerEvents="none">
               <FaSearch color="gray.300" />
             </InputLeftElement>
-            <Input type="text" placeholder="Search Templates...." />
+            <Input type="text" placeholder="Search Templates...." onChange={(e)=>handleInput(e.target.value)} />
           </InputGroup>
-          <Button leftIcon={<FaSearch/>} w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}}>Search</Button>
+          <Button leftIcon={<FaSearch/>} w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}} onClick={handleSearch}>Search</Button>
         </Flex>
       </Stack>
     </Stack>

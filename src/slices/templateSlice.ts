@@ -24,7 +24,7 @@ interface TemplatesState {
       status: string;
       authorProfileLink: string;
       templatePage: {
-        images: [];
+        images: [string,string,string,string,string];
         highlights: [];
         overview: string;
         sections: [];
@@ -109,7 +109,7 @@ const initialState: TemplatesState = {
     status: "",
     authorProfileLink: "",
     templatePage: {
-      images: [],
+      images: ["","","","",""],
       highlights: [],
       overview: "",
       sections: [],
@@ -240,6 +240,18 @@ export const templateSlice = createSlice({
       state.isLoading = false;
       state.message = action.payload.message;
     },
+    searchTemplateStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    searchTemplateSuccess: (state, action) => {
+      state.isLoading = false;
+      state.templates = action.payload;
+    },
+    searchTemplateFailure: (state, action) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+    },
   },
 });
 
@@ -258,7 +270,10 @@ export const {
   removeItemFromLovedListFailure,
   getTemplateOrComponentByIdStart,
   getTemplateOrComponentByIdSuccess,
-  getTemplateOrComponentByIdFailure
+  getTemplateOrComponentByIdFailure,
+  searchTemplateStart,
+  searchTemplateSuccess,
+  searchTemplateFailure,
 } = templateSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
