@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: 'Discover a curated selection of meticulously crafted web templates tailored to suit various industries and design preferences. Explore our diverse range of templates to find the perfect match for your next website project',
 }
 
-export default function TemplatesLayout({
+export default function WebTemplatesLayout({
   children,
 }: {
   children: React.ReactNode

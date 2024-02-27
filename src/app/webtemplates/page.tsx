@@ -1,13 +1,13 @@
 "use client";
 import Footer from "@/components/Common/Footer";
 import Navbar from "@/components/Common/Navbar";
-import SearchSection from "@/components/Templates/SearchSection";
-import Templates from "@/components/Templates/Templates";
+import SearchSection from "@/components/WebTemplates/SearchSection";
+import Templates from "@/components/WebTemplates/WebTemplatesSection";
 import { Box, ChakraProvider } from "@chakra-ui/react";
-import React, { Suspense } from "react";
+import React from "react";
 import StoreProvider from "../StoreProvider";
 
-const templates = () => {
+const TemplatesPage = () => {
   return (
     <StoreProvider>
       <ChakraProvider>
@@ -22,4 +22,4 @@ const templates = () => {
   );
 };
 
-export default templates;
+export default TemplatesPage;

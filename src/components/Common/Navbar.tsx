@@ -85,7 +85,7 @@ const Navbar = () => {
   };
 
   const router = useRouter();
-  const authorDashboard = "http://localhost:3002/";
+  const authorDashboard = process.env.NEXT_PUBLIC_AUTHOR_DASHBOARD_URL;
   return (
     <Flex
       as="nav"
@@ -121,9 +121,9 @@ const Navbar = () => {
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
-            onClick={() => router.push("/templates")}
+            onClick={() => router.push("/webtemplates")}
           >
-            Templates
+            Web Templates
           </Button>
           <Button
             className="underline-on-hover"
@@ -188,7 +188,7 @@ const Navbar = () => {
         ""
       )}
       {showLoginButton == true ? (
-        data.user.username != null ? (
+        data.user.username != "" && data.user.username!=null ? (
           <Flex justifyContent={"space-between"} gap={3} alignItems={"center"}>
             <Avatar
               name={data.user?.username}
@@ -196,7 +196,7 @@ const Navbar = () => {
               size={"sm"}
             />
             <Text color={isTop ? "#ffffff" : "#000000"}>
-              {data?.user.username}
+              {data?.user.name}
             </Text>
             <Menu>
               <MenuButton
@@ -214,7 +214,7 @@ const Navbar = () => {
                   href={
                     data.user.role === "USER"
                       ? "/dashboard"
-                      : `${authorDashboard}`
+                      : `${authorDashboard}?access=${token}`
                   }
                 >
                   Dashboard
@@ -224,7 +224,7 @@ const Navbar = () => {
                   href={
                     data.user.role === "USER"
                       ? "/dashboard/bag"
-                      : `${authorDashboard}bag`
+                      : `${authorDashboard}/bag?access=${token}`
                   }
                 >
                   Bag
@@ -234,7 +234,7 @@ const Navbar = () => {
                   href={
                     data.user.role === "USER"
                       ? "/dashboard/purchased"
-                      : `${authorDashboard}purchased`
+                      : `${authorDashboard}/purchased?access=${token}`
                   }
                 >
                   Purchase
@@ -288,9 +288,9 @@ const Navbar = () => {
               bg={"none"}
               as={Button}
               _hover={{ bg: "none" }}
-              onClick={() => router.push("/templates")}
+              onClick={() => router.push("/webtemplates")}
             >
-              Templates
+              Web Templates
             </Button>
             <Button
               className="underline-on-hover"

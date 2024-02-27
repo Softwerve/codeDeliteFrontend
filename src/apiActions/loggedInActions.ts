@@ -59,3 +59,20 @@ export const handleUnlikeTemplate = (tempId:number) => (dispatch: AppDispatch) =
       dispatch(unlikeItemFailure(error));
     });
 };
+
+
+// Handle Search component
+// export const handleSearchTemplate = (keyword:string) => async (dispatch: AppDispatch) => {
+//   dispatch(searchComponentStart());
+//     return await fetch(`${baseUrl}/template/search/component?keyword=${keyword}`, {
+//       method: "GET",
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     }).then((response)=> response.json())
+//     .then((response)=> {
+//       return dispatch(searchComponentSuccess(response));
+//     }).catch((error)=>{
+//       dispatch(searchComponentFailure(error));
+//     });
+// }

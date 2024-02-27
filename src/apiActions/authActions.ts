@@ -62,7 +62,7 @@ export const handleSendOtp = (email: string) => (dispatch: AppDispatch) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        
+        cookies.set("token",response.token,{path:'/',maxAge: 365 * 24 * 60 * 60});
         return dispatch(loginSuccess(response));
       })
       .catch((error) => {
