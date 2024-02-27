@@ -234,7 +234,7 @@ const CurrentUserBasedComponentCard = ({ category }) => {
                   <Text fontSize="sm">{component.authorUsername}</Text>
                 </Box>
               </Flex>
-              { user.role==="AUTHOR" ? component.isAuthorInInspirationList : component.isFollowingAuthor ? (
+              { (user.role==="AUTHOR" ? component.isAuthorInInspirationList : component.isFollowingAuthor) ? (
                 <Button
                   variant={"outline"}
                   border={"2px solid #0A66C2"}
