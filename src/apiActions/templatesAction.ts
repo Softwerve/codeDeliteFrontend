@@ -22,7 +22,7 @@ import {
   removeItemFromLovedListSuccess,
   searchTemplateFailure,
   searchTemplateStart,
-  searchTemplateSuccess,,
+  searchTemplateSuccess,
 } from "@/slices/templateSlice";
 import Cookies from "universal-cookie";
 
