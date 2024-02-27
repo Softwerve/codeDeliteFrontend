@@ -2,7 +2,7 @@
 import StoreProvider from "@/app/StoreProvider";
 import Footer from "@/components/Common/Footer";
 import Navbar from "@/components/Common/Navbar";
-import TemplatesPage from "@/components/WebTemplates/WebTemplatesPage";
+import TemplatesPage from "@/components/websiteTemplates/WebsiteTemplatesPage";
 import { ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 

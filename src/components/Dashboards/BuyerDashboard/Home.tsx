@@ -1,7 +1,7 @@
 "use client";
 import StoreProvider from "@/app/StoreProvider";
-import SearchSection from "@/components/WebTemplates/SearchSection";
-import Templates from "@/components/WebTemplates/WebTemplatesSection";
+import SearchSection from "@/components/websiteTemplates/SearchSection";
+import Templates from "@/components/websiteTemplates/WebTemplatesSection";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 
