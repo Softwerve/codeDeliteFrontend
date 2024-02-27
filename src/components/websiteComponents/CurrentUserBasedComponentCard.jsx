@@ -68,7 +68,7 @@ const CurrentUserBasedComponentCard = ({ category }) => {
     store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
   }, []);
 
-  const handleFollow = (authorId) => {
+  const handleFollow = (authorId,authorUsername) => {
     if(user.role === "USER")
     {
       store.dispatch(handleFollowAuthor(authorId)).then((response) => {
@@ -82,7 +82,7 @@ const CurrentUserBasedComponentCard = ({ category }) => {
       });
     }else if(user.role === "AUTHOR")
     {
-      store.dispatch(handleGetInspiredByAuthor(authorId)).then((response) => {
+      store.dispatch(handleGetInspiredByAuthor(authorUsername)).then((response) => {
         if (response?.payload?.success) {
           store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
           const audio = new Audio(followSound);
@@ -94,7 +94,7 @@ const CurrentUserBasedComponentCard = ({ category }) => {
     }
   };
 
-  const handleUnfollow = (authorId) => {
+  const handleUnfollow = (authorId,authorUsername) => {
     if(user.role === "USER")
     {
       store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
@@ -107,7 +107,7 @@ const CurrentUserBasedComponentCard = ({ category }) => {
     }
     else if(user.role === "AUTHOR")
     {
-      store.dispatch(handleRemoveFromInspiration(authorId)).then((response) => {
+      store.dispatch(handleRemoveFromInspiration(authorUsername)).then((response) => {
         if (response?.payload?.success) {
           store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
         } else {
@@ -234,7 +234,7 @@ const CurrentUserBasedComponentCard = ({ category }) => {
                   <Text fontSize="sm">{component.authorUsername}</Text>
                 </Box>
               </Flex>
-              {component.isFollowingAuthor ? (
+              { user.role==="AUTHOR" ? component.isAuthorInInspirationList : component.isFollowingAuthor ? (
                 <Button
                   variant={"outline"}
                   border={"2px solid #0A66C2"}
@@ -242,7 +242,7 @@ const CurrentUserBasedComponentCard = ({ category }) => {
                   color={"#0A66C2"}
                   _hover={{ bg: "#E4F1FE" }}
                   leftIcon={<FaUserMinus />}
-                  onClick={() => handleUnfollow(component.authorId)}
+                  onClick={() => handleUnfollow(component.authorId,component.authorUsername)}
                 >
                   {user.role == "AUTHOR"
                     ? "Remove From Inspiration"
@@ -256,7 +256,7 @@ const CurrentUserBasedComponentCard = ({ category }) => {
                   color={"#0A66C2"}
                   _hover={{ bg: "#E4F1FE" }}
                   leftIcon={<IoMdPersonAdd />}
-                  onClick={() => handleFollow(component.authorId)}
+                  onClick={() => handleFollow(component.authorId,component.authorUsername)}
                 >
                   {user.role == "AUTHOR" ? "Add To Inspiration" : "Follow"}
                 </Button>

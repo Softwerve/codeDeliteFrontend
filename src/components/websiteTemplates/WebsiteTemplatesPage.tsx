@@ -6,7 +6,7 @@ import React, { useEffect } from 'react'
 import { BsBoxArrowUpRight } from 'react-icons/bs';
 import { RiUserAddFill } from 'react-icons/ri';
 
-const TemplatesPage = ({id}:{id:number}) => {
+const WebTemplatesPage = ({id}:{id:number}) => {
     const store = useAppStore();
     const {templateOrComponent} = useAppSelector((state)=> state.templates);
     useEffect(()=>{
@@ -110,4 +110,4 @@ const TemplatesPage = ({id}:{id:number}) => {
   )
 }
 
-export default TemplatesPage
+export default WebTemplatesPage

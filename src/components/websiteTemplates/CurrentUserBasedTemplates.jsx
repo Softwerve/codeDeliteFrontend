@@ -66,7 +66,7 @@ const CurrentUserBasedTemplates = ({ category }) => {
     store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
   }, []);
 
-  const handleFollow = (authorId) => {
+  const handleFollow = (authorId,authorUsername) => {
     if(user.role === "USER")
     {
       store.dispatch(handleFollowAuthor(authorId)).then((response) => {
@@ -80,7 +80,7 @@ const CurrentUserBasedTemplates = ({ category }) => {
       });
     }else if(user.role === "AUTHOR")
     {
-      store.dispatch(handleGetInspiredByAuthor(authorId)).then((response) => {
+      store.dispatch(handleGetInspiredByAuthor(authorUsername)).then((response) => {
         if (response?.payload?.success) {
           store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
           const audio = new Audio(followSound);
@@ -92,7 +92,7 @@ const CurrentUserBasedTemplates = ({ category }) => {
     }
   };
 
-  const handleUnfollow = (authorId) => {
+  const handleUnfollow = (authorId,authorUsername) => {
     if(user.role === "USER")
     {
       store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
@@ -105,7 +105,7 @@ const CurrentUserBasedTemplates = ({ category }) => {
     }
     else if(user.role === "AUTHOR")
     {
-      store.dispatch(handleRemoveFromInspiration(authorId)).then((response) => {
+      store.dispatch(handleRemoveFromInspiration(authorUsername)).then((response) => {
         if (response?.payload?.success) {
           store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
         } else {
@@ -232,7 +232,7 @@ const CurrentUserBasedTemplates = ({ category }) => {
                   <Text fontSize="sm">{template.authorUsername}</Text>
                 </Box>
               </Flex>
-              {template.isFollowingAuthor ? (
+              { user.role=="AUTHOR" ? template.isAuthorInInspirationList : template.isFollowingAuthor ? (
                 <Button
                   variant={"outline"}
                   border={"2px solid #0A66C2"}
@@ -240,7 +240,7 @@ const CurrentUserBasedTemplates = ({ category }) => {
                   color={"#0A66C2"}
                   _hover={{ bg: "#E4F1FE" }}
                   leftIcon={<FaUserMinus />}
-                  onClick={() => handleUnfollow(template.authorId)}
+                  onClick={() => handleUnfollow(template.authorId,template.authorUsername)}
                 >
                   {user.role == "AUTHOR"
                     ? "Remove From Inspiration"
@@ -254,7 +254,7 @@ const CurrentUserBasedTemplates = ({ category }) => {
                   color={"#0A66C2"}
                   _hover={{ bg: "#E4F1FE" }}
                   leftIcon={<IoMdPersonAdd />}
-                  onClick={() => handleFollow(template.authorId)}
+                  onClick={() => handleFollow(template.authorId,template.authorUsername)}
                 >
                   {user.role == "AUTHOR" ? "Add To Inspiration" : "Follow"}
                 </Button>

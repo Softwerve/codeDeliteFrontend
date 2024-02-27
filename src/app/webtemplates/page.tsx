@@ -1,8 +1,8 @@
 "use client";
 import Footer from "@/components/Common/Footer";
 import Navbar from "@/components/Common/Navbar";
-import SearchSection from "@/components/WebTemplates/SearchSection";
-import Templates from "@/components/WebTemplates/WebTemplatesSection";
+import SearchSection from "@/components/websiteTemplates/SearchSection";
+import Templates from "@/components/websiteTemplates/WebTemplatesSection";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 import StoreProvider from "../StoreProvider";

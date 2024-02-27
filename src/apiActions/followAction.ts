@@ -83,9 +83,9 @@ export const handleGetAllFollowedAuthors = () => (dispatch: AppDispatch) => {
 
 
 // handling get inspired by another author
-export const handleGetInspiredByAuthor = (id:number) => (dispatch: AppDispatch) => {
+export const handleGetInspiredByAuthor = (username: string) => (dispatch: AppDispatch) => {
   dispatch(inspireByAuthorStart());
-  return fetch(`${baseUrl}/author/inspiration/add?inspirationId=${id}`, {
+  return fetch(`${baseUrl}/author/inspiration/add?username=${username}`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -101,9 +101,9 @@ export const handleGetInspiredByAuthor = (id:number) => (dispatch: AppDispatch) 
 };
 
 // handling remove another author from inspiration list 
-export const handleRemoveFromInspiration = (id:number) => (dispatch: AppDispatch) => {
+export const handleRemoveFromInspiration = (username:string) => (dispatch: AppDispatch) => {
   dispatch(inspireByAuthorStart());
-  return fetch(`${baseUrl}/author/inspiration/remove?inspirationId=${id}`, {
+  return fetch(`${baseUrl}/author/inspiration/remove?username=${username}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,

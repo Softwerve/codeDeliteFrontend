@@ -19,6 +19,7 @@ interface authState {
       price: number;
       likes: number;
       isFollowingAuthor: boolean;
+      isAuthorInInspirationList: boolean;
       isItemInBag: boolean;
       isItemInLovedlist: boolean;
       isLiked: boolean;
@@ -56,6 +57,7 @@ const initialState: authState = {
       price: 0.0,
       likes: 0,
       isFollowingAuthor: false,
+      isAuthorInInspirationList: false,
       isItemInBag: false,
       isItemInLovedlist: false,
       isLiked: false,
