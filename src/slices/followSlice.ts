@@ -5,6 +5,7 @@ interface followState {
   isLoading: boolean;
   isError: boolean;
   message: string;
+  success : boolean;
   followedAuthors: [
     {
       authorId: number;
@@ -70,6 +71,7 @@ const initialState: followState = {
   isLoading: false,
   isError: false,
   message: "",
+  success: false,
   followedAuthors: [
     {
       authorId: 0,
@@ -155,8 +157,23 @@ export const followSlice = createSlice({
     followAuthorSuccess: (state, action) => {
       state.isLoading = false;
       state.message = action.payload.message;
+      state.success = true;
     },
     followAuthorFailure: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload.message;
+    },
+    inspireByAuthorStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    inspireByAuthorSuccess: (state, action) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+      state.success = true;
+    },
+    inspireByAuthorFailure: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload.message;
@@ -197,6 +214,9 @@ export const {
   followAuthorStart,
   followAuthorSuccess,
   followAuthorFailure,
+  inspireByAuthorStart,
+  inspireByAuthorSuccess,
+  inspireByAuthorFailure,
   authorPublishedWebsitesStart,
   authorPublishedWebsitesSuccess,
   authorPublishedWebsitesFailure,
