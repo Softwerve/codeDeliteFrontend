@@ -1,5 +1,5 @@
 import { AppDispatch } from "@/lib/store";
-import { componentsOfACategoryFailure, componentsOfACategoryStart, componentsOfACategorySuccess } from "@/slices/componentsSlice";
+import { componentsOfACategoryFailure, componentsOfACategoryStart, componentsOfACategorySuccess, searchComponentFailure, searchComponentStart, searchComponentSuccess } from "@/slices/componentsSlice";
 import Cookies from "universal-cookie";
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -19,3 +19,20 @@ export const handleComponentsByCategory = (category: string) => (dispatch: AppDi
       dispatch(componentsOfACategoryFailure(error));
     });
 };
+
+
+// Handle Search component
+export const handleSearchComponents = (keyword:string) => async (dispatch: AppDispatch) => {
+  dispatch(searchComponentStart());
+    return await fetch(`${baseUrl}/template/search/component?keyword=${keyword}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response)=> response.json())
+    .then((response)=> {
+      return dispatch(searchComponentSuccess(response));
+    }).catch((error)=>{
+      dispatch(searchComponentFailure(error));
+    });
+}

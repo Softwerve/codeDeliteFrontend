@@ -68,9 +68,22 @@ export const componentSlice = createSlice({
       state.isError = true;
       state.message = action.payload.message;
     },
+    searchComponentStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    searchComponentSuccess: (state, action) => {
+      state.isLoading = false;
+      state.components = action.payload;
+    },
+    searchComponentFailure: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload.message;
+    },
   },
 });
 
-export const {componentsOfACategoryStart,componentsOfACategorySuccess,componentsOfACategoryFailure} = componentSlice.actions;
+export const {componentsOfACategoryStart,componentsOfACategorySuccess,componentsOfACategoryFailure,searchComponentStart,searchComponentSuccess,searchComponentFailure} = componentSlice.actions;
 
 export default componentSlice.reducer;

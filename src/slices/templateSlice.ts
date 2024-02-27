@@ -3,6 +3,34 @@ import type { RootState } from "../lib/store";
 
 // Define a type for the slice state
 interface TemplatesState {
+  templateOrComponent : {
+      authorUsername: string;
+      monetizationLevel: string;
+      tempId: number;
+      authorId: number;
+      authorName: string;
+      authorProfileImage: string;
+      title: string;
+      thumbnailImage: string;
+      price: number;
+      likes: number;
+      isFollowingAuthor: boolean;
+      isItemInBag: boolean;
+      isItemInLovedlist: boolean;
+      isLiked: boolean;
+      tempLink: string;
+      tempType: string;
+      currency: string;
+      status: string;
+      authorProfileLink: string;
+      templatePage: {
+        images: [string,string,string,string,string];
+        highlights: [];
+        overview: string;
+        sections: [];
+        technologiesUsed: [];
+      };
+  },
   templates: [
     {
       username: string;
@@ -60,6 +88,34 @@ interface TemplatesState {
 
 // Define the initial state using that type
 const initialState: TemplatesState = {
+  templateOrComponent : {
+    tempId: 0,
+    authorId: 0,
+    authorName: "",
+    authorUsername: "",
+    monetizationLevel: "",
+    authorProfileImage: "",
+    title: "",
+    thumbnailImage: "",
+    price: 0.0,
+    likes: 0,
+    isFollowingAuthor: false,
+    isItemInBag: false,
+    isItemInLovedlist: false,
+    isLiked: false,
+    tempLink: "",
+    tempType: "",
+    currency: "",
+    status: "",
+    authorProfileLink: "",
+    templatePage: {
+      images: ["","","","",""],
+      highlights: [],
+      overview: "",
+      sections: [],
+      technologiesUsed: [],
+    },
+  },
   templates: [
     {
       username: "",
@@ -172,6 +228,30 @@ export const templateSlice = createSlice({
       state.isLoading = false;
       state.message = action.payload.message;
     },
+    getTemplateOrComponentByIdStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    getTemplateOrComponentByIdSuccess: (state, action) => {
+      state.isLoading = false;
+      state.templateOrComponent = action.payload;
+    },
+    getTemplateOrComponentByIdFailure: (state, action) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+    },
+    searchTemplateStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    searchTemplateSuccess: (state, action) => {
+      state.isLoading = false;
+      state.templates = action.payload;
+    },
+    searchTemplateFailure: (state, action) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+    },
   },
 });
 
@@ -188,6 +268,12 @@ export const {
   removeItemFromLovedListStart,
   removeItemFromLovedListSuccess,
   removeItemFromLovedListFailure,
+  getTemplateOrComponentByIdStart,
+  getTemplateOrComponentByIdSuccess,
+  getTemplateOrComponentByIdFailure,
+  searchTemplateStart,
+  searchTemplateSuccess,
+  searchTemplateFailure,
 } = templateSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
