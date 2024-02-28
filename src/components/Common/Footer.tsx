@@ -23,7 +23,7 @@ const Footer = () => {
         </Stack>
         <Stack>
           <Text fontWeight={'bold'} fontSize={'20px'} >Explore</Text>
-          <Link href={`/webtemplates`} style={{opacity:'0.6', fontSize:"15px"}}>Templates</Link>
+          <Link href={`/webtemplates?category=All`} style={{opacity:'0.6', fontSize:"15px"}}>Templates</Link>
           <Link href="/components" style={{opacity:'0.6', fontSize:"15px"}}>Components</Link>
           <Link href={`https://www.${link}/blog`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Blogs</Link>
         </Stack>

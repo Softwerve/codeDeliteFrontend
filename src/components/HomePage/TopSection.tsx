@@ -12,7 +12,7 @@ const TopSection = () => {
             <Text>Explore Our Comprehensive Coding Templates</Text>
             <Text>Dive into the world of code-based creativity! Discover our extensive library of website coding templates. From HTML to CSS, JavaScript to Python - unleash your ideas with our diverse coding components.</Text>
             <Flex gap={5} alignItems={'center'}>
-              <Button w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}} onClick={()=>router.push("/webtemplates")} >Explore Templates</Button>
+              <Button w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}} onClick={()=>router.push("/webtemplates?category=All")} >Explore Templates</Button>
               <Button w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}} onClick={()=>router.push("/components")} >Explore Components</Button>
             </Flex>
         </Stack>
