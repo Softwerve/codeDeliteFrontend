@@ -106,7 +106,7 @@ const SelectTemplate = () => {
            }
          </Grid>
          <Stack alignItems={'center'}>
-            <Link href="/webtemplates" style={{textDecoration:"underline"}} >{"See All >"}</Link>
+            <Link href="/webtemplates?category=All" style={{textDecoration:"underline"}} >{"See All >"}</Link>
          </Stack>
         </Stack>
       </Stack>

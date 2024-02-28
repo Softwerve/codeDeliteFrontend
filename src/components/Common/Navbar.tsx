@@ -121,7 +121,7 @@ const Navbar = () => {
             bg={"none"}
             as={Button}
             _hover={{ bg: "none" }}
-            onClick={() => router.push("/webtemplates")}
+            onClick={() => router.push(`/webtemplates?category=All`)}
           >
             Web Templates
           </Button>

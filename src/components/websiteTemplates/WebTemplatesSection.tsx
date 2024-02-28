@@ -5,19 +5,22 @@ import { useAppSelector, useAppStore } from "@/lib/hooks";
 import CurrentUserBasedTemplates from "./CurrentUserBasedTemplates";
 import PublicTemplates from "./PublicWebTemplates";
 import { handleGetAllCategories } from "@/apiActions/templatesAction";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const TemplatesSection = () => {
   const store = useAppStore();
-  const [selectedTab, setSelectedTab] = useState("All");
   const { user } = useAppSelector((state) => state.user);
   const { categories } = useAppSelector((state) => state.categories);
-
+  const router  = useRouter();
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("category");
+  const selectedTab = decodeURIComponent(`${categoryParam}`);
   useEffect(() => {
     store.dispatch(handleGetAllCategories());
   }, []);
 
   const handleTabChange = (category: string) => {
-    setSelectedTab(category);
+    router.push(`/webtemplates?category=${category}`)
   }
   
   return (
