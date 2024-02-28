@@ -214,17 +214,17 @@ const Navbar = () => {
                   href={
                     data.user.role === "USER"
                       ? "/dashboard"
-                      : `${authorDashboard}?access=${token}`
+                      : `${authorDashboard}?screen=Dashboard&access=${token}`
                   }
                 >
                   Dashboard
                 </MenuItem>
-                <MenuItem
+                {/* <MenuItem
                   as="a"
                   href={
                     data.user.role === "USER"
                       ? "/dashboard/bag"
-                      : `${authorDashboard}/bag?access=${token}`
+                      : `${authorDashboard}/bag?screen=Bag&access=${token}`
                   }
                 >
                   Bag
@@ -234,11 +234,11 @@ const Navbar = () => {
                   href={
                     data.user.role === "USER"
                       ? "/dashboard/purchased"
-                      : `${authorDashboard}/purchased?access=${token}`
+                      : `${authorDashboard}/purchased?screen=Purchased%20Bag&access=${token}`
                   }
                 >
                   Purchase
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </MenuList>
             </Menu>
