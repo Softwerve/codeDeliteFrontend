@@ -21,6 +21,13 @@ interface componentState {
       category: string;
       currency: string;
       authorProfileLink: string;
+      templatePage: {
+        images: [];
+        highlights: [];
+        overview: string;
+        sections: [];
+        technologiesUsed: [];
+      };
     }
   ];
 }
@@ -46,6 +53,13 @@ const initialState: componentState = {
       currency: "",
       category: "",
       authorProfileLink: "",
+      templatePage: {
+        images: [],
+        highlights: [],
+        overview: "",
+        sections: [],
+        technologiesUsed: [],
+      },
     }
   ],
 };

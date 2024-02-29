@@ -18,10 +18,10 @@ const WebTemplatesPage = ({id}:{id:number}) => {
     <Flex minH={'100vh'} background={"#343F51"} color={'#ffffff'}>
         <Stack p={10} width={'70%'} marginTop={'50px'} spacing={5} >
             <Flex alignItems={'center'} gap={10} >
-                <Link href={""}>
+                <Link href={templateOrComponent.tempLink} target="blank">
                   <Heading fontSize={'50px'} >{templateOrComponent.title}</Heading>
                 </Link>
-                <Link href={""} >
+                <Link href={templateOrComponent.tempLink} target="blank">
                     <BsBoxArrowUpRight fontSize={"40px"} />
                 </Link>
             </Flex>
@@ -90,7 +90,7 @@ const WebTemplatesPage = ({id}:{id:number}) => {
         <Stack width={'25%'} marginTop={'100px'} p={5}  height={"fit-content"}  borderRadius={'30px'} border={'2px solid #ffffff'}>
             <Flex justifyContent={"space-between"} alignItems={'center'} >
                 <Flex>
-                    <Avatar src='https://bit.ly/sage-adebayo' />
+                    <Avatar src={templateOrComponent.authorProfileImage} />
                     <Box ml='3'>
                         <Text fontWeight='bold'>
                             {templateOrComponent.authorName}
