@@ -37,7 +37,7 @@ const Footer = () => {
         </Stack>
         <Stack>
           <Text fontWeight={'bold'} fontSize={'20px'} >Contact Us</Text>
-          <Link href="mailto:support@softwerve.com" style={{opacity:'0.6', fontSize:"15px"}}>Mail to: support@softwerve.com</Link>
+          <Link href="mailto:contact@softwerve.com" style={{opacity:'0.6', fontSize:"15px"}}>Mail to: contact@softwerve.com</Link>
           <Link href="tel:+917060476249" style={{opacity:'0.6', fontSize:"15px"}}>Call Us +917060476249</Link>
           <Link href="/faq" style={{opacity:'0.6', fontSize:"15px"}}>FAQ</Link>
         </Stack>
