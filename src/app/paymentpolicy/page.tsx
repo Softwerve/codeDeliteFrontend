@@ -31,7 +31,7 @@ const Paymentpolicy = () => {
                     <Text>{"Refunds for unsuccessful transactions will be processed within 14 days from the date of the failed transaction. The refunded amount will be credited back to the original payment method used for the purchase."}</Text>
                     <Text>{"We strive to provide a transparent and fair payment experience for both buyers and authors on Codedelite. If you have any questions or concerns regarding our Payment Policy, please don't hesitate to contact us."}</Text>
                     <Text>Thank you for being a part of the Codedelite community!</Text>
-                    <Text><a style={{textDecoration:'underline',color:'blue'}} href="mailto:support@softwerve.com">Contact Us: support@softwerve.com</a></Text>
+                    <Text><a style={{textDecoration:'underline',color:'blue'}} href="mailto:contact@softwerve.com">Contact Us: contact@softwerve.com</a></Text>
                 </Stack>
                 <Footer/>
             </Stack>
