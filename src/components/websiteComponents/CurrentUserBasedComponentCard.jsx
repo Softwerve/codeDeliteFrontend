@@ -268,7 +268,8 @@ const CurrentUserBasedComponentCard = ({ category }) => {
                 src={component.thumbnailImage}
                 width={"100%"}
                 height={"200px"}
-                onClick={()=> router.push(`/webtemplates/${component.tempId}`)}
+                cursor={'pointer'}
+                onClick={()=> router.push(`/components/${category}/${component.title}/${component.tempId}`)}
               />
             </Box>
             <Divider/>

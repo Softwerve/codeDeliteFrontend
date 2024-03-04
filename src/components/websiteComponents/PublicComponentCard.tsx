@@ -45,7 +45,7 @@ const PublicComponentCard = ({ category }: { category: string }) => {
               p={2}
               cursor={"pointer"}
               onClick={() =>
-                (window.location.href = `http://localhost:3003/profile/public/${component.username}`)
+                (window.location.href = `${process.env.NEXT_PUBLIC_AUTHOR_PROFILE_URL}/${component.username}`)
               }
             >
               <Avatar

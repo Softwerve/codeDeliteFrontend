@@ -1,4 +1,4 @@
-import { components, templateCategories } from '@/components/Sitemap/sitemapApiActions'
+import { allPublishedComponents, allPublishedTemplates, components, templateCategories } from '@/components/Sitemap/sitemapApiActions'
 import { MetadataRoute } from 'next'
  
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -6,7 +6,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const codedeliteUrl = process.env.NEXT_CODEDELITE_URL
   const componentCategories = components;
   const templateAllCategories = await templateCategories();
-
+  const allWebTemplates = await allPublishedTemplates();
+  const allComponents = await allPublishedComponents();
+  
   const componentCategoryEntries :MetadataRoute.Sitemap = componentCategories.map((category)=>({
       url: `${codedeliteUrl}/components/${category}`,
       lastModified: new Date(),
@@ -21,6 +23,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
 }));
 
+  const templateEntries :MetadataRoute.Sitemap = allWebTemplates.map((template)=>({
+    url: `${codedeliteUrl}/webtemplates/${template.title.split(" ").join("-")}/${template.tempId}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 0.8,
+  }));
+
+
+  const componentEntries :MetadataRoute.Sitemap = allComponents.map((component)=>({
+    url: `${codedeliteUrl}/components/${component.category}/${component.title.split(" ").join("-")}/${component.tempId}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 0.8,
+  }));
+  
 
 
   return [
@@ -87,18 +104,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     ...templateCategoryEntries,
     ...componentCategoryEntries,
-    {
-      url: `${codedeliteUrl}/webtemplates/1`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.5,
-    },
-    {
-      url: `${codedeliteUrl}/components/1`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.5,
-    },
+    ...templateEntries,
+    ...componentEntries,
     {
       url: `${codedeliteUrl}/dashboard/`,
       lastModified: new Date(),
