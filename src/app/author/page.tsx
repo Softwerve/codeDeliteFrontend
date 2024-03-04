@@ -27,7 +27,7 @@ const Page = () => {
     <StoreProvider>
       <ChakraProvider>
         <Flex
-          bg={"#191919"}
+          bg={"#5E17EB"}
           margin={"auto"}
           justifyContent={"space-between"}
           h={"100vh"}
@@ -52,7 +52,7 @@ const Page = () => {
               </Box>
             </Box>
           </Stack>
-          <Box bg={"#ffffff"} width={['100%',"50%"]} p={'5%'}>
+          <Box bg={"#ffffff"} width={['100%',"50%"]} p={'3%'}>
             <Tabs isFitted>
               <TabList mb="1em">
                 <Tab>LogIn</Tab>

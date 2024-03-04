@@ -16,12 +16,12 @@ const WebTemplatesPage = ({id}:{id:number}) => {
 
   return (
     <Flex minH={'100vh'} background={"#343F51"} color={'#ffffff'}>
-        <Stack p={10} width={'70%'} marginTop={'50px'} spacing={5} >
+        <Stack p={10} width={['100%','70%']} marginTop={'50px'} spacing={5} >
             <Flex alignItems={'center'} gap={10} >
-                <Link href={templateOrComponent.tempLink} target="blank">
+                <Link href={`${templateOrComponent.tempLink}`} target="blank">
                   <Heading fontSize={'50px'} >{templateOrComponent.title}</Heading>
                 </Link>
-                <Link href={templateOrComponent.tempLink} target="blank">
+                <Link href={`${templateOrComponent.tempLink}`} target="blank">
                     <BsBoxArrowUpRight fontSize={"40px"} />
                 </Link>
             </Flex>
@@ -44,7 +44,7 @@ const WebTemplatesPage = ({id}:{id:number}) => {
                 <Heading>Technologies Used</Heading>
                 <Flex justifyContent={'space-between'} flexWrap={'wrap'}>
                     {
-                        templateOrComponent.templatePage.technologiesUsed.map((techStack: string,index:number)=>(
+                        templateOrComponent.templatePage?.technologiesUsed.map((techStack: string,index:number)=>(
                             <Box key={index} bg={"#ffffff"} p={"10px"} borderRadius={'10px'} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px" _hover={{boxShadow: "rgba(241, 138, 46, 1) 0px 10px 20px, rgba(241, 138, 46, 1) 0px 6px 6px;"}} >
                                 <Text color={'#000000'} fontWeight={'bold'}>{techStack}</Text>
                             </Box>
@@ -52,12 +52,12 @@ const WebTemplatesPage = ({id}:{id:number}) => {
                     }
                 </Flex>
             </Stack>
-            <Flex gap={5} justifyContent={'space-between'} p={5}>
-                <Stack border={'1px solid #ffffff'} p={5} borderRadius={'10px'} spacing={5} >
+            <Flex display={['block','flex']} gap={5} justifyContent={'space-between'} p={5}>
+                <Stack border={'1px solid #ffffff'} p={5} borderRadius={'10px'} spacing={5} mb={['10px','0px']} >
                     <Heading>Sections</Heading>
-                    <Grid gap={5} templateColumns={'repeat(3,1fr)'} templateRows={'repeat(auto,auto)'}>
+                    <Grid gap={5} templateColumns={['repeat(2,1fr)','repeat(3,1fr)']} templateRows={'repeat(auto,auto)'}>
                         {
-                            templateOrComponent.templatePage.sections.map((section,index)=>(
+                            templateOrComponent.templatePage?.sections.map((section,index)=>(
                                 <GridItem key={index}>
                                     <Box bg={"#ffffff"} p={"10px"} borderRadius={'10px'} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px" _hover={{boxShadow: "rgba(241, 138, 46, 1) 0px 10px 20px, rgba(241, 138, 46, 1) 0px 6px 6px;"}} >
                                         <Text color={"#000000"} fontWeight={'bold'}>{section}</Text>
@@ -69,9 +69,9 @@ const WebTemplatesPage = ({id}:{id:number}) => {
                 </Stack>
                 <Stack border={'1px solid #ffffff'} p={5} borderRadius={'10px'} spacing={5}>
                     <Heading>Highlights</Heading>
-                    <Grid gap={5} templateColumns={'repeat(3,1fr)'} templateRows={'repeat(auto,auto)'}>
+                    <Grid gap={5} templateColumns={['repeat(2,1fr)','repeat(3,1fr)']} templateRows={'repeat(auto,auto)'}>
                         {
-                            templateOrComponent.templatePage.highlights.map((highlight,index)=>(
+                            templateOrComponent.templatePage?.highlights.map((highlight,index)=>(
                                 <GridItem key={index}>
                                     <Box bg={"#ffffff"} p={"10px"} borderRadius={'10px'} boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px" _hover={{boxShadow: "rgba(241, 138, 46, 1) 0px 10px 20px, rgba(241, 138, 46, 1) 0px 6px 6px;"}} >
                                         <Text color={'#000000'} fontWeight={'bold'}>{highlight}</Text>
@@ -87,7 +87,7 @@ const WebTemplatesPage = ({id}:{id:number}) => {
                 <Button width={'40%'} >Add To Bag</Button>
             </Flex> */}
         </Stack>
-        <Stack width={'25%'} marginTop={'100px'} p={5}  height={"fit-content"}  borderRadius={'30px'} border={'2px solid #ffffff'}>
+        <Stack display={['none','flex']} width={'25%'} marginTop={'100px'} p={5}  height={"fit-content"}  borderRadius={'30px'} border={'2px solid #ffffff'}>
             <Flex justifyContent={"space-between"} alignItems={'center'} >
                 <Flex>
                     <Avatar src={templateOrComponent.authorProfileImage} />

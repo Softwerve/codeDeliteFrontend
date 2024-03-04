@@ -68,10 +68,10 @@ const SelectTemplate = () => {
           alignItems={'center'}
         >
          <Flex gap={5} flexWrap={'wrap'}>
-           <Text border={'2px solid gray'} borderRadius={'30px'} color={selectedTab=="All"?"#ffffff":"gray"} p={2} bg={selectedTab==="All" ? 'blue' : 'none'} cursor={'pointer'} onClick={()=> handleTabChange("All")} >All</Text>
+           <Text border={selectedTab=="All"?"#ffffff":'2px solid gray'} borderRadius={'30px'} color={selectedTab=="All"?"#ffffff":"gray"} p={2} bg={selectedTab==="All" ? 'blue' : 'none'} cursor={'pointer'} onClick={()=> handleTabChange("All")} >All</Text>
            {
             categories.map((category,index)=>(
-              <Text border={'2px solid gray'} borderRadius={'30px'} color={selectedTab==category.category?"#ffffff":"#626161"} p={2} bg={selectedTab==category.category ? 'blue' : 'none'} cursor={'pointer'} onClick={()=> handleTabChange(category.category)} key={index}>{category.category}</Text>
+              <Text border={selectedTab==category.category?"#ffffff":'2px solid gray'} borderRadius={'30px'} color={selectedTab==category.category?"#ffffff":"#626161"} p={2} bg={selectedTab==category.category ? 'blue' : 'none'} cursor={'pointer'} onClick={()=> handleTabChange(category.category)} key={index}>{category.category}</Text>
             ))
            }
          </Flex>
