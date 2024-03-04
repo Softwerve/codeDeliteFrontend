@@ -16,7 +16,7 @@ const SearchAuthor = () => {
     >
       <Stack width={"50%"} spacing={5}>
         <Heading fontSize={"45px"} color={"#ffffff"}>
-        Follow Creators for Exclusive Updates On Their Work
+          Follow Creators for Exclusive Updates On Their Work
         </Heading>
         <Flex width={'70%'} gap={5}>
           <Input backgroundColor={'#ffffff'} type="text" placeholder="Find Talented Creators" />
