@@ -22,8 +22,10 @@ import {
 import { AiFillLike } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SelectTemplate = () => {
+  const router = useRouter();
   const store = useAppStore();
   const { categories } = useAppSelector((state) => state.categories);
   const { templates } = useAppSelector((state)=> state.templates);
@@ -87,7 +89,7 @@ const SelectTemplate = () => {
                       <Text fontSize='sm'>{template.username}</Text>
                     </Box>
                   </Flex>
-                  <Image height={'150px'} src={template.thumbnailImage} alt={template.title} />
+                  <Image cursor={'pointer'} onClick={()=>user.email!=null ? router.push(`/webtemplates/${template.title}/${template.tempId}`) : router.push(`/login`)} height={'150px'} src={template.thumbnailImage} alt={template.title} />
                   <Divider/>
                    <Text>{template.title}</Text>
                   <Divider/>

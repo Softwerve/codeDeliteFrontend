@@ -265,7 +265,8 @@ const CurrentUserBasedTemplates = ({ category }) => {
                 src={template.thumbnailImage}
                 width={"100%"}
                 height={"200px"}
-                onClick={()=> router.push(`/webtemplates/${template.tempId}`)}
+                cursor={'pointer'}
+                onClick={()=> router.push(`/webtemplates/${template.title.split(" ").join("-")}/${template.tempId}`)}
               />
             </Box>
             <Box>

@@ -57,7 +57,7 @@ const SearchComponents = () => {
             keyword!="" && inp && ( components.length > 0 ? 
              components.map((component,index)=>(
               <Flex gap={5} key={index} alignItems={'top'}>
-                <Image width={'250px'} height={"auto"} cursor='pointer' src={component.thumbnailImage} alt={component.title} />
+                <Image cursor={'pointer'} width={'250px'} height={"auto"} cursor='pointer' src={component.thumbnailImage} alt={component.title} />
                 <Stack>
                   <Text fontWeight={'bold'}>{component.title}</Text>
                   <Text textAlign={'start'}>{truncateOverview(component?.templatePage?.overview)}</Text>
