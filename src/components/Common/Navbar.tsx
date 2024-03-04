@@ -271,9 +271,12 @@ const Navbar = () => {
 
       <IconButton
         display={{ base: "flex", md: "none" }}
+        background={'transparent'}
+        color={isTop?'#ffffff':"#000000"}
         onClick={onOpen}
         icon={<FaBars />}
         aria-label={"Menu"}
+        size={'lg'}
       />
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
         <DrawerOverlay />
@@ -288,7 +291,7 @@ const Navbar = () => {
               bg={"none"}
               as={Button}
               _hover={{ bg: "none" }}
-              onClick={() => router.push("/webtemplates")}
+              onClick={() => router.push("/webtemplates?category=All")}
             >
               Web Templates
             </Button>

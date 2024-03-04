@@ -51,14 +51,14 @@ const SearchSection = () => {
     <Stack justifyContent={'center'} alignItems={'center'} minH={'60vh'} color={'#ffffff'} textAlign={"center"} backgroundImage={tempBg.src} backgroundRepeat={'no-repeat'} backgroundSize={'cover'}>
       <Stack p={5} borderRadius={'20px'} bg={inp?'#ffffff':'#transparent'} width={["90%","80%","60%"]} spacing={5}>
         <Heading>Explore Our Templates</Heading>
-        <Flex gap={3} alignItems={'center'} justifyContent={'space-between'}>
+        <Flex flexWrap={'wrap'} gap={3} alignItems={'center'} justifyContent={'space-between'}>
           <InputGroup borderRadius={"10px"} bg={"#ffffff"} color={"#000000"}>
             <InputLeftElement pointerEvents="none">
               <FaSearch color="gray.300" />
             </InputLeftElement>
             <Input defaultValue={keyword} onInput={()=>setInp(true)} onMouseLeave={()=> setInp(false)} type="text" placeholder="Search Templates...." onKeyDown={handleSearch} onChange={(e)=>handleInput(e.target.value)} />
           </InputGroup>
-          <Button leftIcon={<FaSearch/>} w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}}  onClick={()=>router.push(`/templates/search?keyword=${keyword}`)}>Search</Button>
+          <Button w={'fit-content'} bg={'#F0F848'} color={'#585857'} _hover={{bg:'#ECEC23'}}  onClick={()=>router.push(`/templates/search?keyword=${keyword}`)}>Search</Button>
         </Flex>
         <Stack display={inp?'flex':'none'}>
           {
