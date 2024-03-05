@@ -89,7 +89,7 @@ const SelectTemplate = () => {
                       <Text fontSize='sm'>{template.username}</Text>
                     </Box>
                   </Flex>
-                  <Image cursor={'pointer'} onClick={()=>user.email!=null ? router.push(`/webtemplates/${template.title.split(" ").join("-")}/${template.tempId}`) : router.push(`/author`)} height={'150px'} src={template.thumbnailImage} alt={template.title} />
+                  <Image cursor={'pointer'} onClick={()=>user.email!="" ? router.push(`/webtemplates/${template.title.split(" ").join("-")}/${template.tempId}`) : router.push(`/author`)} height={'150px'} src={template.thumbnailImage} alt={template.title} />
                   <Divider/>
                    <Text>{template.title}</Text>
                   <Divider/>

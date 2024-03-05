@@ -44,16 +44,16 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { IoBagAdd, IoBagHandleSharp, IoBagRemove } from "react-icons/io5";
 import ComponentNotAvailable from "../CustomLoaders/ComponentNotAvailable";
 import { TbHeartMinus } from "react-icons/tb";
-import likeSound from '../../../public/audio/likeSound.wav';
-import unlikeSound from '../../../public/audio/unlike.mp3';
-import addToLovedSound from '../../../public/audio/addToLovedItemsSound.wav';
-import removeFromLovedSound from '../../../public/audio/removeFromLovedItemsSound.wav';
-import addToBagSound from '../../../public/audio/addToBagSound.wav';
+import likeSound from "../../../public/audio/likeSound.wav";
+import unlikeSound from "../../../public/audio/unlike.mp3";
+import addToLovedSound from "../../../public/audio/addToLovedItemsSound.wav";
+import removeFromLovedSound from "../../../public/audio/removeFromLovedItemsSound.wav";
+import addToBagSound from "../../../public/audio/addToBagSound.wav";
 import removeFromBagSound from "../../../public/audio/removeFromBagSound.wav";
-import followSound from '../../../public/audio/followSound.wav';
+import followSound from "../../../public/audio/followSound.wav";
 import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
 import Link from "next/link";
-
+import { handlePurchaseFreeItem } from "@/apiActions/purchaseAction";
 
 const CurrentUserBasedTemplates = ({ category }) => {
   const store = useAppStore();
@@ -66,52 +66,51 @@ const CurrentUserBasedTemplates = ({ category }) => {
     store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
   }, []);
 
-  const handleFollow = (authorId,authorUsername) => {
-    if(user.role === "USER")
-    {
+  const handleFollow = (authorId, authorUsername) => {
+    if (user.role === "USER") {
       store.dispatch(handleFollowAuthor(authorId)).then((response) => {
         if (response?.payload?.success) {
-          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+          store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
           const audio = new Audio(followSound);
           audio.play();
         } else {
           handleToast(response?.payload.message, "error");
         }
       });
-    }else if(user.role === "AUTHOR")
-    {
-      store.dispatch(handleGetInspiredByAuthor(authorUsername)).then((response) => {
-        if (response?.payload?.success) {
-          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
-          const audio = new Audio(followSound);
-          audio.play();
-        } else {
-          handleToast(response?.payload.message, "error");
-        }
-      });
+    } else if (user.role === "AUTHOR") {
+      store
+        .dispatch(handleGetInspiredByAuthor(authorUsername))
+        .then((response) => {
+          if (response?.payload?.success) {
+            store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
+            const audio = new Audio(followSound);
+            audio.play();
+          } else {
+            handleToast(response?.payload.message, "error");
+          }
+        });
     }
   };
 
-  const handleUnfollow = (authorId,authorUsername) => {
-    if(user.role === "USER")
-    {
+  const handleUnfollow = (authorId, authorUsername) => {
+    if (user.role === "USER") {
       store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
         if (response?.payload?.success) {
-          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+          store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
         } else {
           handleToast(response?.payload.message, "error");
         }
       });
-    }
-    else if(user.role === "AUTHOR")
-    {
-      store.dispatch(handleRemoveFromInspiration(authorUsername)).then((response) => {
-        if (response?.payload?.success) {
-          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
-        } else {
-          handleToast(response?.payload.message, "error");
-        }
-      });
+    } else if (user.role === "AUTHOR") {
+      store
+        .dispatch(handleRemoveFromInspiration(authorUsername))
+        .then((response) => {
+          if (response?.payload?.success) {
+            store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
+          } else {
+            handleToast(response?.payload.message, "error");
+          }
+        });
     }
   };
 
@@ -187,11 +186,24 @@ const CurrentUserBasedTemplates = ({ category }) => {
     });
   };
 
+  const handleBuyFreeItem = (tempId) => {
+    store.dispatch(handlePurchaseFreeItem(tempId)).then((response) => {
+      if (response?.payload?.success) {
+        handleToast(response?.payload?.message, "success");
+        store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
+        const audio = new Audio(addToBagSound);
+        audio.play();
+      } else {
+        handleToast(response?.payload?.message, "error");
+      }
+    });
+  };
+
   const handleToast = (message, status) => {
     toast({
       title: message,
       status: status,
-      duration: 3000,
+      duration: 5000,
       isClosable: true,
     });
   };
@@ -211,7 +223,7 @@ const CurrentUserBasedTemplates = ({ category }) => {
             boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
             borderRadius={"10px"}
           >
-            <Flex justifyContent={"space-between"} alignItems={"center"} p={3}>
+            <Flex gap={5} justifyContent={"space-between"} alignItems={"center"} p={3}>
               <Flex
                 cursor={"pointer"}
                 onClick={() =>
@@ -232,15 +244,21 @@ const CurrentUserBasedTemplates = ({ category }) => {
                   <Text fontSize="sm">{template.authorUsername}</Text>
                 </Box>
               </Flex>
-              { (user.role==="AUTHOR" ? template.isAuthorInInspirationList : template.isFollowingAuthor) ? (
+              {(
+                user.role === "AUTHOR"
+                  ? template.isAuthorInInspirationList
+                  : template.isFollowingAuthor
+              ) ? (
                 <Button
                   variant={"outline"}
-                  border={"2px solid #0A66C2"}
+                  border={"2px solid #6D2EEA"}
                   borderRadius={"20px"}
-                  color={"#0A66C2"}
-                  _hover={{ bg: "#E4F1FE" }}
+                  color={"#6D2EEA"}
+                  _hover={{ bg: "#E0D3FA" }}
                   leftIcon={<FaUserMinus />}
-                  onClick={() => handleUnfollow(template.authorId,template.authorUsername)}
+                  onClick={() =>
+                    handleUnfollow(template.authorId, template.authorUsername)
+                  }
                 >
                   {user.role == "AUTHOR"
                     ? "Remove From Inspiration"
@@ -249,32 +267,60 @@ const CurrentUserBasedTemplates = ({ category }) => {
               ) : (
                 <Button
                   variant={"outline"}
-                  border={"2px solid #0A66C2"}
+                  border={"2px solid #6D2EEA"}
                   borderRadius={"20px"}
-                  color={"#0A66C2"}
-                  _hover={{ bg: "#E4F1FE" }}
+                  color={"#6D2EEA"}
+                  _hover={{ bg: "#E0D3FA" }}
                   leftIcon={<IoMdPersonAdd />}
-                  onClick={() => handleFollow(template.authorId,template.authorUsername)}
+                  onClick={() =>
+                    handleFollow(template.authorId, template.authorUsername)
+                  }
                 >
                   {user.role == "AUTHOR" ? "Add To Inspiration" : "Follow"}
                 </Button>
               )}
             </Flex>
-            <Box>
+            <Box position="relative">
+              <Flex position="absolute" top={0} right={0} p={2} zIndex={1}>
+                <Badge
+                  colorScheme="purple"
+                  p={"3px 10px 3px 10px"}
+                  height={"fit-content"}
+                  width={"fit-content"}
+                  borderRadius={'10px'}
+                >
+                  <Flex gap={1} alignItems="center">
+                    {template.price !== 0 && <Text>{user.currencySymbol}</Text>}
+                    <Text>
+                      {template.price === 0
+                        ? "Free"
+                        : convertCurrencyFromINR(template.price, user.currency)}
+                    </Text>
+                  </Flex>
+                </Badge>
+              </Flex>
               <Image
                 src={template.thumbnailImage}
-                width={"100%"}
-                height={"200px"}
-                cursor={'pointer'}
-                onClick={()=> router.push(`/webtemplates/${template.title.split(" ").join("-")}/${template.tempId}`)}
+                width="100%"
+                height="200px"
+                cursor="pointer"
+                onClick={() =>
+                  router.push(
+                    `/webtemplates/${template.title.split(" ").join("-")}/${
+                      template.tempId
+                    }`
+                  )
+                }
               />
             </Box>
-            <Box>
+
+            <Box p={'0px 0px 0px 10px'}>
               <Text>{template.title}</Text>
             </Box>
             <Flex
               justifyContent={"space-between"}
               alignContent={"center"}
+              alignItems={"center"}
               p={"5%"}
               fontSize={"20"}
             >
@@ -334,38 +380,48 @@ const CurrentUserBasedTemplates = ({ category }) => {
                   </Box>
                 )
               ) : null}
-              {template.isItemInBag ? (
-                <Box
-                  transition="transform 0.5s"
-                  cursor={"pointer"}
-                  _hover={{ transform: "scale(2)" }}
-                  color={"#E24D4D"}
-                  onClick={() => handleRemoveFromBag(template?.tempId)}
-                >
-                  <IoBagRemove />
-                </Box>
+              {template.price > 0 ? (
+                template.isItemInBag ? (
+                  <Box
+                    transition="transform 0.5s"
+                    cursor={"pointer"}
+                    _hover={{ transform: "scale(2)" }}
+                    color={"#E24D4D"}
+                    onClick={() => handleRemoveFromBag(template?.tempId)}
+                  >
+                    <IoBagRemove />
+                  </Box>
+                ) : (
+                  <Box
+                    transition="transform 0.5s"
+                    cursor={"pointer"}
+                    _hover={{ transform: "scale(2)" }}
+                    color="#5EB921"
+                    onClick={() => handleAddToBag(template?.tempId)}
+                  >
+                    <IoBagAdd />
+                  </Box>
+                )
               ) : (
-                <Box
-                  transition="transform 0.5s"
-                  cursor={"pointer"}
-                  _hover={{ transform: "scale(2)" }}
-                  color="#5EB921"
-                  onClick={() => handleAddToBag(template?.tempId)}
+                <Button
+                  bg={"#8C53FF"}
+                  color={"#ffffff"}
+                  _hover={{ bg: "#6D2EEA" }}
+                  onClick={() => handleBuyFreeItem(template?.tempId)}
                 >
-                  <IoBagAdd/>
-                </Box>
+                  Buy Now Free
+                </Button>
               )}
-              <Badge colorScheme="purple" p={2}>
-                <Flex gap={2} alignItems={"center"}>
-                  <Text>
-                    {template.price == 0 ? null : user.currencySymbol}
-                  </Text>
-                  <Text>
-                    {template.price == 0
-                      ? "Free" : convertCurrencyFromINR(template.price,user.currency)}
-                  </Text>
-                </Flex>
-              </Badge>
+              {template.price == 0 ? null : (
+                  <Button
+                  bg={"#8C53FF"}
+                  color={"#ffffff"}
+                  _hover={{ bg: "#6D2EEA" }}
+                  onClick={() => handleBuyFreeItem(template?.tempId)}
+                >
+                  Buy Now
+                </Button>
+              )}
             </Flex>
           </Stack>
         </GridItem>

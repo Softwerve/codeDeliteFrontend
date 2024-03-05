@@ -20,7 +20,7 @@ const TemplatesSection = () => {
   }, []);
 
   const handleTabChange = (category: string) => {
-    router.push(`/webtemplates?category=${category}`)
+    router.push(`/webtemplates?category=${category.split(" ").join("-")}`)
   }
   
   return (
@@ -29,19 +29,19 @@ const TemplatesSection = () => {
       <Stack align="center">
         <Flex gap={"3"} flexWrap={"wrap"} alignItems={"center"}>
           <Box
-            bg={selectedTab=="All"?"blue":"none"}
+            bg={selectedTab=="All"?"#8C53FF":"none"}
             color={selectedTab=="All"?"#ffffff":"#000000"}
             cursor={'pointer'}
             borderRadius={"30px"}
             p={2}
-            border={"1px solid gray"}
+            border={selectedTab=="All"?"#ffffff":"1px solid gray"}
             onClick={() => handleTabChange("All")}
           >
             All
           </Box>
           {categories.map((tab, id) => (
             <Box
-            bg={selectedTab==tab.category ?"blue":"none"}
+            bg={selectedTab==tab.category ?"#8C53FF":"none"}
             color={selectedTab==tab.category ?"#ffffff":"#000000"}
               borderRadius={"30px"}
               p={2}

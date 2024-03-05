@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 import Head from "next/head";
 import Script from "next/script";
 import * as gtag from "../lib/gtag";
+import Link from "next/link";
 export default function Home() {
   const searchParams = useSearchParams();
   const token = searchParams.get("access");
@@ -52,6 +53,7 @@ export default function Home() {
         <SelectTemplate />
         <BecomeSeller />
         <WhyFromUs />
+        <Link href="https://www.sigmatraffic.com?ref=244241">Buy website traffic cheap</Link>
         <Footer />
       </ChakraProvider>
     </StoreProvider>
