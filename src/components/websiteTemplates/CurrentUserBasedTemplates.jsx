@@ -54,6 +54,7 @@ import followSound from "../../../public/audio/followSound.wav";
 import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
 import Link from "next/link";
 import { handlePurchaseFreeItem } from "@/apiActions/purchaseAction";
+import BuyNow from "../Payment/Buynow";
 
 const CurrentUserBasedTemplates = ({ category }) => {
   const store = useAppStore();
@@ -413,14 +414,7 @@ const CurrentUserBasedTemplates = ({ category }) => {
                 </Button>
               )}
               {template.price == 0 ? null : (
-                  <Button
-                  bg={"#8C53FF"}
-                  color={"#ffffff"}
-                  _hover={{ bg: "#6D2EEA" }}
-                  onClick={() => handleBuyFreeItem(template?.tempId)}
-                >
-                  Buy Now
-                </Button>
+                  <BuyNow itemId={template.tempId} />
               )}
             </Flex>
           </Stack>

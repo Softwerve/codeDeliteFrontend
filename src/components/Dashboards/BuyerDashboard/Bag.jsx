@@ -19,6 +19,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { IoBagHandle, IoBagRemove } from "react-icons/io5";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import logo from '../../../app/favicon.ico';
+import BuyNow from "@/components/Payment/Buynow";
 const Bag = () => {
   const store = useAppStore();
   const { bagItems, bagTotalAmount } = useAppSelector((state) => state.bag);
@@ -41,43 +42,6 @@ const Bag = () => {
     alignContent: "center",
     fontSize: "20",
   };
-
-  const handleBuyItem = (tempId) => {
-    store.dispatch(handleCreateAnOrder(tempId)).then((response) => {
-      if (response?.payload?.success && response?.payload.orderResponse.orderId) {
-        const { amount, name, description, orderId, prefill } = response?.payload?.orderResponse;
-        const options = {
-          "key": process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, 
-          "amount": amount,
-          "currency": "INR",
-          "name": name,
-          "description": description,
-          "image": logo.src,
-          "order_id": orderId,
-          "handler": function(response) {
-            store.dispatch(handleOrderPaymentSuccess({
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature
-            }));
-            store.dispatch(handleGetBag());
-          },
-          "prefill": {
-            "name": prefill.name,
-            "email": prefill.email
-          },
-          "theme": {
-            "color": "#3399cc"
-          }
-        };
-  
-        const paymentObject = new Razorpay(options);
-        paymentObject.open();
-      }
-    });
-  }
-  
-
 
   const handleCheckout = (e) => {
     e.preventDefault();
@@ -141,14 +105,7 @@ const Bag = () => {
                   <Text>{user?.currencySymbol}</Text>
                   <Text>{convertCurrencyFromINR(item?.price,user?.currency)}</Text>
                 </Flex>
-                <Button
-                  bg={"#2D7F80"}
-                  color={"#ffffff"}
-                  _hover={{ bg: "#277273" }}
-                  onClick={()=> handleBuyItem(item?.tempId)}
-                >
-                  Buy
-                </Button>
+                <BuyNow itemId={item?.tempId} />
                 <IoBagRemove
                   className="temp-icons"
                   fontSize="25"

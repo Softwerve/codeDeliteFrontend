@@ -54,6 +54,7 @@ import addToBagSound from "../../../public/audio/addToBagSound.wav";
 import removeFromBagSound from "../../../public/audio/removeFromBagSound.wav";
 import followSound from "../../../public/audio/followSound.wav";
 import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
+import BuyNow from "../Payment/Buynow";
 
 const CurrentUserBasedComponentCard = ({ category }) => {
   const store = useAppStore();
@@ -417,14 +418,7 @@ const CurrentUserBasedComponentCard = ({ category }) => {
                 </Button>
               )}
               {component.price == 0 ? null : (
-                  <Button
-                  bg={"#8C53FF"}
-                  color={"#ffffff"}
-                  _hover={{ bg: "#6D2EEA" }}
-                  onClick={() => handleBuyFreeItem(component?.tempId)}
-                >
-                  Buy Now
-                </Button>
+                  <BuyNow itemId={component?.tempId} />
               )}
             </Flex>
           </Stack>
