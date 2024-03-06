@@ -7,15 +7,23 @@ interface bagState {
   isLoading: boolean;
   isError: boolean;
   message: string;
-  bagItems: [{
-    thumbnailImage: string;
+  bagAccordingToAuthor: [{
+    authorId : number;
     authorName: string;
-    authorUserName: string;
-    price: number;
-    currency: string;
-    tempId: number;
+    authorUsername: string;
+    authorProfileImage: string;
+    bagItems: [
+      {
+        tempId : number;
+        title: string;
+        thumbnailImage: string;
+        price: number;
+        tempLink: string;
+        tempType: string;
+      }
+    ];
+    totalPrice: number;
   }]
-  bagTotalAmount: any;
 }
 
 // Define the initial state using that type
@@ -24,15 +32,23 @@ const initialState: bagState = {
   isError: false,
   message: "",
   isSuccess: false,
-  bagItems: [{
-    thumbnailImage: "",
+  bagAccordingToAuthor: [{
+    authorId : 0,
     authorName: "",
-    authorUserName: "",
-    currency: "",
-    price: 0.0,
-    tempId: 0,
-  }],
-  bagTotalAmount: 0.0
+    authorUsername: "",
+    authorProfileImage: "",
+    bagItems: [
+      {
+        tempId : 0,
+        title: "",
+        thumbnailImage: "",
+        price: 0,
+        tempLink: "",
+        tempType: "",
+      }
+    ],
+    totalPrice: 0,
+  }]
 };
 
 export const bagSlice = createSlice({
@@ -62,8 +78,7 @@ export const bagSlice = createSlice({
     },
     getUserBagSuccess: (state,action) => {
       state.isLoading = false;
-      state.bagItems = action.payload.bagItems;
-      state.bagTotalAmount = action.payload.totalPrice;
+      state.bagAccordingToAuthor = action.payload;
     },
     getUserBagFailure: (state,action)=>{
       state.isLoading = false;

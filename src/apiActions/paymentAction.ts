@@ -14,7 +14,6 @@ export const handleCreateAnOrder = (tempId: number) => (dispatch: AppDispatch) =
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
       }
     })
       .then((response) => response.json())
@@ -43,5 +42,23 @@ export const handleOrderPaymentSuccess = (successResponse:any) => (dispatch: App
   })
     .catch((error) => {
       dispatch(orderPaidFailure(error));
+    });
+};
+
+// --------------------handle creating order---------------------------
+export const handleCreateAnOrderAccordingToAuthor = (authorId: number) => (dispatch: AppDispatch) => {
+  dispatch(createAnOrderStart());
+  return fetch(`${baseUrl}/payment/order/accordingtoauthor/create?authorId=${authorId}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      return dispatch(createAnOrderSuccess(response));
+    })
+    .catch((error: any) => {
+      dispatch(createAnOrderFailure(error.message));
     });
 };
