@@ -39,7 +39,7 @@ const Bag = () => {
   };
 
   return (
-    <Stack bg={"#F5F2FC"} minH={"90vh"} p={"5%"}>
+    <Stack minH={"90vh"} p={"5%"}>
       <Script
         id="razorpay-checkout-js"
         src="https://checkout.razorpay.com/v1/checkout.js"
@@ -70,7 +70,7 @@ const Bag = () => {
                     <Text fontSize="sm">{bag.authorUsername}</Text>
                   </Box>
                 </Flex>
-                <Text>Total Amount: {user.currencySymbol}{convertCurrencyFromINR(bag.totalPrice, user?.currency)}</Text>
+                <Text><strong>Total Amount: </strong> {user.currencySymbol}{convertCurrencyFromINR(bag.totalPrice, user?.currency)}</Text>
               </Flex>
               <Stack p={5} borderRadius={"10"} bg={"#F5F2FC"}>
                 {bag.bagItems.map((item, ind) => (
