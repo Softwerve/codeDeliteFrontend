@@ -13,10 +13,12 @@ interface authorState {
         name: string;
         username: string;
         profileImage: string;
+        profileTitle: string;
         monetizationLevel: string;
         totalFollowers: number;
         totalCreation: number;
-        followed: Boolean;
+        followed: boolean;
+        isInInspirationList: boolean;
     }
   ],
 }
@@ -33,10 +35,12 @@ const initialState: authorState = {
         name: "",
         username: "",
         profileImage: "",
+        profileTitle: "",
         monetizationLevel: "",
         totalFollowers: 0,
         totalCreation: 0,
         followed: false, 
+        isInInspirationList: false,
     }
   ],
 };

@@ -18,10 +18,10 @@ const SearchAuthor = () => {
         <Heading fontSize={"45px"} color={"#ffffff"}>
           Follow Creators for Exclusive Updates On Their Work
         </Heading>
-        <Flex width={'70%'} gap={5}>
+        {/* <Flex width={'70%'} gap={5}>
           <Input backgroundColor={'#ffffff'} type="text" placeholder="Find Talented Creators" />
           <Button leftIcon={<BiSearchAlt2/>} colorScheme="yellow" >Search</Button>
-        </Flex>
+        </Flex> */}
       </Stack>
     </Stack>
   );
