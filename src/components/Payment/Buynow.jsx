@@ -70,7 +70,7 @@ const BuyNow = ({ itemId }) => {
               {
                 if (user.role == "AUTHOR") {
                   router.push(
-                    `${process.env.NEXT_PUBLIC_AUTHOR_DASHBOARD_URL}/purchased?screen=Purchased-Bag&access=${token}`
+                    `${process.env.NEXT_PUBLIC_AUTHOR_DASHBOARD_URL}/purchasebag?screen=Purchase-Bag&access=${token}`
                   );
                 } else {
                   router.push("/dashboard/purchased?screen=Purchase-Bag");

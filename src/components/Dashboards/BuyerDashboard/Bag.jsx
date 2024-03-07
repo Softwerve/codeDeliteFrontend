@@ -55,7 +55,7 @@ const Bag = () => {
       {bagAccordingToAuthor.length > 0 ? (
         <Stack mt={"2%"}>
           {bagAccordingToAuthor?.map((bag, index) => (
-            bag.bagItems > 0 ? 
+            bag.bagItems.length > 0 ? 
             <Stack
               bg={"#ffffff"}
               padding={"2%"}

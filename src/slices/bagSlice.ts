@@ -106,7 +106,4 @@ export const bagSlice = createSlice({
 export const { addItemToBagStart, addItemToBagSuccess, addItemToBagFailure, getUserBagStart, getUserBagSuccess, getUserBagFailure, removeItemFromBagStart,removeItemFromBagSuccess,removeItemFromBagFailure } =
   bagSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.sendOtp.value;
-
 export default bagSlice.reducer;

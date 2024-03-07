@@ -68,13 +68,7 @@ import {
                  console.log(purchasedResponse);
                 if(purchasedResponse?.success)
                 {
-                  if (user.role == "AUTHOR") {
-                    router.push(
-                      `${process.env.NEXT_PUBLIC_AUTHOR_DASHBOARD_URL}/purchased?screen=Purchased-Bag&access=${token}`
-                    );
-                  } else {
                     router.push("/dashboard/purchased?screen=Purchase-Bag");
-                  }
                 }
               })
             },
