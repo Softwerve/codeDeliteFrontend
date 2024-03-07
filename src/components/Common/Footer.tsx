@@ -27,6 +27,7 @@ const Footer = () => {
           <Link href={`/webtemplates?category=All`} style={{opacity:'0.6', fontSize:"15px"}}>Templates</Link>
           <Link href="/components" style={{opacity:'0.6', fontSize:"15px"}}>Components</Link>
           <Link href={`https://www.${link}/blog`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Blogs</Link>
+          <Link href={`/author/all`} style={{opacity:'0.6', fontSize:"15px"}}>Authors</Link>
         </Stack>
         <Stack>
           <Text fontWeight={'bold'} fontSize={'20px'} >Company</Text>

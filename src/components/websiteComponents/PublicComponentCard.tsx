@@ -16,7 +16,6 @@ import ComponentNotAvailable from "../CustomLoaders/ComponentNotAvailable";
 import { handleComponentsByCategory } from "@/apiActions/components";
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { useRouter } from "next/navigation";
-import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
 
 
 const PublicComponentCard = ({ category }: { category: string }) => {
@@ -67,7 +66,7 @@ const PublicComponentCard = ({ category }: { category: string }) => {
                 src={component.thumbnailImage}
                 width={"100%"}
                 height={"200px"}
-                onClick={()=> router.push("http://www.softwerve.com/login")}
+                onClick={()=> router.push("/author")}
               />
             </Box>
             <Flex p={2} justifyContent={"space-between"} alignItems={'center'}>

@@ -17,6 +17,7 @@ import ComponentNotAvailable from "../CustomLoaders/ComponentNotAvailable";
 import { handleGetAllPublishedTemplatesOfACategory } from "@/apiActions/templatesAction";
 import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
 const PublicTemplates = ({ category }: { category: string }) => {
+  const router = useRouter();
   const store = useAppStore();
   const { templates } = useAppSelector((state) => state.templates);
   const { user } = useAppSelector((state) => state.user);
@@ -56,6 +57,7 @@ const PublicTemplates = ({ category }: { category: string }) => {
             <Box>
               <Image
                 src={template.thumbnailImage}
+                onClick={() => router.push("/author")  }
                 width={"100%"}
                 height={"200px"}
               />

@@ -51,7 +51,7 @@ const SearchSection = () => {
     <Stack justifyContent={'center'} alignItems={'center'} minH={'60vh'} color={'#ffffff'} textAlign={"center"} backgroundImage={tempBg.src} backgroundRepeat={'no-repeat'} backgroundSize={'cover'}>
       <Stack p={5} borderRadius={'20px'} bg={inp?'#ffffff':'#transparent'} width={["90%","80%","60%"]} spacing={5}>
         <Heading>Explore Our Templates</Heading>
-        <Flex flexWrap={'wrap'} gap={3} alignItems={'center'} justifyContent={'space-between'}>
+        <Flex flexWrap={['wrap','nowrap']} gap={3} alignItems={'center'} justifyContent={'space-between'}>
           <InputGroup borderRadius={"10px"} bg={"#ffffff"} color={"#000000"}>
             <InputLeftElement pointerEvents="none">
               <FaSearch color="gray.300" />

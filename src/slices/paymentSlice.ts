@@ -66,11 +66,25 @@ export const paymentSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload.message;
-    }
+    },
+    orderPaidStart: (state) => {
+      state.isLoading = true;
+      state.isError = false;
+    },
+    orderPaidSuccess: (state, action) => {
+      state.isLoading = false;
+      state.message = action.payload.message;
+      state.success = action.payload.success;
+    },
+    orderPaidFailure: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload.message;
+    },
   },
 });
 
-export const { createAnOrderStart,createAnOrderSuccess,createAnOrderFailure } =
+export const { createAnOrderStart,createAnOrderSuccess,createAnOrderFailure, orderPaidStart, orderPaidSuccess, orderPaidFailure } =
   paymentSlice.actions;
 
 export default paymentSlice.reducer;

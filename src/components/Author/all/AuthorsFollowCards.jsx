@@ -1,5 +1,14 @@
-import { handleGetAllAuthorsFollowCards } from "@/apiActions/authors";
-import { handleFollowAuthor, handleUnfollowAuthor } from "@/apiActions/followAction";
+"use client"
+import {
+  handleGetAllAuthorsFollowCards,
+  handleGetAllAuthorsFollowCardsWithoutLogin,
+} from "@/apiActions/authors";
+import {
+  handleFollowAuthor,
+  handleGetInspiredByAuthor,
+  handleRemoveFromInspiration,
+  handleUnfollowAuthor,
+} from "@/apiActions/followAction";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
 import {
   Avatar,
@@ -14,35 +23,63 @@ import {
 import React, { useEffect } from "react";
 import { FaCubes, FaUserCheck, FaUserFriends } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
-import followSound from '../../../../public/audio/followSound.wav';
+import followSound from "../../../../public/audio/followSound.wav";
+import { handleUserDetails } from "@/apiActions/userAction";
+import Link from "next/link";
 const AuthorsFollowCards = ({ searchParams }) => {
   const store = useAppStore();
   const toast = useToast();
   const { authorsCards } = useAppSelector((state) => state.authors);
+  const { user } = useAppSelector((state) => state.user);
   useEffect(() => {
-    store.dispatch(handleGetAllAuthorsFollowCards());
+    store.dispatch(handleUserDetails());
+    if (user.email != "") {
+      store.dispatch(handleGetAllAuthorsFollowCards());
+    } else {
+      store.dispatch(handleGetAllAuthorsFollowCardsWithoutLogin());
+    }
   }, []);
 
-  const handleFollow = (authorId) => {
-    store.dispatch(handleFollowAuthor(authorId)).then((response) => {
-      if (response?.payload?.success) {
-        store.dispatch(handleGetAllAuthorsFollowCards());
-        const audio = new Audio(followSound);
-        audio.play();
-      } else {
-        handleToast(response?.payload.message, "error");
-      }
-    });
+  const handleFollow = (authorId, authorUsername) => {
+    if (user.role === "USER") {
+      store.dispatch(handleFollowAuthor(authorId)).then((response) => {
+        if (response?.payload?.success) {
+          const audio = new Audio(followSound);
+          audio.play();
+        } else {
+          handleToast(response?.payload.message, "error");
+        }
+      });
+    } else if (user.role === "AUTHOR") {
+      store
+        .dispatch(handleGetInspiredByAuthor(authorUsername))
+        .then((response) => {
+          if (response?.payload?.success) {
+            const audio = new Audio(followSound);
+            audio.play();
+          } else {
+            handleToast(response?.payload.message, "error");
+          }
+        });
+    }
   };
 
-  const handleUnfollow = (authorId) => {
-    store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
-      if (response?.payload?.success) {
-        store.dispatch(handleGetAllAuthorsFollowCards());
-      } else {
-        handleToast(response?.payload.message, "error");
-      }
-    });
+  const handleUnfollow = (authorId, authorUsername) => {
+    if (user.role === "USER") {
+      store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
+        if (!response?.payload?.success) {
+          handleToast(response?.payload.message, "error");
+        }
+      });
+    } else if (user.role === "AUTHOR") {
+      store
+        .dispatch(handleRemoveFromInspiration(authorUsername))
+        .then((response) => {
+          if (!response?.payload?.success) {
+            handleToast(response?.payload.message, "error");
+          }
+        });
+    }
   };
 
   const handleToast = (message, status) => {
@@ -54,10 +91,9 @@ const AuthorsFollowCards = ({ searchParams }) => {
     });
   };
 
-
   return (
     <Stack background={"#FDF6F6"} p={"20"}>
-      {authorsCards.map((authorCard, index) => (
+      {authorsCards?.map((authorCard, index) => (
         <Flex
           borderRadius={"10px"}
           width={"50%"}
@@ -71,7 +107,7 @@ const AuthorsFollowCards = ({ searchParams }) => {
           boxShadow="rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"
         >
           <Flex>
-            <Avatar src={authorCard.profileImage} name={authorCard.name} />
+            <Avatar onClick={()=> router.push(`${process.env.NEXT_PUBLIC_AUTHOR_PROFILE_URL}/${authorCard.username}`)} src={authorCard.profileImage} name={authorCard.name} />
             <Box ml="3">
               <Text fontWeight="bold">
                 {authorCard.name}
@@ -79,7 +115,10 @@ const AuthorsFollowCards = ({ searchParams }) => {
                   {authorCard.monetizationLevel}
                 </Badge>
               </Text>
-              <Text fontSize="sm">{authorCard.username}</Text>
+              <Link style={{textDecoration:"underline"}} href={`${process.env.NEXT_PUBLIC_AUTHOR_PROFILE_URL}/${authorCard.username}`} target={'blank'}>
+                <Text fontSize="sm" >{authorCard.username}</Text>
+              </Link>
+              <Text color="gray">{authorCard.profileTitle}</Text>
               <Flex gap={"3"} alignItems={"center"}>
                 <FaUserFriends />
                 <Text>{authorCard.totalFollowers} Followers</Text>
@@ -90,25 +129,37 @@ const AuthorsFollowCards = ({ searchParams }) => {
               </Flex>
             </Box>
           </Flex>
-          {!authorCard.followed ? (
+          {(
+            user.role === "AUTHOR"
+              ? authorCard.isInInspirationList
+              : authorCard.followed
+          ) ? (
             <Button
-              borderRadius={"30px"}
               variant={"outline"}
-              colorScheme="blue"
-              leftIcon={<IoMdPersonAdd />}
-              onClick={()=> handleFollow(authorCard.authorId)}
+              border={"2px solid #6D2EEA"}
+              borderRadius={"20px"}
+              color={"#6D2EEA"}
+              _hover={{ bg: "#E0D3FA" }}
+              leftIcon={<FaUserMinus />}
+              onClick={() =>
+                handleUnfollow(authorCard.authorId, authorCard.username)
+              }
             >
-              Follow
+              {user.role == "AUTHOR" ? "Remove From Inspiration" : "Unfollow"}
             </Button>
           ) : (
             <Button
-              borderRadius={"30px"}
               variant={"outline"}
-              colorScheme="blue"
-              leftIcon={<FaUserCheck />}
-              onClick={()=> handleUnfollow(authorCard.authorId)}
+              border={"2px solid #6D2EEA"}
+              borderRadius={"20px"}
+              color={"#6D2EEA"}
+              _hover={{ bg: "#E0D3FA" }}
+              leftIcon={<IoMdPersonAdd />}
+              onClick={() =>
+                handleFollow(authorCard.authorId, authorCard.username)
+              }
             >
-              Following
+              {user.role == "AUTHOR" ? "Add To Inspiration" : "Follow"}
             </Button>
           )}
         </Flex>

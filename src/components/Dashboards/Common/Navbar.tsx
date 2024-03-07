@@ -58,12 +58,12 @@ const Navbar = () => {
     },
     {
       icon: <HiTemplate />,
-      title: "Templates",
-      link: "/templates",
+      title: "Explore WebTemplates",
+      link: "/webtemplates?category=All",
     },
     {
       icon: <CgComponents />,
-      title: "Components",
+      title: "Explore Components",
       link: "/components",
     },
     {
@@ -85,12 +85,12 @@ const Navbar = () => {
   const navItemsSmall = [
     {
       icon: <HiTemplate />,
-      title: "Templates",
-      link: "/templates",
+      title: "Explore WebTemplates",
+      link: "/webtemplates?category=All",
     },
     {
       icon: <CgComponents />,
-      title: "Components",
+      title: "Explore Components",
       link: "/components",
     },
     {

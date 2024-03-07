@@ -6,7 +6,9 @@ import categorySlice from '@/slices/categorySlice'
 import componentsSlice from '@/slices/componentsSlice'
 import followSlice from '@/slices/followSlice'
 import loggedInSlice from '@/slices/loggedIn'
+import ordersSlice from '@/slices/ordersSlice'
 import paymentSlice from '@/slices/paymentSlice'
+import purchaseSlice from '@/slices/purchaseSlice'
 import templateSlice from '@/slices/templateSlice'
 import userSlice  from '@/slices/userSlice'
 import { configureStore } from '@reduxjs/toolkit'
@@ -24,6 +26,8 @@ export const makeStore = () => {
       authors: authorsSlice,
       loggedIn: loggedInSlice,
       payment: paymentSlice,
+      purchase: purchaseSlice,
+      orders: ordersSlice,
     }
   })
 }

@@ -1,5 +1,5 @@
 import { AppDispatch } from "@/lib/store";
-import { createAnOrderFailure, createAnOrderStart, createAnOrderSuccess } from "@/slices/paymentSlice";
+import { createAnOrderFailure, createAnOrderStart, createAnOrderSuccess, orderPaidFailure, orderPaidStart, orderPaidSuccess } from "@/slices/paymentSlice";
 import Cookies from "universal-cookie";
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -14,7 +14,6 @@ export const handleCreateAnOrder = (tempId: number) => (dispatch: AppDispatch) =
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
       }
     })
       .then((response) => response.json())
@@ -28,13 +27,37 @@ export const handleCreateAnOrder = (tempId: number) => (dispatch: AppDispatch) =
 
 // ----------------------handle payment success----------------------
 export const handleOrderPaymentSuccess = (successResponse:any) => (dispatch: AppDispatch) => {
-  fetch(`${baseUrl}/payment/success`, {
+  dispatch(orderPaidStart());
+  return fetch(`${baseUrl}/payment/success`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
     },
     body: JSON.stringify(successResponse)
+  }).then((response)=> response.json())
+  .then((response)=> {
+    dispatch(orderPaidSuccess(response));
+    return response; 
   })
+    .catch((error) => {
+      dispatch(orderPaidFailure(error));
+    });
+};
+
+// --------------------handle creating order---------------------------
+export const handleCreateAnOrderAccordingToAuthor = (authorId: number) => (dispatch: AppDispatch) => {
+  dispatch(createAnOrderStart());
+  return fetch(`${baseUrl}/payment/order/accordingtoauthor/create?authorId=${authorId}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      return dispatch(createAnOrderSuccess(response));
+    })
     .catch((error: any) => {
       dispatch(createAnOrderFailure(error.message));
     });

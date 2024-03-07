@@ -54,6 +54,7 @@ import addToBagSound from "../../../public/audio/addToBagSound.wav";
 import removeFromBagSound from "../../../public/audio/removeFromBagSound.wav";
 import followSound from "../../../public/audio/followSound.wav";
 import { convertCurrencyFromINR } from "@/apiActions/currencyExchange";
+import BuyNow from "../Payment/Buynow";
 
 const CurrentUserBasedComponentCard = ({ category }) => {
   const store = useAppStore();
@@ -69,9 +70,8 @@ const CurrentUserBasedComponentCard = ({ category }) => {
     store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
   }, []);
 
-  const handleFollow = (authorId,authorUsername) => {
-    if(user.role === "USER")
-    {
+  const handleFollow = (authorId, authorUsername) => {
+    if (user.role === "USER") {
       store.dispatch(handleFollowAuthor(authorId)).then((response) => {
         if (response?.payload?.success) {
           store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
@@ -81,23 +81,23 @@ const CurrentUserBasedComponentCard = ({ category }) => {
           handleToast(response?.payload.message, "error");
         }
       });
-    }else if(user.role === "AUTHOR")
-    {
-      store.dispatch(handleGetInspiredByAuthor(authorUsername)).then((response) => {
-        if (response?.payload?.success) {
-          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
-          const audio = new Audio(followSound);
-          audio.play();
-        } else {
-          handleToast(response?.payload.message, "error");
-        }
-      });
+    } else if (user.role === "AUTHOR") {
+      store
+        .dispatch(handleGetInspiredByAuthor(authorUsername))
+        .then((response) => {
+          if (response?.payload?.success) {
+            store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+            const audio = new Audio(followSound);
+            audio.play();
+          } else {
+            handleToast(response?.payload.message, "error");
+          }
+        });
     }
   };
 
-  const handleUnfollow = (authorId,authorUsername) => {
-    if(user.role === "USER")
-    {
+  const handleUnfollow = (authorId, authorUsername) => {
+    if (user.role === "USER") {
       store.dispatch(handleUnfollowAuthor(authorId)).then((response) => {
         if (response?.payload?.success) {
           store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
@@ -105,16 +105,16 @@ const CurrentUserBasedComponentCard = ({ category }) => {
           handleToast(response?.payload.message, "error");
         }
       });
-    }
-    else if(user.role === "AUTHOR")
-    {
-      store.dispatch(handleRemoveFromInspiration(authorUsername)).then((response) => {
-        if (response?.payload?.success) {
-          store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
-        } else {
-          handleToast(response?.payload.message, "error");
-        }
-      });
+    } else if (user.role === "AUTHOR") {
+      store
+        .dispatch(handleRemoveFromInspiration(authorUsername))
+        .then((response) => {
+          if (response?.payload?.success) {
+            store.dispatch(handleGetItemsWhenLoggedIn(category, "component"));
+          } else {
+            handleToast(response?.payload.message, "error");
+          }
+        });
     }
   };
 
@@ -190,11 +190,24 @@ const CurrentUserBasedComponentCard = ({ category }) => {
     });
   };
 
+  const handleBuyFreeItem = (tempId) => {
+    store.dispatch(handlePurchaseFreeItem(tempId)).then((response) => {
+      if (response?.payload?.success) {
+        handleToast(response?.payload?.message, "success");
+        store.dispatch(handleGetItemsWhenLoggedIn(category, "template"));
+        const audio = new Audio(addToBagSound);
+        audio.play();
+      } else {
+        handleToast(response?.payload?.message, "error");
+      }
+    });
+  };
+
   const handleToast = (message, status) => {
     toast({
       title: message,
       status: status,
-      duration: 3000,
+      duration: 5000,
       isClosable: true,
     });
   };
@@ -214,7 +227,7 @@ const CurrentUserBasedComponentCard = ({ category }) => {
             boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
             borderRadius={"10px"}
           >
-            <Flex justifyContent={"space-between"} alignItems={"center"} p={3}>
+            <Flex gap={5} justifyContent={"space-between"} alignItems={"center"} p={3}>
               <Flex
                 cursor={"pointer"}
                 onClick={() =>
@@ -235,15 +248,21 @@ const CurrentUserBasedComponentCard = ({ category }) => {
                   <Text fontSize="sm">{component.authorUsername}</Text>
                 </Box>
               </Flex>
-              { (user.role==="AUTHOR" ? component.isAuthorInInspirationList : component.isFollowingAuthor) ? (
+              {(
+                user.role === "AUTHOR"
+                  ? component.isAuthorInInspirationList
+                  : component.isFollowingAuthor
+              ) ? (
                 <Button
                   variant={"outline"}
-                  border={"2px solid #0A66C2"}
+                  border={"2px solid #6D2EEA"}
                   borderRadius={"20px"}
-                  color={"#0A66C2"}
-                  _hover={{ bg: "#E4F1FE" }}
+                  color={"#6D2EEA"}
+                  _hover={{ bg: "#E0D3FA" }}
                   leftIcon={<FaUserMinus />}
-                  onClick={() => handleUnfollow(component.authorId,component.authorUsername)}
+                  onClick={() =>
+                    handleUnfollow(component.authorId, component.authorUsername)
+                  }
                 >
                   {user.role == "AUTHOR"
                     ? "Remove From Inspiration"
@@ -252,32 +271,61 @@ const CurrentUserBasedComponentCard = ({ category }) => {
               ) : (
                 <Button
                   variant={"outline"}
-                  border={"2px solid #0A66C2"}
+                  border={"2px solid #6D2EEA"}
                   borderRadius={"20px"}
-                  color={"#0A66C2"}
-                  _hover={{ bg: "#E4F1FE" }}
+                  color={"#6D2EEA"}
+                  _hover={{ bg: "#E0D3FA" }}
                   leftIcon={<IoMdPersonAdd />}
-                  onClick={() => handleFollow(component.authorId,component.authorUsername)}
+                  onClick={() =>
+                    handleFollow(component.authorId, component.authorUsername)
+                  }
                 >
                   {user.role == "AUTHOR" ? "Add To Inspiration" : "Follow"}
                 </Button>
               )}
             </Flex>
-            <Box>
+            <Box position="relative">
+              <Flex position="absolute" top={0} right={0} p={2} zIndex={1}>
+                <Badge
+                  colorScheme="purple"
+                  p={"3px 10px 3px 10px"}
+                  height={"fit-content"}
+                  width={"fit-content"}
+                  borderRadius={'10px'}
+                >
+                  <Flex gap={2} alignItems="center">
+                    {component.price !== 0 && <Text>{user.currencySymbol}</Text>}
+                    <Text>
+                      {component.price === 0
+                        ? "Free"
+                        : convertCurrencyFromINR(component.price, user.currency)}
+                    </Text>
+                  </Flex>
+                </Badge>
+              </Flex>
               <Image
                 src={component.thumbnailImage}
-                width={"100%"}
-                height={"200px"}
-                cursor={'pointer'}
-                onClick={()=> router.push(`/components/${category}/${component.title}/${component.tempId}`)}
+                width="100%"
+                height="200px"
+                cursor="pointer"
+                onClick={() =>
+                  router.push(
+                    `/components/${component.title.split(" ").join("-")}/${
+                      component.tempId
+                    }`
+                  )
+                }
               />
             </Box>
-            <Divider/>
-            <Text>{component.title}</Text>
-            <Divider/>
+            <Divider />
+            <Box p={'0px 0px 0px 10px'}>
+              <Text>{component.title}</Text>
+            </Box>
+            <Divider />
             <Flex
               justifyContent={"space-between"}
               alignContent={"center"}
+              alignItems={"center"}
               p={"5%"}
               fontSize={"20"}
             >
@@ -337,39 +385,41 @@ const CurrentUserBasedComponentCard = ({ category }) => {
                   </Box>
                 )
               ) : null}
-              {component.isItemInBag ? (
-                <Box
-                  transition="transform 0.5s"
-                  cursor={"pointer"}
-                  _hover={{ transform: "scale(2)" }}
-                  color={"#E24D4D"}
-                  onClick={() => handleRemoveFromBag(component?.tempId)}
-                >
-                  <IoBagRemove />
-                </Box>
+              {component.price > 0 ? (
+                component.isItemInBag ? (
+                  <Box
+                    transition="transform 0.5s"
+                    cursor={"pointer"}
+                    _hover={{ transform: "scale(2)" }}
+                    color={"#E24D4D"}
+                    onClick={() => handleRemoveFromBag(component?.tempId)}
+                  >
+                    <IoBagRemove />
+                  </Box>
+                ) : (
+                  <Box
+                    transition="transform 0.5s"
+                    cursor={"pointer"}
+                    _hover={{ transform: "scale(2)" }}
+                    color="#5EB921"
+                    onClick={() => handleAddToBag(component?.tempId)}
+                  >
+                    <IoBagAdd />
+                  </Box>
+                )
               ) : (
-                <Box
-                  transition="transform 0.5s"
-                  cursor={"pointer"}
-                  _hover={{ transform: "scale(2)" }}
-                  color="#5EB921"
-                  onClick={() => handleAddToBag(component?.tempId)}
+                <Button
+                  bg={"#8C53FF"}
+                  color={"#ffffff"}
+                  _hover={{ bg: "#6D2EEA" }}
+                  onClick={() => handleBuyFreeItem(component?.tempId)}
                 >
-                  <IoBagAdd />
-                </Box>
+                  Buy Now Free
+                </Button>
               )}
-              <Badge colorScheme="purple" p={2}>
-                <Flex gap={2} alignItems={"center"}>
-                  <Text>
-                    {component.price == 0 ? null : user.currencySymbol}
-                  </Text>
-                  <Text>
-                    {component.price == 0
-                      ? "Free"
-                      : convertCurrencyFromINR(component.price, user.currency)}
-                  </Text>
-                </Flex>
-              </Badge>
+              {component.price == 0 ? null : (
+                  <BuyNow itemId={component?.tempId} />
+              )}
             </Flex>
           </Stack>
         </GridItem>
