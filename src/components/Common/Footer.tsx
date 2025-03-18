@@ -11,27 +11,27 @@ import Link from "next/link";
 
 const Footer = () => {
   let currentYear = new Date().getFullYear();
-  const link = "softwerve.com";
+  const link = "softwerve.vercel.app";
   const router = useRouter();
   return (
     <Stack borderTop={"1px solid white"} spacing={"5"} p={"5% 5% 2% 5%"} bg={'#343434'} color={'#FFFFFF'}>
-      <Image style={{cursor:'pointer'}} onClick={()=>router.push(`https://www.${link}`)} src={softwerve} alt="codedelite" width={"200"} />
+      <Image style={{cursor:'pointer'}} onClick={()=>router.push(`https://${link}`)} src={softwerve} alt="codedelite" width={"200"} />
       <Flex justifyContent={"space-between"} p={"5%"} borderBottom={'1px solid white'} flexWrap={'wrap'} gap={5}>
         <Stack>
           <Text fontWeight={'bold'} fontSize={'20px'} >Products</Text>
-          <Link href={`https://www.codedelite.${link}`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>CodeDelite</Link>
+          <Link href={`https://codedelite.vercel.app`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>CodeDelite</Link>
           <Link href={""} style={{opacity:'0.6', fontSize:"15px"}}>WebTailory</Link>
         </Stack>
         <Stack>
           <Text fontWeight={'bold'} fontSize={'20px'} >Explore</Text>
           <Link href={`/webtemplates?category=All`} style={{opacity:'0.6', fontSize:"15px"}}>Templates</Link>
           <Link href="/components" style={{opacity:'0.6', fontSize:"15px"}}>Components</Link>
-          <Link href={`https://www.${link}/blog`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Blogs</Link>
+          <Link href={`https://${link}/blog`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Blogs</Link>
           <Link href={`/author/all`} style={{opacity:'0.6', fontSize:"15px"}}>Authors</Link>
         </Stack>
         <Stack>
           <Text fontWeight={'bold'} fontSize={'20px'} >Company</Text>
-          <Link href={`https://www.${link}`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Softwerve</Link>
+          <Link href={`https://${link}`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Softwerve</Link>
           <Link href={`https://${link}/about`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>About Softwerve</Link>
           <Link href={`https://${link}/termsandconditions`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Terms & Conditions</Link>
           <Link href={`https://${link}/privacypolicy`} target="blank" style={{opacity:'0.6', fontSize:"15px"}}>Privacy Policy</Link>
@@ -51,7 +51,7 @@ const Footer = () => {
           </Flex>
           <Flex alignItems={'center'} gap={2} fontSize="15px">
             <FaXTwitter/>
-            <Link href={`https://www.codedelite.${link}`} style={{opacity:'0.6', }}>Twitter</Link>
+            <Link href={`https://codedelite.vercel.app`} style={{opacity:'0.6', }}>Twitter</Link>
           </Flex>
           <Flex alignItems={'center'} gap={2} fontSize="15px">
             <RiInstagramFill/>
