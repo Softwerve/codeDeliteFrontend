@@ -26,6 +26,7 @@ import { IoMdPersonAdd } from "react-icons/io";
 import followSound from "../../../../public/audio/followSound.wav";
 import { handleUserDetails } from "@/apiActions/userAction";
 import Link from "next/link";
+import { FaUserMinus } from "react-icons/fa6";
 const AuthorsFollowCards = ({ searchParams }) => {
   const store = useAppStore();
   const toast = useToast();

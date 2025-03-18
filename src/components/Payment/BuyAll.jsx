@@ -136,7 +136,7 @@ import {
                   <Text fontSize={"30px"}>Order Created</Text>
                   <FaCircleCheck fontSize={"50px"} color="green" />
                   <Text fontSize={"15px"}>Now Pay and Purchase This Creation</Text>
-                  <Text>Please Don't Refresh and Close This Window While Paying</Text>
+                  <Text>{"Please Don't Refresh and Close This Window While Paying"}</Text>
                 </Stack>
               ) : (
                 <Text textAlign={"center"} color={"red.500"} fontSize="30px">
