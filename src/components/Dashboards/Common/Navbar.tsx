@@ -35,7 +35,7 @@ import {
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAppSelector, useAppStore } from "@/lib/hooks";
-import { handleUserDetails } from "@/apiActions/userAction";
+import { handleLogout, handleUserDetails } from "@/apiActions/userAction";
 import { FaUserAlt } from "react-icons/fa";
 
 const Navbar = () => {
@@ -195,7 +195,7 @@ const Navbar = () => {
                   <MenuItem as="a" href="/profile">
                     Profile
                   </MenuItem>
-                  <MenuItem>Logout</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </MenuList>
               </Menu>
             </>
