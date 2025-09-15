@@ -244,16 +244,17 @@ const Navbar = () => {
             </Menu>
           </Flex>
         ) : (
-          // <Button
-          //   variant={"outline"}
-          //   color={isTop ? "white" : "black"}
-          //   _hover={{ bg: "none" }}
-          //   onClick={() =>
-          //     (window.location.href = "http://localhost:3000/login")
-          //   }
-          // >
-          //   Login <FiArrowUpRight fontWeight="bold" />
-          // </Button>
+          <Flex gap={10}>
+          <Button
+            variant={"outline"}
+            color={isTop ? "white" : "black"}
+            bg={"none"}
+            as={Button}
+            _hover={{ bg: "none" }}
+            onClick={() => router.push("/user")}
+          >
+            Login <FiArrowUpRight fontWeight="bold" />
+          </Button>
           <Button
             // className="underline-on-hover"
             variant={"outline"}
@@ -266,6 +267,7 @@ const Navbar = () => {
           >
             Become An Author
           </Button>
+          </Flex>
         )
       ) : null}
 

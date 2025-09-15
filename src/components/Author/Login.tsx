@@ -37,7 +37,6 @@ const LogIn = () => {
       .then((response) => {
         if (response?.payload.isSuccess == true) {
           handleToast("Logged In Successfully", "success");
-
           window.location.href = `${authorDashboard}?screen=Dashboard&access=${response?.payload.token}`;
         } else {
           handleToast(response?.payload.message, "error");

@@ -88,3 +88,22 @@ export const handleAvailableUsername =
     });
 };
 
+// -----------------------Handling Signup User-----------------------
+  export const handleSignUp = (user: any,otp:number) => async (dispatch: AppDispatch) => {
+    console.log(user);
+      dispatch(signupStart());
+      return fetch(`${baseUrl}/user/signup?otp=${otp}`, {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          return dispatch(signupSuccess(response));
+        })
+        .catch((error) => {
+          dispatch(signupFailure(error));
+        });
+    };
