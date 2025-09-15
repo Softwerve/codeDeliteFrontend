@@ -45,6 +45,16 @@ const Navbar = () => {
   const router = useRouter();
   const store = useAppStore();
   const { user } = useAppSelector((state) => state.user);
+  const logout = () => {
+      store.dispatch(handleLogout()).then((response) => {
+        if (response?.payload?.success) {
+          handleToast(response?.payload?.message, "success");
+          window.location.reload();
+        } else {
+          handleToast(response?.payload?.message, "error");
+        }
+      });
+    };
   const navItems = [
     {
       icon: <BiSolidDashboard />,
@@ -195,7 +205,7 @@ const Navbar = () => {
                   <MenuItem as="a" href="/profile">
                     Profile
                   </MenuItem>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  <MenuItem onClick={logout}>Logout</MenuItem>
                 </MenuList>
               </Menu>
             </>
@@ -207,3 +217,7 @@ const Navbar = () => {
 };
 
 export default Navbar;
+function handleToast(message: any, arg1: string) {
+  throw new Error("Function not implemented.");
+}
+
